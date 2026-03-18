@@ -89,7 +89,7 @@ export default function App() {
       {/* Header */}
       <header className="px-6 py-4 flex justify-between items-center bg-[#080c14]/80 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5">
         <div className="flex items-center gap-4">
-          <Image src="/352pcs-site/logo.png" alt="352pcs" width={45} height={45} className="object-contain" />
+          <Image src="/logo.png" alt="352pcs" width={45} height={45} className="object-contain" />
           <span className="text-xl font-black tracking-tighter uppercase italic">352<span className="text-[rgb(66,123,157)]">pcs</span></span>
         </div>
         
@@ -164,7 +164,7 @@ export default function App() {
       <section id="about" className="px-6 py-24 border-y border-white/5 bg-[#18293c]/20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="relative aspect-square bg-[#080c14] rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex items-center justify-center p-12">
-            <Image src="/352pcs-site/logo.png" alt="352pcs Logo" width={300} height={300} className="object-contain" />
+            <Image src="/logo.png" alt="352pcs Logo" width={300} height={300} className="object-contain" />
             <div className="absolute inset-0 bg-gradient-to-br from-[rgb(15,52,92)]/20 to-transparent"></div>
           </div>
           <div>
@@ -257,7 +257,7 @@ export default function App() {
                 >
                   <div className="relative w-full h-full bg-white rounded-xl overflow-hidden shadow-xl group-hover:scale-105 transition-all">
                     <Image 
-                      src="/352pcs-site/352pcs_qr.png" 
+                      src="/352pcs_qr.png" 
                       alt="Instagram QR" 
                       fill
                       className="object-cover p-2" 
