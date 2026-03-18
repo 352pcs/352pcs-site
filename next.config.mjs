@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',      // This is the magic line for Plan B
+  output: 'export',
+  basePath: '/352pcs-site',
+  assetPrefix: '/352pcs-site', // This fixes the CSS and Images
   images: {
-    unoptimized: true,   // Required because GitHub doesn't have an image server
+    unoptimized: true,
   },
 };
 
