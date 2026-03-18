@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "deploy": "next build && touch out/.nojekyll"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.1",
