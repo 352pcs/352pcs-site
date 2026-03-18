@@ -272,32 +272,6 @@ const content = {
         </div>
       </section>
       
-      {/* Trust / Google Reviews Section */}
-      <section className="px-6 py-20 bg-gradient-to-b from-transparent to-[rgb(15,52,92)]/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-6">
-            Certified Informatics Specialist
-          </div>
-          
-          <h3 className="text-3xl md:text-5xl font-black mb-6 tracking-tight uppercase">
-            {t.trustTitle}
-          </h3>
-          <p className="text-slate-400 mb-10 text-lg italic">
-            {t.trustSub}
-          </p>
-          <a 
-            href="https://www.google.com/maps/search/?api=1&query=352pcs+Niederkorn" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-all group"
-          >
-            <img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google" className="w-5 h-5" />
-            {t.mapPrompt}
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
-        </div>
-      </section>
-
       {/* Contact Section */}
       <section id="contact" className="px-6 py-32">
         <div className="max-w-6xl mx-auto">
