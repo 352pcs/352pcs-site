@@ -7,12 +7,12 @@ const content = {
     nav: ["Home", "Services", "About", "Pricing", "Contact"],
     heroBadge: "Luxembourg's Premier Tech Service",
     heroTitle: "High-Performance Builds. Professional Repairs.",
-    heroDesc: "Freshly graduated from high school (GIN) providing expert PC solutions in Luxembourg. From custom gaming monsters to precision laptop repairs.",
+    heroDesc: "Fresh high school graduate in Informatics (GIN), providing expert PC solutions in Luxembourg. From custom gaming monsters to precision laptop repairs.",
     status: "Accepting Repairs & Builds",
     aboutTitle: "MEET THE FOUNDER",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Hardware Specialist & Founder",
-    aboutText: "I'm a recent high school graduate in General Informatics (GIN). This September, I will be heading to Belval to pursue my informatics studies. For over 3 years, I've built and repaired PCs for the local community. 352pcs is where technical precision meets a passion for hardware.",
+    aboutBio: "I'm a recent high school graduate in General Informatics (GIN). This September, I will be heading to Belval to pursue my informatics studies. For over 3 years, I've built and repaired PCs for the local community. 352pcs is where technical precision meets a passion for hardware.",
     belvalStatus: "Future Student @ Belval (Sept 2026)",
     servicesTitle: "Our Expertise",
     services: [
@@ -41,12 +41,12 @@ const content = {
     nav: ["Accueil", "Services", "À propos", "Tarifs", "Contact"],
     heroBadge: "Le service tech numéro 1 au Luxembourg",
     heroTitle: "Montages Haute Performance. Réparations d'Experts.",
-    heroDesc: "Jeune diplômé de 1ère GIN offrant des solutions informatiques au Luxembourg. Des PC gaming sur mesure aux réparations de précision.",
+    heroDesc: "Jeune diplômé d'informatique (GIN) offrant des solutions informatiques au Luxembourg. Des PC gaming sur mesure aux réparations de précision.",
     status: "Disponible pour Réparations & Montages",
     aboutTitle: "À PROPOS",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Fondateur & Technicien PC",
-    aboutText: "Diplômé en Informatique Générale (GIN), je commencerai mes études à Belval en septembre. Depuis 3 ans, je monte et répare des PC pour la communauté locale. 352pcs allie précision technique et passion du hardware.",
+    aboutBio: "Jeune diplômé en Informatique Générale (GIN), je commencerai mes études à Belval en septembre. Depuis 3 ans, je monte et répare des PC pour la communauté locale. 352pcs allie précision technique et passion du hardware.",
     belvalStatus: "Futur Étudiant @ Belval (Sept 2026)",
     servicesTitle: "Notre Expertise",
     services: [
@@ -71,34 +71,13 @@ const content = {
     locationLabel: "Notre Siège",
     footer: "Créé avec passion au Luxembourg."
   },
-  // ... (Other languages follow the same pattern)
-  de: { nav: ["Start", "Services", "Über mich", "Preise", "Kontakt"], heroBadge: "Luxemburgs erstklassiger Tech-Service",
-    heroTitle: "High-Performance Builds. Profi-Reparatur.",
-    heroDesc: "Frischgebackener GIN-Abiturient mit Fokus auf IT-Lösungen in Luxemburg. Von maßgeschneiderten Gaming-PCs bis hin zu Präzisionsreparaturen.",
-    status: "Verfügbar für Reparaturen & Bau",
-    aboutTitle: "ÜBER MICH",
-    aboutName: "Oliveira Moutinho Daniel",
-    aboutTitle2: "Gründer & PC-Techniker", 
-    aboutText: "Ich habe vor kurzem meinen Abschluss in Allgemeiner Informatik (GIN) gemacht. Ab diesem September studiere ich Informatik in Belval. Seit über 3 Jahren baue und repariere ich PCs für die Region. 352pcs vereint Präzision mit Leidenschaft für Hardware.", belvalStatus: "Zukünftiger Student @ Belval (Sept 2026)", servicesTitle: "Expertise", services: [{ title: "Custom PC Bau", desc: "Einzigartige Gaming-Setups.", icon: "⚡" }, { title: "Hardware Reparatur", desc: "Fachmännische Diagnose.", icon: "🛠️" }, { title: "Upgrades", desc: "Maximale Geschwindigkeit.", icon: "🚀" }, { title: "IT-Beratung", desc: "Fehlersuche.", icon: "🧠" }], pricingTitle: "Faire Preise", prices: [{ label: "Diagnose", cost: "30€", detail: "Check" }, { label: "Reparatur", cost: "50€", detail: "Service" }, { label: "PC Montage", cost: "70€", detail: "Bau" }], fromText: "ab", disclaimer: "* Teilkosten hängen vom Budget ab.", qrPrompt: "Hier klicken", mapPrompt: "In Maps öffnen", contactTitle: "Bereit?", phoneLabel: "Professioneller Telefonsupport", emailLabel: "E-Mail-Anfrage", locationLabel: "Standort", footer: "In Luxemburg gebaut." },
-  pt: { nav: ["Início", "Serviços", "Sobre", "Preços", "Contacto"], heroBadge: "O melhor serviço técnico do Luxemburgo",
-    heroTitle: "Builds de Alta Performance. Reparações Profissionais.",
-    heroDesc: "Recém-graduado no ensino secundário em Informática (GIN) no Luxemburgo. De PCs de gaming por medida a reparações de precisão.",
-    status: "Disponível para Reparações",
-    aboutTitle: "SOBRE MIM",
-    aboutName: "Oliveira Moutinho Daniel",
-    aboutTitle2: "Fundador & Técnico de Hardware", 
-    aboutText: "Sou recém-graduado em Informática Geral (GIN). Em setembro, irei para Belval continuar os meus estudos em informática. Há mais de 3 anos que monto e reparo PCs para a comunidade local. 352pcs é onde a precisão técnica encontra a paixão pelo hardware.", belvalStatus: "Futuro Estudante @ Belval (Sept 2026)", servicesTitle: "Especialidade", services: [{ title: "Montagem de PCs", desc: "PCs gaming e workstations.", icon: "⚡" }, { title: "Reparação Hardware", desc: "Diagnóstico especializado.", icon: "🛠️" }, { title: "Upgrades", desc: "Aumente a velocidade.", icon: "🚀" }, { title: "Consultoria TI", desc: "Resolução de problemas.", icon: "🧠" }], pricingTitle: "Preços Justos", prices: [{ label: "Diagnóstico", cost: "30€", detail: "Verificação" }, { label: "Mão de obra", cost: "50€", detail: "Serviço" }, { label: "Montagem PC", cost: "70€", detail: "Setup" }], fromText: "a partir de", disclaimer: "* O custo depende do orçamento.", qrPrompt: "Clique aqui", mapPrompt: "Abrir no Maps", contactTitle: "Vamos começar?", phoneLabel: "Suporte telefónico profissional", emailLabel: "Pedido por e-mail", locationLabel: "Localização", footer: "Criado no Luxemburgo." },
-  lu: { nav: ["Home", "Servicer", "Iwwer mech", "Präisser", "Kontakt"], heroBadge: "Ären Tech-Expert zu Lëtzebuerg",
-    heroTitle: "High-Performance Builds. Profi-Reparaturen.",
-    heroDesc: "Frësche GIN-Premières-Absolvent bitt Informatik-Léisungen zu Lëtzebuerg un. Vu personaliséierte Gaming-Maschinnen bis zu präzise Laptop-Reparaturen.",
-    status: "Bereet fir Reparaturen & Bau",
-    aboutTitle: "IWWERT MECH",
-    aboutName: "Oliveira Moutinho Daniel",
-    aboutTitle2: "Grënner & Hardware-Techniker", aboutText: "Ech hunn viru kuerzem mäin Ofschloss an der Allgemenger Informatik (GIN) gemaach. Dëse September fänken ech mäi Studium an der Informatik um Belval un. Zënter iwwer 3 Joer bauen a reparéieren ech PCen fir d'Leit aus der Géigend. Bei 352pcs trefft technesch Präzisioun op Leidenschaft fir Hardware.", belvalStatus: "Zukünftege Student @ Belval (Sept 2026)", servicesTitle: "Expertise", services: [{ title: "Custom PC Bau", desc: "Eenzegaarteg Setups.", icon: "⚡" }, { title: "Hardware Reparatur", desc: "Experten-Diagnos.", icon: "🛠️" }, { title: "Performance Upgrades", desc: "Méi Speed.", icon: "🚀" }, { title: "IT Berodung", desc: "Tech-Conseil.", icon: "🧠" }], pricingTitle: "Transparent Präisser", prices: [{ label: "Diagnos", cost: "30€", detail: "Check" }, { label: "Aarbechtszäit", cost: "50€", detail: "Service" }, { label: "PC Montage", cost: "70€", detail: "Bau" }], fromText: "vun", disclaimer: "* Käschte hänke vum Budget of.", qrPrompt: "Hei klicken", mapPrompt: "An Maps opmaachen", contactTitle: "Bereet?", phoneLabel: "Professionellen Telefonsupport", emailLabel: "Ufro per E-Mail", locationLabel: "Büro", footer: "Zu Lëtzebuerg gebaut." }
+  de: { nav: ["Start", "Services", "Über mich", "Preise", "Kontakt"], heroBadge: "Luxemburgs erstklassiger Tech-Service", heroTitle: "High-Performance Builds. Profi-Reparatur.", heroDesc: "Frischgebackener Informatik-Abiturient (GIN) mit Fokus auf IT-Lösungen in Luxemburg. Von maßgeschneiderten Gaming-PCs bis hin zu Präzisionsreparaturen.", status: "Verfügbar für Reparaturen & Bau", aboutTitle: "ÜBER MICH", aboutName: "Oliveira Moutinho Daniel", aboutTitle2: "Gründer & PC-Techniker", aboutBio: "Ich habe vor kurzem meinen Abschluss in Allgemeiner Informatik (GIN) gemacht. Ab diesem September studiere ich Informatik in Belval. Seit über 3 Jahren baue und repariere ich PCs für die Region. 352pcs vereint Präzision mit Leidenschaft für Hardware.", belvalStatus: "Zukünftiger Student @ Belval (Sept 2026)", servicesTitle: "Expertise", services: [{ title: "Custom PC Bau", desc: "Einzigartige Gaming-Setups.", icon: "⚡" }, { title: "Hardware Reparatur", desc: "Fachmännische Diagnose.", icon: "🛠️" }, { title: "Upgrades", desc: "Maximale Geschwindigkeit.", icon: "🚀" }, { title: "IT-Beratung", desc: "Fehlersuche.", icon: "🧠" }], pricingTitle: "Faire Preise", prices: [{ label: "Diagnose", cost: "30€", detail: "Check" }, { label: "Reparatur", cost: "50€", detail: "Service" }, { label: "PC Montage", cost: "70€", detail: "Bau" }], fromText: "ab", disclaimer: "* Teilkosten hängen vom Budget ab.", qrPrompt: "Hier klicken", mapPrompt: "In Maps öffnen", contactTitle: "Bereit?", phoneLabel: "Professioneller Telefonsupport", emailLabel: "E-Mail-Anfrage", locationLabel: "Standort", footer: "In Luxemburg gebaut." },
+  pt: { nav: ["Início", "Serviços", "Sobre", "Preços", "Contacto"], heroBadge: "O melhor serviço técnico do Luxemburgo", heroTitle: "Builds de Alta Performance. Reparações Profissionais.", heroDesc: "Recém-graduado no ensino secundário em Informática (GIN) no Luxemburgo. De PCs de gaming por medida a reparações de precisão.", status: "Disponível para Reparações", aboutTitle: "SOBRE MIM", aboutName: "Oliveira Moutinho Daniel", aboutTitle2: "Fundador & Técnico de Hardware", aboutBio: "Sou recém-graduado em Informática Geral (GIN). Em setembro, irei para Belval continuar os meus estudos em informática. Há mais de 3 anos que monto e reparo PCs para a comunidade local. 352pcs é onde a precisão técnica encontra a paixão pelo hardware.", belvalStatus: "Futuro Estudante @ Belval (Sept 2026)", servicesTitle: "Especialidade", services: [{ title: "Montagem de PCs", desc: "PCs gaming e workstations.", icon: "⚡" }, { title: "Reparação Hardware", desc: "Diagnóstico especializado.", icon: "🛠️" }, { title: "Upgrades", desc: "Aumente a velocidade.", icon: "🚀" }, { title: "Consultoria TI", desc: "Resolução de problemas.", icon: "🧠" }], pricingTitle: "Preços Justos", prices: [{ label: "Diagnóstico", cost: "30€", detail: "Verificação" }, { label: "Mão de obra", cost: "50€", detail: "Serviço" }, { label: "Montagem PC", cost: "70€", detail: "Setup" }], fromText: "a partir de", disclaimer: "* O custo depende do orçamento.", qrPrompt: "Clique aqui", mapPrompt: "Abrir no Maps", contactTitle: "Vamos começar?", phoneLabel: "Suporte telefónico profissional", emailLabel: "Pedido por e-mail", locationLabel: "Localização", footer: "Criado no Luxemburgo." },
+  lu: { nav: ["Home", "Servicer", "Iwwer mech", "Präisser", "Kontakt"], heroBadge: "Ären Tech-Expert zu Lëtzebuerg", heroTitle: "High-Performance Builds. Profi-Reparaturen.", heroDesc: "Frësche GIN-Absolvent bitt Informatik-Léisungen zu Lëtzebuerg un. Vu personaliséierte Gaming-Maschinnen bis zu präzise Laptop-Reparaturen.", status: "Bereet fir Reparaturen & Bau", aboutTitle: "IWWERT MECH", aboutName: "Oliveira Moutinho Daniel", aboutTitle2: "Grënner & Hardware-Techniker", aboutBio: "Ech hunn viru kuerzem mäin Ofschloss an der Allgemenger Informatik (GIN) gemaach. Dëse September fänken ech mäi Studium an der Informatik um Belval un. Zënter iwwer 3 Joer bauen a reparéieren ech PCen fir d'Leit aus der Géigend. Bei 352pcs trefft technesch Präzisioun op Leidenschaft fir Hardware.", belvalStatus: "Zukünftege Student @ Belval (Sept 2026)", servicesTitle: "Expertise", services: [{ title: "Custom PC Bau", desc: "Eenzegaarteg Setups.", icon: "⚡" }, { title: "Hardware Reparatur", desc: "Experten-Diagnos.", icon: "🛠️" }, { title: "Performance Upgrades", desc: "Méi Speed.", icon: "🚀" }, { title: "IT Berodung", desc: "Tech-Conseil.", icon: "🧠" }], pricingTitle: "Transparent Präisser", prices: [{ label: "Diagnos", cost: "30€", detail: "Check" }, { label: "Aarbechtszäit", cost: "50€", detail: "Service" }, { label: "PC Montage", cost: "70€", detail: "Bau" }], fromText: "vun", disclaimer: "* Käschte hänke vum Budget of.", qrPrompt: "Hei klicken", mapPrompt: "An Maps opmaachen", contactTitle: "Bereet?", phoneLabel: "Professionellen Telefonsupport", emailLabel: "Ufro per E-Mail", locationLabel: "Büro", footer: "Zu Lëtzebuerg gebaut." }
 };
 
 export default function App() {
-  const [lang, setLang] = useState("fr");
+  const [lang, setLang] = useState("en"); // Changed default to English
   const t = content[lang] || content.en;
 
   return (
@@ -120,7 +99,7 @@ export default function App() {
         <div className="flex gap-4 sm:gap-8 items-center">
           <nav className="space-x-8 text-[10px] font-black uppercase tracking-widest hidden lg:block">
              {t.nav.slice(0, 4).map((item, i) => (
-              <a key={i} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-[rgb(66,123,157)] transition-all opacity-70 hover:opacity-100">{item}</a>
+              <a key={i} href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-[rgb(66,123,157)] transition-all opacity-70 hover:opacity-100">{item}</a>
             ))}
           </nav>
           
@@ -147,7 +126,6 @@ export default function App() {
 
       {/* Hero Section */}
       <section className="relative px-6 py-28 md:py-44 flex flex-col items-center justify-center text-center">
-        {/* Pulsing Status Indicator */}
         <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/20 mb-6 transition-all hover:bg-emerald-500/10">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -191,15 +169,18 @@ export default function App() {
             <img 
               src="/founder-pro.png" 
               alt={t.aboutName} 
-              className="w-48 h-48 rounded-2xl border-2 border-blue-500/20 object-cover shadow-2xl"
+              className="w-48 h-48 rounded-2xl border-2 border-[rgb(66,123,157)]/20 object-cover shadow-2xl"
             />
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">
             {t.aboutName}
           </h2>
-          <p className="text-blue-400 font-medium mb-6 uppercase tracking-widest text-sm">
+          <p className="text-[rgb(66,123,157)] font-medium mb-1 uppercase tracking-widest text-sm">
             {t.aboutTitle2}
+          </p>
+          <p className="text-slate-500 font-bold mb-6 uppercase tracking-widest text-[10px] opacity-70">
+            {t.belvalStatus}
           </p>
 
           <p className="max-w-2xl mx-auto text-gray-400 text-lg leading-relaxed">
@@ -298,7 +279,7 @@ export default function App() {
               </div>
 
               <a 
-                href="https://maps.google.com/?q=149+rue+Pierre+Gansen+Niederkorn" 
+                href="https://www.google.com/maps/search/?api=1&query=149+rue+Pierre+Gansen+Niederkorn" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-white/5 p-8 rounded-3xl border border-white/5 flex flex-col justify-center relative group/loc transition-all hover:border-[rgb(66,123,157)]/50 hover:bg-white/[0.07] min-h-[140px]"
@@ -330,4 +311,4 @@ export default function App() {
       </footer>
     </div>
   );
-} 
+}
