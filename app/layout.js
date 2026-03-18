@@ -10,7 +10,7 @@ export const viewport = {
 export const metadata = {
   title: '352pcs | High-Performance PC Builds & Repairs Luxembourg',
   description: 'Expert computer services in Luxembourg by a GIN graduate. Custom gaming builds, precision laptop repairs, and IT consulting. Based in Niederkorn.',
-  keywords: 'PC Repair Luxembourg, Reparatur Computer Lëtzebuerg, Custom Gaming PC, 352pcs, PC Bau Lëtzebuerg, Belval IT Support',
+  keywords: ["PC Repair Luxembourg", "Custom Gaming PC", "352pcs", "Informatics Luxembourg", "Niederkorn PC Repair"],
   authors: [{ name: '352pcs' }],
   icons: {
     icon: '/logo.png',
@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth">
       <body className="antialiased">{children}</body>
     </html>
   )
