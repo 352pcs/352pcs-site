@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* Offset anchor jumps so sections aren't hidden under the sticky header */
+html {
+  scroll-padding-top: 90px;
+}
+
+/* Consistent, accessible keyboard focus ring across all interactive elements */
+:focus-visible {
+  outline: 2px solid rgba(66, 123, 157, 0.9);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
 /* Globals.css - Clean Language Switcher */
 select[name="language-picker"] {
   background-color: transparent !important;
