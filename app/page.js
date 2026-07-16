@@ -48,7 +48,7 @@ const content = {
     heroBadge: "Local PC Builds & Repairs in Luxembourg",
     heroTitle: "High-Performance Builds. Professional Repairs.",
     heroDesc: "Fresh high school graduate in Informatics (GIN), providing expert PC solutions in Niederkorn. From custom gaming builds to precision laptop repairs.",
-    status: "Open Mon–Sat · 12:00–18:00",
+    status: "Open Mon–Sat · 10:00–18:00",
     apptBadge: "Appointment Needed · Drop-Off Only · Niederkorn",
     whatsappCta: "Chat on WhatsApp",
     whatsappFast: "Fastest reply",
@@ -62,19 +62,47 @@ const content = {
       { title: "Custom PC Builds", desc: "Crafting unique gaming and workstation rigs optimized for your specific budget.", icon: "⚡" },
       { title: "Hardware Repair", desc: "Expert diagnostics and component replacement for laptops and desktops.", icon: "🛠️" },
       { title: "Performance Upgrades", desc: "Boosting speed with high-end SSDs, RAM, and GPU installations.", icon: "🚀" },
+      { title: "Deep PC Cleaning", desc: "Detailed internal cleaning, fan cleaning, CPU thermal-paste replacement where required, reassembly and temperature testing.", icon: "✨" },
       { title: "IT Consulting", desc: "Software troubleshooting and personalized tech advice for home or office.", icon: "🧠" },
     ],
-    pricingTitle: "Fair Pricing",
+    pricingTitle: "Simple Pricing",
+    pricingIntro: "Prices cover labour only. Any required parts are quoted separately and approved before work begins.",
     prices: [
-      { label: "Diagnostics", cost: "30€", detail: "Full Tech Check" },
-      { label: "Repair Labor", cost: "50€", detail: "Service + Parts" },
-      { label: "Build Service", cost: "70€", detail: "Assembly + Setup" },
+      {
+        label: "PC Check",
+        cost: "49€",
+        desc: "Hardware testing and a clear diagnosis of the issue. If you approve the repair, this 49€ comes off your bill.",
+        fixed: true,
+      },
+      {
+        label: "Simple Upgrades",
+        cost: "39€",
+        desc: "RAM, SSD, GPU and other component installation. Final price depends on accessibility, configuration and testing required.",
+        fixed: false,
+      },
+      {
+        label: "PC Repairs",
+        cost: "89€",
+        desc: "Repair labour starts at 89€, including the diagnosis when the repair is approved. Final price confirmed before work begins.",
+        fixed: false,
+      },
+      {
+        label: "Custom PC Build",
+        cost: "149€",
+        desc: "I assemble, set up, and test your PC. Parts cost extra (yours, or ordered for you).",
+        fixed: false,
+      },
     ],
+    extraPrice: {
+      label: "Deep PC Cleaning",
+      cost: "99€",
+      desc: "Detailed internal cleaning, fan cleaning, CPU thermal-paste replacement where required, reassembly and temperature testing. Heavily soiled PCs or jobs requiring extensive disassembly are quoted after inspection.",
+    },
     fromText: "from",
-    disclaimer: "* Part costs depend on client budget. Final quotes provided after diagnostic.",
+    disclaimer: "Final price agreed before work begins—no surprises. Heavily soiled or unusually complex jobs are quoted after inspection.",
     businessTitle: "How It Works",
     businessItems: [
-      { label: "Opening Hours", value: "Monday to Saturday, 12:00 – 18:00 (closed Sunday)." },
+      { label: "Opening Hours", value: "Monday to Saturday, 10:00 – 18:00 (closed Sunday)." },
       { label: "Response Time", value: "I reply within 24 hours." },
       { label: "Repair Turnaround", value: "Typically 2–7 days, depending on parts and complexity." },
       { label: "Service Area", value: "Niederkorn only — drop-off at my address." },
@@ -83,13 +111,12 @@ const content = {
     ],
     faqTitle: "Frequently Asked Questions",
     faqs: [
-      { q: "When are you open?", a: "I'm open Monday through Saturday, 12:00–18:00, and closed on Sundays. Swing by any weekday afternoon or on Saturday and I'll be right here at the workshop, ready to help." },
+      { q: "When are you open?", a: "I'm open Monday through Saturday, 10:00–18:00, and closed on Sundays. Book an appointment, then drop by during those hours and I'll be at the workshop ready to help." },
       { q: "Do you offer pickup?", a: "It's drop-off only at my workshop in Niederkorn — no pickups or deliveries. Just bring your machine to me and I'll take great care of it." },
       { q: "Do I need an appointment?", a: "Yes, always book before you drop off! A quick WhatsApp message or a call locks in your slot, so I'm ready for you and your device gets looked at fast." },
       { q: "What payment methods do you accept?", a: "Nice and easy — I take cash or Digicash (SNET instant bank transfer). Whatever's most convenient for you works for me." },
       { q: "Which brands do you work on?", a: "All of them! Dell, HP, Lenovo, Asus, Acer, Apple, MSI, and fully custom builds — laptops and desktops alike. If it's a computer, I can work on it." },
       { q: "How do custom builds work?", a: "Two easy options: tell me your budget and goals and I'll source every compatible part for you, or supply your own parts and I'll handle the assembly, cable management, and tuning — as long as the components are compatible." },
-      { q: "Is there a warranty?", a: "Just so it's clear up front: I don't provide a warranty on repairs or builds. I always aim for top-quality work, but no formal guarantee is included." },
       { q: "What should I bring?", a: "Keep it simple — bring your PC or laptop and its power cable or charger. That's everything I need to start the diagnostic." },
       { q: "Can you fix my software issues remotely?", a: "No remote support, sorry — every repair, including software issues, is done in person at the workshop so I can properly diagnose and fix it." },
       { q: "What is your service area?", a: "Niederkorn only. I'm a local, drop-off-based workshop, so all the work happens right here at my address." },
@@ -124,7 +151,7 @@ const content = {
     heroBadge: "Montage & réparation PC à Niederkorn",
     heroTitle: "Montages Haute Performance. Réparations d'Experts.",
     heroDesc: "Jeune diplômé en informatique (GIN) offrant des solutions informatiques à Niederkorn. Des PC gaming sur mesure aux réparations de précision.",
-    status: "Ouvert lun–sam · 12h00–18h00",
+    status: "Ouvert lun–sam · 10h00–18h00",
     apptBadge: "Sur rendez-vous · Dépôt uniquement · Niederkorn",
     whatsappCta: "Discuter sur WhatsApp",
     whatsappFast: "Réponse la plus rapide",
@@ -138,19 +165,47 @@ const content = {
       { title: "PC sur Mesure", desc: "Création de PC gaming et stations de travail optimisés selon votre budget.", icon: "⚡" },
       { title: "Réparation Hardware", desc: "Diagnostics experts et remplacement de composants pour portables et fixes.", icon: "🛠️" },
       { title: "Améliorations", desc: "Boostez vos performances avec les derniers SSD, RAM et GPU.", icon: "🚀" },
+      { title: "Nettoyage en profondeur", desc: "Nettoyage interne détaillé, ventilateurs, pâte thermique CPU si nécessaire, remontage et test des températures.", icon: "✨" },
       { title: "Conseil IT", desc: "Dépannage logiciel et conseils personnalisés pour la maison ou le bureau.", icon: "🧠" },
     ],
-    pricingTitle: "Tarifs Transparents",
+    pricingTitle: "Tarifs Simples",
+    pricingIntro: "Les prix couvrent uniquement la main-d'œuvre. Toute pièce nécessaire est devisée à part et validée avant intervention.",
     prices: [
-      { label: "Diagnostic", cost: "30€", detail: "Check-up Complet" },
-      { label: "Main d'œuvre", cost: "50€", detail: "Service + Pièces" },
-      { label: "Montage PC", cost: "70€", detail: "Assemblage + Setup" },
+      {
+        label: "Check PC",
+        cost: "49€",
+        desc: "Tests hardware et un diagnostic clair du problème. Si vous validez la réparation, ces 49€ sont déduits de la facture.",
+        fixed: true,
+      },
+      {
+        label: "Upgrades simples",
+        cost: "39€",
+        desc: "Installation de RAM, SSD, GPU et autres composants. Le prix final dépend de l'accès, de la configuration et des tests nécessaires.",
+        fixed: false,
+      },
+      {
+        label: "Réparations PC",
+        cost: "89€",
+        desc: "La main-d'œuvre de réparation commence à 89€, diagnostic inclus si la réparation est validée. Prix final confirmé avant le début des travaux.",
+        fixed: false,
+      },
+      {
+        label: "Montage PC sur mesure",
+        cost: "149€",
+        desc: "J'assemble, configure et teste votre PC. Les pièces sont en plus (les vôtres, ou commandées pour vous).",
+        fixed: false,
+      },
     ],
+    extraPrice: {
+      label: "Nettoyage en profondeur",
+      cost: "99€",
+      desc: "Nettoyage interne détaillé, nettoyage des ventilateurs, remplacement de la pâte thermique du CPU si nécessaire, remontage et test des températures. PC très encrassés ou démontage important : devis après inspection.",
+    },
     fromText: "à partir de",
-    disclaimer: "* Le coût des pièces dépend du budget du client. Devis final après diagnostic.",
+    disclaimer: "Prix final convenu avant le début des travaux — pas de surprise. Les jobs très sales ou particulièrement complexes sont devisés après inspection.",
     businessTitle: "Comment ça marche",
     businessItems: [
-      { label: "Horaires", value: "Lundi au samedi, 12h00 – 18h00 (fermé le dimanche)." },
+      { label: "Horaires", value: "Lundi au samedi, 10h00 – 18h00 (fermé le dimanche)." },
       { label: "Délai de réponse", value: "Je réponds sous 24 heures." },
       { label: "Délai de réparation", value: "Généralement 2 à 7 jours, selon les pièces et la complexité." },
       { label: "Zone de service", value: "Niederkorn uniquement — dépôt à mon adresse." },
@@ -159,13 +214,12 @@ const content = {
     ],
     faqTitle: "Questions Fréquentes",
     faqs: [
-      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 12h00 à 18h00, et fermé le dimanche. Passez en semaine l'après-midi ou le samedi : je serai à l'atelier, prêt à vous aider." },
+      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 10h00 à 18h00, et fermé le dimanche. Prenez rendez-vous, puis passez pendant ces horaires : je serai à l'atelier, prêt à vous aider." },
       { q: "Proposez-vous un enlèvement ?", a: "C'est uniquement en dépôt à mon atelier à Niederkorn — ni enlèvement ni livraison. Apportez-moi votre machine et j'en prendrai grand soin." },
       { q: "Faut-il prendre rendez-vous ?", a: "Oui, réservez toujours avant de venir ! Un petit message WhatsApp ou un appel suffit à bloquer votre créneau, pour que votre appareil soit pris en charge rapidement." },
       { q: "Quels moyens de paiement acceptez-vous ?", a: "Tout simple — j'accepte les espèces ou Digicash (virement bancaire instantané SNET). Choisissez ce qui vous arrange le plus." },
       { q: "Sur quelles marques travaillez-vous ?", a: "Toutes ! Dell, HP, Lenovo, Asus, Acer, Apple, MSI et montages 100 % sur mesure — portables comme fixes. Si c'est un ordinateur, je peux m'en occuper." },
       { q: "Comment fonctionnent les montages sur mesure ?", a: "Deux options simples : donnez-moi votre budget et vos objectifs et je commande toutes les pièces compatibles pour vous, ou fournissez vos propres pièces et je m'occupe du montage, du câblage et des réglages — tant que les composants sont compatibles." },
-      { q: "Y a-t-il une garantie ?", a: "Soyons clairs dès le départ : je n'offre aucune garantie sur les réparations ou les montages. Je vise toujours un travail de qualité, mais aucune garantie formelle n'est incluse." },
       { q: "Que dois-je apporter ?", a: "Faites simple — apportez votre PC ou portable et son câble d'alimentation ou chargeur. C'est tout ce qu'il me faut pour lancer le diagnostic." },
       { q: "Pouvez-vous régler mes problèmes logiciels à distance ?", a: "Pas de support à distance, désolé — chaque réparation, y compris les problèmes logiciels, se fait en personne à l'atelier pour un diagnostic et une réparation corrects." },
       { q: "Quelle est votre zone de service ?", a: "Uniquement Niederkorn. Je suis un atelier local en dépôt, donc tout se passe directement à mon adresse." },
@@ -200,7 +254,7 @@ const content = {
     heroBadge: "PC-Bau & Reparatur in Niederkorn",
     heroTitle: "High-Performance Builds. Profi-Reparatur.",
     heroDesc: "Frischgebackener Informatik-Abiturient (GIN) mit Fokus auf IT-Lösungen in Niederkorn. Von maßgeschneiderten Gaming-PCs bis hin zu Präzisionsreparaturen.",
-    status: "Geöffnet Mo–Sa · 12:00–18:00",
+    status: "Geöffnet Mo–Sa · 10:00–18:00",
     apptBadge: "Nur mit Termin · Nur Abgabe · Niederkorn",
     whatsappCta: "Per WhatsApp schreiben",
     whatsappFast: "Schnellste Antwort",
@@ -214,19 +268,47 @@ const content = {
       { title: "Custom PC Bau", desc: "Maßgeschneiderte Gaming-PCs und Workstations, optimal auf Ihr Budget abgestimmt.", icon: "⚡" },
       { title: "Hardware Reparatur", desc: "Fachmännische Diagnosen und Komponentenaustausch für Laptops und Desktop-PCs.", icon: "🛠️" },
       { title: "Upgrades", desc: "Maximale Geschwindigkeit durch Installation von High-End-SSDs, RAM und Grafikkarten.", icon: "🚀" },
+      { title: "Tiefenreinigung", desc: "Gründliche Innenreinigung, Lüfterreinigung, CPU-Wärmeleitpaste bei Bedarf, Zusammenbau und Temperaturtests.", icon: "✨" },
       { title: "IT-Beratung", desc: "Software-Fehlerbehebung und persönliche IT-Beratung für Privatpersonen oder Büros.", icon: "🧠" },
     ],
-    pricingTitle: "Faire Preise",
+    pricingTitle: "Einfache Preise",
+    pricingIntro: "Die Preise gelten nur für die Arbeit. Benötigte Teile werden separat angeboten und vor Beginn freigegeben.",
     prices: [
-      { label: "Diagnose", cost: "30€", detail: "Check" },
-      { label: "Reparatur", cost: "50€", detail: "Service" },
-      { label: "PC Montage", cost: "70€", detail: "Bau" },
+      {
+        label: "PC-Check",
+        cost: "49€",
+        desc: "Hardware-Tests und eine klare Diagnose des Problems. Wenn Sie die Reparatur freigeben, werden diese 49€ von der Rechnung abgezogen.",
+        fixed: true,
+      },
+      {
+        label: "Einfache Upgrades",
+        cost: "39€",
+        desc: "Installation von RAM, SSD, GPU und anderen Komponenten. Der Endpreis hängt von Zugänglichkeit, Konfiguration und Tests ab.",
+        fixed: false,
+      },
+      {
+        label: "PC-Reparaturen",
+        cost: "89€",
+        desc: "Reparaturarbeit ab 89€, Diagnose inklusive wenn die Reparatur freigegeben wird. Endpreis vor Arbeitsbeginn bestätigt.",
+        fixed: false,
+      },
+      {
+        label: "Custom PC-Bau",
+        cost: "149€",
+        desc: "Ich baue, richte ein und teste Ihren PC. Teile kosten extra (Ihre eigenen oder von mir bestellt).",
+        fixed: false,
+      },
     ],
+    extraPrice: {
+      label: "Tiefenreinigung",
+      cost: "99€",
+      desc: "Gründliche Innenreinigung, Lüfterreinigung, CPU-Wärmeleitpasten-Wechsel bei Bedarf, Zusammenbau und Temperaturtests. Stark verschmutzte PCs oder aufwendige Demontage nach Inspektion angeboten.",
+    },
     fromText: "ab",
-    disclaimer: "* Teilkosten hängen vom Budget ab. Endpreis nach Diagnose.",
+    disclaimer: "Endpreis vor Arbeitsbeginn vereinbart — keine Überraschungen. Stark verschmutzte oder ungewöhnlich komplexe Jobs werden nach Inspektion angeboten.",
     businessTitle: "So funktioniert's",
     businessItems: [
-      { label: "Öffnungszeiten", value: "Montag bis Samstag, 12:00 – 18:00 (Sonntag geschlossen)." },
+      { label: "Öffnungszeiten", value: "Montag bis Samstag, 10:00 – 18:00 (Sonntag geschlossen)." },
       { label: "Antwortzeit", value: "Ich antworte innerhalb von 24 Stunden." },
       { label: "Reparaturdauer", value: "In der Regel 2–7 Tage, je nach Teilen und Komplexität." },
       { label: "Servicegebiet", value: "Nur Niederkorn — Abgabe an meiner Adresse." },
@@ -235,13 +317,12 @@ const content = {
     ],
     faqTitle: "Häufig gestellte Fragen",
     faqs: [
-      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 12:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. Kommen Sie unter der Woche nachmittags oder samstags vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
+      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 10:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. Buchen Sie einen Termin und kommen Sie in diesen Zeiten vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
       { q: "Bieten Sie Abholung an?", a: "Nur Abgabe in meiner Werkstatt in Niederkorn — keine Abholung, keine Lieferung. Bringen Sie mir einfach Ihr Gerät, ich kümmere mich bestens darum." },
       { q: "Brauche ich einen Termin?", a: "Ja, bitte immer vorher buchen! Eine kurze WhatsApp-Nachricht oder ein Anruf sichert Ihren Termin, damit Ihr Gerät schnell drankommt." },
       { q: "Welche Zahlungsmethoden akzeptieren Sie?", a: "Ganz einfach — ich nehme Bargeld oder Digicash (sofortige SNET-Banküberweisung). Wählen Sie, was für Sie am bequemsten ist." },
       { q: "An welchen Marken arbeiten Sie?", a: "An allen! Dell, HP, Lenovo, Asus, Acer, Apple, MSI und komplett individuelle Builds — Laptops wie Desktops. Wenn es ein Computer ist, kann ich daran arbeiten." },
       { q: "Wie funktionieren Custom Builds?", a: "Zwei einfache Optionen: Nennen Sie mir Budget und Ziele und ich beschaffe alle kompatiblen Teile für Sie, oder Sie liefern Ihre eigenen Teile und ich übernehme Zusammenbau, Kabelmanagement und Feintuning — solange die Komponenten kompatibel sind." },
-      { q: "Gibt es eine Garantie?", a: "Damit es von Anfang an klar ist: Ich gebe keine Garantie auf Reparaturen oder Builds. Ich strebe immer erstklassige Arbeit an, aber eine formelle Garantie ist nicht enthalten." },
       { q: "Was soll ich mitbringen?", a: "Halten Sie es einfach — bringen Sie Ihren PC oder Laptop und das Netzkabel bzw. Ladegerät mit. Mehr brauche ich nicht, um mit der Diagnose zu starten." },
       { q: "Können Sie meine Softwareprobleme aus der Ferne lösen?", a: "Kein Remote-Support, sorry — jede Reparatur, auch Softwareprobleme, erfolgt persönlich in der Werkstatt, damit ich richtig diagnostizieren und reparieren kann." },
       { q: "Was ist Ihr Servicegebiet?", a: "Nur Niederkorn. Ich bin eine lokale Werkstatt mit Abgabe vor Ort, also passiert alles direkt an meiner Adresse." },
@@ -276,7 +357,7 @@ const content = {
     heroBadge: "Montagem & reparação de PC em Niederkorn",
     heroTitle: "Builds de Alta Performance. Reparações Profissionais.",
     heroDesc: "Recém-graduado em Informática (GIN) no Luxemburgo. De PCs de gaming por medida a reparações de precisão em Niederkorn.",
-    status: "Aberto seg–sáb · 12:00–18:00",
+    status: "Aberto seg–sáb · 10:00–18:00",
     apptBadge: "Com marcação · Só entrega · Niederkorn",
     whatsappCta: "Falar no WhatsApp",
     whatsappFast: "Resposta mais rápida",
@@ -290,19 +371,47 @@ const content = {
       { title: "Montagem de PCs", desc: "Criação de PCs gaming e estações de trabalho exclusivas, otimizadas para o seu orçamento.", icon: "⚡" },
       { title: "Reparação Hardware", desc: "Diagnóstico especializado e substituição de componentes para portáteis e computadores fixos.", icon: "🛠️" },
       { title: "Upgrades", desc: "Aumento de velocidade com instalações de SSDs, RAM e GPUs de alta gama.", icon: "🚀" },
+      { title: "Limpeza profunda", desc: "Limpeza interna detalhada, ventoinhas, pasta térmica do CPU quando necessário, remontagem e testes de temperatura.", icon: "✨" },
       { title: "Consultoria TI", desc: "Resolução de problemas de software e consultoria técnica personalizada para casa ou escritório.", icon: "🧠" },
     ],
-    pricingTitle: "Preços Justos",
+    pricingTitle: "Preços Simples",
+    pricingIntro: "Os preços cobrem apenas a mão de obra. Quaisquer peças necessárias são orçamentadas à parte e aprovadas antes do trabalho.",
     prices: [
-      { label: "Diagnóstico", cost: "30€", detail: "Verificação" },
-      { label: "Mão de obra", cost: "50€", detail: "Serviço" },
-      { label: "Montagem PC", cost: "70€", detail: "Setup" },
+      {
+        label: "Check do PC",
+        cost: "49€",
+        desc: "Testes de hardware e um diagnóstico claro do problema. Se aprovar a reparação, estes 49€ são descontados na fatura.",
+        fixed: true,
+      },
+      {
+        label: "Upgrades simples",
+        cost: "39€",
+        desc: "Instalação de RAM, SSD, GPU e outros componentes. O preço final depende do acesso, da configuração e dos testes necessários.",
+        fixed: false,
+      },
+      {
+        label: "Reparações PC",
+        cost: "89€",
+        desc: "A mão de obra de reparação começa nos 89€, com diagnóstico incluído quando a reparação é aprovada. Preço final confirmado antes do início do trabalho.",
+        fixed: false,
+      },
+      {
+        label: "Montagem de PC",
+        cost: "149€",
+        desc: "Monto, configuro e testo o seu PC. As peças custam à parte (suas, ou encomendadas por mim).",
+        fixed: false,
+      },
     ],
+    extraPrice: {
+      label: "Limpeza profunda",
+      cost: "99€",
+      desc: "Limpeza interna detalhada, limpeza das ventoinhas, substituição da pasta térmica do CPU quando necessário, remontagem e testes de temperatura. PCs muito sujos ou com desmontagem extensa: orçamento após inspeção.",
+    },
     fromText: "a partir de",
-    disclaimer: "* O custo depende do orçamento. Orçamento final após diagnóstico.",
+    disclaimer: "Preço final acordado antes do início do trabalho — sem surpresas. Trabalhos muito sujos ou invulgarmente complexos são orçamentados após inspeção.",
     businessTitle: "Como funciona",
     businessItems: [
-      { label: "Horário", value: "Segunda a sábado, 12:00 – 18:00 (domingo fechado)." },
+      { label: "Horário", value: "Segunda a sábado, 10:00 – 18:00 (domingo fechado)." },
       { label: "Tempo de resposta", value: "Respondo em 24 horas." },
       { label: "Prazo de reparação", value: "Normalmente 2–7 dias, consoante peças e complexidade." },
       { label: "Área de serviço", value: "Apenas Niederkorn — entrega na minha morada." },
@@ -311,13 +420,12 @@ const content = {
     ],
     faqTitle: "Perguntas Frequentes",
     faqs: [
-      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 12:00 às 18:00, e fechado ao domingo. Apareça durante a semana à tarde ou ao sábado: estarei na oficina, pronto para ajudar." },
+      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 10:00 às 18:00, e fechado ao domingo. Marque e apareça nesse horário: estarei na oficina, pronto para ajudar." },
       { q: "Faz recolha?", a: "É só entrega na minha oficina em Niederkorn — não faço recolha nem entrega. Traga-me a sua máquina e eu trato dela com todo o cuidado." },
       { q: "Preciso de marcação?", a: "Sim, marque sempre antes de aparecer! Uma mensagem rápida no WhatsApp ou uma chamada garante o seu horário, para o seu equipamento ser visto rapidamente." },
       { q: "Que métodos de pagamento aceita?", a: "É simples — aceito dinheiro ou Digicash (transferência bancária instantânea SNET). Escolha o que for mais cómodo para si." },
       { q: "Com que marcas trabalha?", a: "Todas! Dell, HP, Lenovo, Asus, Acer, Apple, MSI e builds totalmente personalizados — portáteis e desktops. Se for um computador, eu trato dele." },
       { q: "Como funcionam os builds personalizados?", a: "Duas opções simples: diga-me o orçamento e os objetivos e eu encomendo todas as peças compatíveis por si, ou forneça as suas próprias peças e eu faço a montagem, a gestão de cabos e a afinação — desde que os componentes sejam compatíveis." },
-      { q: "Há garantia?", a: "Para ficar claro desde já: não ofereço garantia em reparações ou builds. Procuro sempre um trabalho de excelência, mas não está incluída qualquer garantia formal." },
       { q: "O que devo trazer?", a: "Simples — traga o seu PC ou portátil e o cabo de alimentação ou carregador. É tudo o que preciso para começar o diagnóstico." },
       { q: "Pode resolver os meus problemas de software remotamente?", a: "Sem suporte remoto, lamento — todas as reparações, incluindo problemas de software, são feitas presencialmente na oficina para um diagnóstico e reparação corretos." },
       { q: "Qual é a sua área de serviço?", a: "Apenas Niederkorn. Sou uma oficina local com entrega no local, por isso tudo acontece diretamente na minha morada." },
@@ -352,7 +460,7 @@ const content = {
     heroBadge: "PC-Bau & Reparatur zu Niederkorn",
     heroTitle: "High-Performance Builds. Profi-Reparaturen.",
     heroDesc: "Frësche Informatik-Absolvent (GIN) bitt Informatik-Léisungen zu Niederkorn un. Vu personaliséierte Gaming-Maschinnen bis zu präzise Laptop-Reparaturen.",
-    status: "Op Méi–Sams · 12:00–18:00",
+    status: "Op Méi–Sams · 10:00–18:00",
     apptBadge: "Nëmme mat Termin · Nëmmen Ofginn · Niederkorn",
     whatsappCta: "Op WhatsApp schreiwen",
     whatsappFast: "Séierst Äntwert",
@@ -366,19 +474,47 @@ const content = {
       { title: "Custom PC Bau", desc: "Moossgeschneidert Gaming- a Workstation-Systemer, optimal op Äre Budget ugepasst.", icon: "⚡" },
       { title: "Hardware Reparatur", desc: "Experten-Diagnos a Komponentenaustausch fir Laptop an Desktop-PCen.", icon: "🛠️" },
       { title: "Performance Upgrades", desc: "Méi Speed duerch d'Installatioun vun High-End SSDen, RAM a Grafikkarten.", icon: "🚀" },
+      { title: "Déif Reinigung", desc: "Detailléiert intern Reinigung, Ventilateur botzen, CPU-Wärmeleetpaste wann néideg, Remontage an Temperaturtester.", icon: "✨" },
       { title: "IT Berodung", desc: "Software-Troubleshooting a perséinlech Tech-Berodung fir doheem oder am Büro.", icon: "🧠" },
     ],
-    pricingTitle: "Transparent Präisser",
+    pricingTitle: "Einfach Präisser",
+    pricingIntro: "D'Präisser gëllen nëmmen fir d'Aarbecht. Néideg Deeler ginn separat ugebueden a virum Ufank validéiert.",
     prices: [
-      { label: "Diagnos", cost: "30€", detail: "Check" },
-      { label: "Aarbechtszäit", cost: "50€", detail: "Service" },
-      { label: "PC Montage", cost: "70€", detail: "Bau" },
+      {
+        label: "PC-Check",
+        cost: "49€",
+        desc: "Hardware-Tester an eng kloer Diagnos vum Problem. Wann Dir d'Reparatur validéiert, ginn dës 49€ vun der Rechnung ofgezunn.",
+        fixed: true,
+      },
+      {
+        label: "Einfach Upgrades",
+        cost: "39€",
+        desc: "Installatioun vu RAM, SSD, GPU an anere Komponenten. De Schlusspräis hänkt vum Zougang, der Konfiguratioun an den Tester of.",
+        fixed: false,
+      },
+      {
+        label: "PC-Reparaturen",
+        cost: "89€",
+        desc: "Reparatur-Aarbecht fänkt bei 89€ un, Diagnos abegraff wann d'Reparatur validéiert gëtt. Schlusspräis virum Ufank confirméiert.",
+        fixed: false,
+      },
+      {
+        label: "Custom PC-Bau",
+        cost: "149€",
+        desc: "Ech bauen, riichten an an testen Äre PC. Deeler kaschten extra (Är eegen, oder vu mir bestallt).",
+        fixed: false,
+      },
     ],
+    extraPrice: {
+      label: "Déif Reinigung",
+      cost: "99€",
+      desc: "Detailléiert intern Reinigung, Ventilateur botzen, CPU-Wärmeleetpaste wiesselen wann néideg, Remontage an Temperaturtester. Staark verschmotzt PCen oder opwänneg Demontage: Präis no Inspektioun.",
+    },
     fromText: "vun",
-    disclaimer: "* Käschte hänke vum Budget of. Definitive Präis no der Diagnos.",
+    disclaimer: "Schlusspräis virum Ufank vun der Aarbecht ofgemaach — keng Iwwerraschung. Staark verschmotzt oder ongewéinlech komplex Jobs ginn no Inspektioun ugebueden.",
     businessTitle: "Sou funktionéiert et",
     businessItems: [
-      { label: "Ouvertureszäiten", value: "Méindeg bis Samschdeg, 12:00 – 18:00 (Sonndeg zou)." },
+      { label: "Ouvertureszäiten", value: "Méindeg bis Samschdeg, 10:00 – 18:00 (Sonndeg zou)." },
       { label: "Äntwertzäit", value: "Ech äntweren an 24 Stonnen." },
       { label: "Reparatiounsdauer", value: "Normalerweis 2–7 Deeg, jee no Deeler a Komplexitéit." },
       { label: "Servicegebitt", value: "Nëmmen Niederkorn — Ofginn op meng Adress." },
@@ -387,13 +523,12 @@ const content = {
     ],
     faqTitle: "Heefeg gestallte Froen",
     faqs: [
-      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 12:00 bis 18:00 Auer op, sonndes zou. Kommt an der Woch nomëttes oder samschdes laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
+      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 10:00 bis 18:00 Auer op, sonndes zou. Reservéiert en Termin a kommt an dësen Zäiten laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
       { q: "Bitt Dir Ofhuelung un?", a: "Et ass nëmmen Ofginn an menger Atelier zu Niederkorn — keng Ofhuelung, keng Liwwerung. Bréngt mir einfach Är Maschinn, ech këmmere mech gutt drëm." },
       { q: "Brauch ech en Termin?", a: "Jo, reservéiert ëmmer ier Dir laanscht kommt! Eng kuerz WhatsApp-Noriicht oder en Uruff séchert Äre Slot, sou datt Äert Gerät séier drukënnt." },
       { q: "Wéi Bezuelmethoden akzeptéiert Dir?", a: "Ganz einfach — ech huelen Bargeld oder Digicash (direkten SNET-Banktransfer) un. Wielt wat fir Iech am bequemsten ass." },
       { q: "Mat wéi enge Marken schafft Dir?", a: "All Marken! Dell, HP, Lenovo, Asus, Acer, Apple, MSI a komplett personaliséiert Builds — Laptoppen a Desktoppen. Wann et en Computer ass, kann ech drun schaffen." },
       { q: "Wéi funktionéieren d'Custom Builds?", a: "Zwou einfach Optiounen: sot mir Äre Budget an Är Ziler an ech bestellen all kompatibel Deeler fir Iech, oder liwwert Är eege Deeler an ech maachen den Zesummebau, d'Kabelmanagement an d'Feintuning — soulaang d'Komponenten kompatibel sinn." },
-      { q: "Gitt et eng Garantie?", a: "Datt et vun Ufank u kloer ass: ech ginn keng Garantie op Reparaturen oder Builds. Ech sti ëmmer fir eng top Aarbecht, awer eng formell Garantie ass net abegraff." },
       { q: "Wat soll ech matbréngen?", a: "Maacht et einfach — bréngt Äre PC oder Laptop an d'Stroumkabel oder Luedgerät mat. Méi brauch ech net fir mat der Diagnos unzefänken." },
       { q: "Kënnt Dir meng Softwareproblemer aus der Distanz léisen?", a: "Kee Remote-Support, pardon — all Reparatur, och Softwareproblemer, gëtt perséinlech an der Atelier gemaach, fir datt ech richteg diagnostizéiere a reparéiere kann." },
       { q: "Wat ass Äert Servicegebitt?", a: "Nëmmen Niederkorn. Ech sinn eng lokal Atelier mat Ofginn op der Plaz, also geschitt alles direkt op menger Adress." },
@@ -724,7 +859,7 @@ export default function App() {
           <h3 className="text-5xl font-black mb-4 tracking-tighter uppercase">{t.servicesTitle}</h3>
           <div className="w-24 h-1.5 bg-[rgb(66,123,157)] mx-auto rounded-full" />
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {t.services.map((s, i) => (
             <div
               key={i}
@@ -742,20 +877,32 @@ export default function App() {
       </section>
 
       <section id="pricing" className="px-6 py-24">
-        <div className="max-w-5xl mx-auto bg-white/[0.02] backdrop-blur-sm p-12 rounded-[2rem] border border-[rgb(66,123,157)]/30">
-          <h3 className="text-4xl font-black mb-12 tracking-tight uppercase text-center">{t.pricingTitle}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+        <div className="max-w-5xl mx-auto bg-white/[0.02] backdrop-blur-sm p-10 md:p-12 rounded-[2rem] border border-[rgb(66,123,157)]/30">
+          <h3 className="text-4xl font-black mb-4 tracking-tight uppercase text-center">{t.pricingTitle}</h3>
+          <p className="text-center text-slate-400 text-sm font-medium max-w-xl mx-auto mb-12 leading-relaxed">{t.pricingIntro}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {t.prices.map((p, i) => (
-              <div key={i} className="flex flex-col items-center group">
-                <span className="text-[rgb(66,123,157)] text-xs font-black uppercase tracking-[0.2em] mb-2">{p.label}</span>
-                <span className="text-4xl font-black tracking-tighter italic mb-2 group-hover:scale-110 transition-transform">
-                  {t.fromText} {p.cost}
+              <div key={i} className="flex flex-col text-center md:text-left p-6 rounded-2xl bg-white/[0.03] border border-white/5">
+                <span className="text-[rgb(66,123,157)] text-xs font-black uppercase tracking-[0.2em] mb-3">{p.label}</span>
+                <span className="text-4xl font-black tracking-tighter italic mb-4">
+                  {p.fixed ? p.cost : `${t.fromText} ${p.cost}`}
                 </span>
-                <span className="text-slate-500 text-[10px] font-black uppercase bg-white/5 px-3 py-1 rounded-full">{p.detail}</span>
+                <p className="text-slate-400 text-sm font-medium leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
-          <p className="text-center text-slate-500 text-[10px] font-bold uppercase mt-12 tracking-widest opacity-60">{t.disclaimer}</p>
+          {t.extraPrice && (
+            <div className="mt-8 p-6 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-center sm:text-left">
+              <div>
+                <span className="text-[rgb(66,123,157)] text-xs font-black uppercase tracking-[0.2em] block mb-2">{t.extraPrice.label}</span>
+                <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-2xl">{t.extraPrice.desc}</p>
+              </div>
+              <span className="text-3xl font-black tracking-tighter italic shrink-0">
+                {t.fromText} {t.extraPrice.cost}
+              </span>
+            </div>
+          )}
+          <p className="text-center text-slate-400 text-xs font-medium mt-10">{t.disclaimer}</p>
         </div>
       </section>
 
