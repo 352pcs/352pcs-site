@@ -99,7 +99,7 @@ const content = {
       desc: "Detailed internal cleaning, fan cleaning, CPU thermal-paste replacement where required, reassembly and temperature testing. Heavily soiled PCs or jobs requiring extensive disassembly are quoted after inspection.",
     },
     fromText: "from",
-    disclaimer: "Final price agreed before work begins—no surprises. Heavily soiled or unusually complex jobs are quoted after inspection.",
+    disclaimer: "Clear pricing, no surprise charges. Any additional work is discussed and approved first.",
     businessTitle: "How It Works",
     businessItems: [
       { label: "Opening Hours", value: "Monday to Saturday, 10:00 – 18:00 (closed Sunday)." },
@@ -202,7 +202,7 @@ const content = {
       desc: "Nettoyage interne détaillé, nettoyage des ventilateurs, remplacement de la pâte thermique du CPU si nécessaire, remontage et test des températures. PC très encrassés ou démontage important : devis après inspection.",
     },
     fromText: "à partir de",
-    disclaimer: "Prix final convenu avant le début des travaux — pas de surprise. Les jobs très sales ou particulièrement complexes sont devisés après inspection.",
+    disclaimer: "Tarifs clairs, pas de frais surprises. Tout travail supplémentaire est discuté et validé au préalable.",
     businessTitle: "Comment ça marche",
     businessItems: [
       { label: "Horaires", value: "Lundi au samedi, 10h00 – 18h00 (fermé le dimanche)." },
@@ -305,7 +305,7 @@ const content = {
       desc: "Gründliche Innenreinigung, Lüfterreinigung, CPU-Wärmeleitpasten-Wechsel bei Bedarf, Zusammenbau und Temperaturtests. Stark verschmutzte PCs oder aufwendige Demontage nach Inspektion angeboten.",
     },
     fromText: "ab",
-    disclaimer: "Endpreis vor Arbeitsbeginn vereinbart — keine Überraschungen. Stark verschmutzte oder ungewöhnlich komplexe Jobs werden nach Inspektion angeboten.",
+    disclaimer: "Klare Preise, keine Überraschungskosten. Zusätzliche Arbeiten werden vorher besprochen und freigegeben.",
     businessTitle: "So funktioniert's",
     businessItems: [
       { label: "Öffnungszeiten", value: "Montag bis Samstag, 10:00 – 18:00 (Sonntag geschlossen)." },
@@ -408,7 +408,7 @@ const content = {
       desc: "Limpeza interna detalhada, limpeza das ventoinhas, substituição da pasta térmica do CPU quando necessário, remontagem e testes de temperatura. PCs muito sujos ou com desmontagem extensa: orçamento após inspeção.",
     },
     fromText: "a partir de",
-    disclaimer: "Preço final acordado antes do início do trabalho — sem surpresas. Trabalhos muito sujos ou invulgarmente complexos são orçamentados após inspeção.",
+    disclaimer: "Preços claros, sem cobranças surpresa. Qualquer trabalho adicional é discutido e aprovado primeiro.",
     businessTitle: "Como funciona",
     businessItems: [
       { label: "Horário", value: "Segunda a sábado, 10:00 – 18:00 (domingo fechado)." },
@@ -511,7 +511,7 @@ const content = {
       desc: "Detailléiert intern Reinigung, Ventilateur botzen, CPU-Wärmeleetpaste wiesselen wann néideg, Remontage an Temperaturtester. Staark verschmotzt PCen oder opwänneg Demontage: Präis no Inspektioun.",
     },
     fromText: "vun",
-    disclaimer: "Schlusspräis virum Ufank vun der Aarbecht ofgemaach — keng Iwwerraschung. Staark verschmotzt oder ongewéinlech komplex Jobs ginn no Inspektioun ugebueden.",
+    disclaimer: "Kloer Präisser, keng Iwwerraschungs-Käschten. All zousätzlech Aarbecht gëtt virdru diskutéiert a validéiert.",
     businessTitle: "Sou funktionéiert et",
     businessItems: [
       { label: "Ouvertureszäiten", value: "Méindeg bis Samschdeg, 10:00 – 18:00 (Sonndeg zou)." },
