@@ -73,6 +73,16 @@ const structuredData = {
       closes: '18:00',
     },
   ],
+  specialOpeningHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      validFrom: '2026-08-07',
+      validThrough: '2026-08-31',
+      opens: '00:00',
+      closes: '00:00',
+    },
+  ],
   areaServed: {
     '@type': 'Place',
     name: 'Niederkorn, Luxembourg',
@@ -88,7 +98,10 @@ const faqData = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    { q: 'When are you open?', a: 'Monday to Saturday, 10:00–18:00. Closed on Sundays.' },
+    {
+      q: 'When are you open?',
+      a: 'Monday to Saturday, 10:00–18:00. Closed on Sundays. Closed from 7 August to early September 2026.',
+    },
     { q: 'Do you offer pickup?', a: 'Drop-off only at the workshop in Niederkorn. No pickups or deliveries.' },
     { q: 'Do I need an appointment?', a: 'Yes, please book an appointment by WhatsApp or phone before dropping off.' },
     { q: 'What payment methods do you accept?', a: 'Cash or Digicash (SNET instant bank transfer).' },

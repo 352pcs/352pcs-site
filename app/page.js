@@ -8,6 +8,112 @@ const EMAIL = "tech352pcs@outlook.com";
 const WHATSAPP_URL = "https://wa.me/352691393559";
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=149+rue+Pierre+Gansen+Niederkorn";
 const MAPS_EMBED = "https://maps.google.com/maps?q=149+rue+Pierre+Gansen+Niederkorn+Luxembourg&t=&z=15&ie=UTF8&iwloc=&output=embed";
+const BUSINESS_TIME_ZONE = "Europe/Luxembourg";
+const REGULAR_SCHEDULE = {
+  openDays: [1, 2, 3, 4, 5, 6],
+  opens: { hour: 10, minute: 0 },
+  closes: { hour: 18, minute: 0 },
+};
+const CLOSURE_NOTICE_START = { year: 2026, month: 1, day: 1, hour: 0, minute: 0 };
+const SUMMER_CLOSURE = {
+  startsAt: { year: 2026, month: 8, day: 7, hour: 0, minute: 0 },
+  endsAt: { year: 2026, month: 9, day: 1, hour: 10, minute: 0 },
+};
+
+function toMinutes(time) {
+  return time.hour * 60 + time.minute;
+}
+
+function formatScheduleTime(time) {
+  return `${String(time.hour).padStart(2, "0")}:${String(time.minute).padStart(2, "0")}`;
+}
+
+function fillScheduleTemplate(template) {
+  return template
+    .replace("{opens}", formatScheduleTime(REGULAR_SCHEDULE.opens))
+    .replace("{closes}", formatScheduleTime(REGULAR_SCHEDULE.closes))
+    .replace("{time}", formatScheduleTime(REGULAR_SCHEDULE.closes));
+}
+
+function getLuxembourgTimeParts(date) {
+  const weekdayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: BUSINESS_TIME_ZONE,
+    weekday: "short",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+
+  return {
+    year: Number(values.year),
+    month: Number(values.month),
+    day: Number(values.day),
+    weekday: weekdayMap[values.weekday],
+    minutes: Number(values.hour) * 60 + Number(values.minute),
+  };
+}
+
+function compareLocalDateTime(parts, point) {
+  const left = [parts.year, parts.month, parts.day, parts.minutes];
+  const right = [point.year, point.month, point.day, toMinutes(point)];
+
+  for (let i = 0; i < left.length; i += 1) {
+    if (left[i] !== right[i]) {
+      return left[i] - right[i];
+    }
+  }
+
+  return 0;
+}
+
+function isWithinSummerClosure(parts) {
+  return (
+    compareLocalDateTime(parts, SUMMER_CLOSURE.startsAt) >= 0 &&
+    compareLocalDateTime(parts, SUMMER_CLOSURE.endsAt) < 0
+  );
+}
+
+function shouldShowClosureNotice(parts) {
+  return (
+    compareLocalDateTime(parts, CLOSURE_NOTICE_START) >= 0 &&
+    compareLocalDateTime(parts, SUMMER_CLOSURE.endsAt) < 0
+  );
+}
+
+function isWithinRegularHours(parts) {
+  return (
+    REGULAR_SCHEDULE.openDays.includes(parts.weekday) &&
+    parts.minutes >= toMinutes(REGULAR_SCHEDULE.opens) &&
+    parts.minutes < toMinutes(REGULAR_SCHEDULE.closes)
+  );
+}
+
+function getCurrentOpeningStatus(now, t) {
+  if (!now) {
+    return {
+      tone: "checking",
+      label: t.statusChecking,
+      detail: t.status,
+      showClosureNotice: true,
+    };
+  }
+
+  const parts = getLuxembourgTimeParts(now);
+  const isSummerClosure = isWithinSummerClosure(parts);
+  const isOpen = !isSummerClosure && isWithinRegularHours(parts);
+
+  return {
+    tone: isOpen ? "open" : "closed",
+    label: isOpen ? t.statusOpenNow : t.statusClosedNow,
+    detail: isSummerClosure ? t.statusSummerDetail : isOpen ? fillScheduleTemplate(t.statusOpenUntil) : t.status,
+    showClosureNotice: shouldShowClosureNotice(parts),
+  };
+}
 
 function WhatsAppIcon({ className = "w-6 h-6" }) {
   return (
@@ -49,6 +155,13 @@ const content = {
     heroTitle: "High-Performance Builds. Professional Repairs.",
     heroDesc: "Fresh high school graduate in Informatics (GIN), providing expert PC solutions in Niederkorn. From custom gaming builds to precision laptop repairs.",
     status: "Open Mon–Sat · 10:00–18:00",
+    statusOpenNow: "Open now",
+    statusClosedNow: "Closed now",
+    statusChecking: "Checking status",
+    statusOpenUntil: "until {time}",
+    statusSummerDetail: "Summer closure",
+    summerClosureTitle: "Summer closure",
+    summerClosureBody: "352pcs is closed from 7 August to early September. You can still send a message, and I will reply as soon as possible.",
     apptBadge: "Appointment Needed · Drop-Off Only · Niederkorn",
     whatsappCta: "Chat on WhatsApp",
     whatsappFast: "Fastest reply",
@@ -103,6 +216,7 @@ const content = {
     businessTitle: "How It Works",
     businessItems: [
       { label: "Opening Hours", value: "Monday to Saturday, 10:00 – 18:00 (closed Sunday)." },
+      { label: "Summer Closure", value: "Closed from 7 August to early September." },
       { label: "Response Time", value: "I reply within 24 hours." },
       { label: "Repair Turnaround", value: "Typically 2–7 days, depending on parts and complexity." },
       { label: "Service Area", value: "Niederkorn only — drop-off at my address." },
@@ -111,7 +225,7 @@ const content = {
     ],
     faqTitle: "Frequently Asked Questions",
     faqs: [
-      { q: "When are you open?", a: "I'm open Monday through Saturday, 10:00–18:00, and closed on Sundays. Book an appointment, then drop by during those hours and I'll be at the workshop ready to help." },
+      { q: "When are you open?", a: "I'm open Monday through Saturday, 10:00–18:00, and closed on Sundays. 352pcs is closed from 7 August to early September. Book an appointment, then drop by during opening hours and I'll be at the workshop ready to help." },
       { q: "Do you offer pickup?", a: "It's drop-off only at my workshop in Niederkorn — no pickups or deliveries. Just bring your machine to me and I'll take great care of it." },
       { q: "Do I need an appointment?", a: "Yes, always book before you drop off! A quick WhatsApp message or a call locks in your slot, so I'm ready for you and your device gets looked at fast." },
       { q: "What payment methods do you accept?", a: "Nice and easy — I take cash or Digicash (SNET instant bank transfer). Whatever's most convenient for you works for me." },
@@ -152,6 +266,13 @@ const content = {
     heroTitle: "Montages Haute Performance. Réparations d'Experts.",
     heroDesc: "Jeune diplômé en informatique (GIN) offrant des solutions informatiques à Niederkorn. Des PC gaming sur mesure aux réparations de précision.",
     status: "Ouvert lun–sam · 10h00–18h00",
+    statusOpenNow: "Ouvert maintenant",
+    statusClosedNow: "Fermé maintenant",
+    statusChecking: "Vérification du statut",
+    statusOpenUntil: "jusqu'à {time}",
+    statusSummerDetail: "Fermeture d'été",
+    summerClosureTitle: "Fermeture d'été",
+    summerClosureBody: "352pcs est fermé du 7 août au début septembre. Vous pouvez quand même envoyer un message, je répondrai dès que possible.",
     apptBadge: "Sur rendez-vous · Dépôt uniquement · Niederkorn",
     whatsappCta: "Discuter sur WhatsApp",
     whatsappFast: "Réponse la plus rapide",
@@ -206,6 +327,7 @@ const content = {
     businessTitle: "Comment ça marche",
     businessItems: [
       { label: "Horaires", value: "Lundi au samedi, 10h00 – 18h00 (fermé le dimanche)." },
+      { label: "Fermeture d'été", value: "Fermé du 7 août au début septembre." },
       { label: "Délai de réponse", value: "Je réponds sous 24 heures." },
       { label: "Délai de réparation", value: "Généralement 2 à 7 jours, selon les pièces et la complexité." },
       { label: "Zone de service", value: "Niederkorn uniquement — dépôt à mon adresse." },
@@ -214,7 +336,7 @@ const content = {
     ],
     faqTitle: "Questions Fréquentes",
     faqs: [
-      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 10h00 à 18h00, et fermé le dimanche. Prenez rendez-vous, puis passez pendant ces horaires : je serai à l'atelier, prêt à vous aider." },
+      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 10h00 à 18h00, et fermé le dimanche. 352pcs est fermé du 7 août au début septembre. Prenez rendez-vous, puis passez pendant les horaires d'ouverture : je serai à l'atelier, prêt à vous aider." },
       { q: "Proposez-vous un enlèvement ?", a: "C'est uniquement en dépôt à mon atelier à Niederkorn — ni enlèvement ni livraison. Apportez-moi votre machine et j'en prendrai grand soin." },
       { q: "Faut-il prendre rendez-vous ?", a: "Oui, réservez toujours avant de venir ! Un petit message WhatsApp ou un appel suffit à bloquer votre créneau, pour que votre appareil soit pris en charge rapidement." },
       { q: "Quels moyens de paiement acceptez-vous ?", a: "Tout simple — j'accepte les espèces ou Digicash (virement bancaire instantané SNET). Choisissez ce qui vous arrange le plus." },
@@ -255,6 +377,13 @@ const content = {
     heroTitle: "High-Performance Builds. Profi-Reparatur.",
     heroDesc: "Frischgebackener Informatik-Abiturient (GIN) mit Fokus auf IT-Lösungen in Niederkorn. Von maßgeschneiderten Gaming-PCs bis hin zu Präzisionsreparaturen.",
     status: "Geöffnet Mo–Sa · 10:00–18:00",
+    statusOpenNow: "Jetzt geöffnet",
+    statusClosedNow: "Jetzt geschlossen",
+    statusChecking: "Status wird geprüft",
+    statusOpenUntil: "bis {time}",
+    statusSummerDetail: "Sommerpause",
+    summerClosureTitle: "Sommerpause",
+    summerClosureBody: "352pcs ist vom 7. August bis Anfang September geschlossen. Sie können trotzdem eine Nachricht senden; ich antworte so schnell wie möglich.",
     apptBadge: "Nur mit Termin · Nur Abgabe · Niederkorn",
     whatsappCta: "Per WhatsApp schreiben",
     whatsappFast: "Schnellste Antwort",
@@ -309,6 +438,7 @@ const content = {
     businessTitle: "So funktioniert's",
     businessItems: [
       { label: "Öffnungszeiten", value: "Montag bis Samstag, 10:00 – 18:00 (Sonntag geschlossen)." },
+      { label: "Sommerpause", value: "Geschlossen vom 7. August bis Anfang September." },
       { label: "Antwortzeit", value: "Ich antworte innerhalb von 24 Stunden." },
       { label: "Reparaturdauer", value: "In der Regel 2–7 Tage, je nach Teilen und Komplexität." },
       { label: "Servicegebiet", value: "Nur Niederkorn — Abgabe an meiner Adresse." },
@@ -317,7 +447,7 @@ const content = {
     ],
     faqTitle: "Häufig gestellte Fragen",
     faqs: [
-      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 10:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. Buchen Sie einen Termin und kommen Sie in diesen Zeiten vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
+      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 10:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. 352pcs ist vom 7. August bis Anfang September geschlossen. Buchen Sie einen Termin und kommen Sie während der Öffnungszeiten vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
       { q: "Bieten Sie Abholung an?", a: "Nur Abgabe in meiner Werkstatt in Niederkorn — keine Abholung, keine Lieferung. Bringen Sie mir einfach Ihr Gerät, ich kümmere mich bestens darum." },
       { q: "Brauche ich einen Termin?", a: "Ja, bitte immer vorher buchen! Eine kurze WhatsApp-Nachricht oder ein Anruf sichert Ihren Termin, damit Ihr Gerät schnell drankommt." },
       { q: "Welche Zahlungsmethoden akzeptieren Sie?", a: "Ganz einfach — ich nehme Bargeld oder Digicash (sofortige SNET-Banküberweisung). Wählen Sie, was für Sie am bequemsten ist." },
@@ -358,6 +488,13 @@ const content = {
     heroTitle: "Builds de Alta Performance. Reparações Profissionais.",
     heroDesc: "Recém-graduado em Informática (GIN) no Luxemburgo. De PCs de gaming por medida a reparações de precisão em Niederkorn.",
     status: "Aberto seg–sáb · 10:00–18:00",
+    statusOpenNow: "Aberto agora",
+    statusClosedNow: "Fechado agora",
+    statusChecking: "A verificar horário",
+    statusOpenUntil: "até às {time}",
+    statusSummerDetail: "Pausa de verão",
+    summerClosureTitle: "Pausa de verão",
+    summerClosureBody: "A 352pcs está fechada de 7 de agosto até ao início de setembro. Pode enviar mensagem na mesma; respondo assim que possível.",
     apptBadge: "Com marcação · Só entrega · Niederkorn",
     whatsappCta: "Falar no WhatsApp",
     whatsappFast: "Resposta mais rápida",
@@ -412,6 +549,7 @@ const content = {
     businessTitle: "Como funciona",
     businessItems: [
       { label: "Horário", value: "Segunda a sábado, 10:00 – 18:00 (domingo fechado)." },
+      { label: "Pausa de verão", value: "Fechado de 7 de agosto até ao início de setembro." },
       { label: "Tempo de resposta", value: "Respondo em 24 horas." },
       { label: "Prazo de reparação", value: "Normalmente 2–7 dias, consoante peças e complexidade." },
       { label: "Área de serviço", value: "Apenas Niederkorn — entrega na minha morada." },
@@ -420,7 +558,7 @@ const content = {
     ],
     faqTitle: "Perguntas Frequentes",
     faqs: [
-      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 10:00 às 18:00, e fechado ao domingo. Marque e apareça nesse horário: estarei na oficina, pronto para ajudar." },
+      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 10:00 às 18:00, e fechado ao domingo. A 352pcs está fechada de 7 de agosto até ao início de setembro. Marque e apareça durante o horário de funcionamento: estarei na oficina, pronto para ajudar." },
       { q: "Faz recolha?", a: "É só entrega na minha oficina em Niederkorn — não faço recolha nem entrega. Traga-me a sua máquina e eu trato dela com todo o cuidado." },
       { q: "Preciso de marcação?", a: "Sim, marque sempre antes de aparecer! Uma mensagem rápida no WhatsApp ou uma chamada garante o seu horário, para o seu equipamento ser visto rapidamente." },
       { q: "Que métodos de pagamento aceita?", a: "É simples — aceito dinheiro ou Digicash (transferência bancária instantânea SNET). Escolha o que for mais cómodo para si." },
@@ -461,6 +599,13 @@ const content = {
     heroTitle: "High-Performance Builds. Profi-Reparaturen.",
     heroDesc: "Frësche Informatik-Absolvent (GIN) bitt Informatik-Léisungen zu Niederkorn un. Vu personaliséierte Gaming-Maschinnen bis zu präzise Laptop-Reparaturen.",
     status: "Op Méi–Sams · 10:00–18:00",
+    statusOpenNow: "Elo op",
+    statusClosedNow: "Elo zou",
+    statusChecking: "Status gëtt gepréift",
+    statusOpenUntil: "bis {time}",
+    statusSummerDetail: "Summerpaus",
+    summerClosureTitle: "Summerpaus",
+    summerClosureBody: "352pcs ass vum 7. August bis Ufank September zou. Dir kënnt trotzdeem eng Noriicht schécken; ech äntweren esou séier wéi méiglech.",
     apptBadge: "Nëmme mat Termin · Nëmmen Ofginn · Niederkorn",
     whatsappCta: "Op WhatsApp schreiwen",
     whatsappFast: "Séierst Äntwert",
@@ -515,6 +660,7 @@ const content = {
     businessTitle: "Sou funktionéiert et",
     businessItems: [
       { label: "Ouvertureszäiten", value: "Méindeg bis Samschdeg, 10:00 – 18:00 (Sonndeg zou)." },
+      { label: "Summerpaus", value: "Zou vum 7. August bis Ufank September." },
       { label: "Äntwertzäit", value: "Ech äntweren an 24 Stonnen." },
       { label: "Reparatiounsdauer", value: "Normalerweis 2–7 Deeg, jee no Deeler a Komplexitéit." },
       { label: "Servicegebitt", value: "Nëmmen Niederkorn — Ofginn op meng Adress." },
@@ -523,7 +669,7 @@ const content = {
     ],
     faqTitle: "Heefeg gestallte Froen",
     faqs: [
-      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 10:00 bis 18:00 Auer op, sonndes zou. Reservéiert en Termin a kommt an dësen Zäiten laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
+      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 10:00 bis 18:00 Auer op, sonndes zou. 352pcs ass vum 7. August bis Ufank September zou. Reservéiert en Termin a kommt wärend den Ouvertureszäiten laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
       { q: "Bitt Dir Ofhuelung un?", a: "Et ass nëmmen Ofginn an menger Atelier zu Niederkorn — keng Ofhuelung, keng Liwwerung. Bréngt mir einfach Är Maschinn, ech këmmere mech gutt drëm." },
       { q: "Brauch ech en Termin?", a: "Jo, reservéiert ëmmer ier Dir laanscht kommt! Eng kuerz WhatsApp-Noriicht oder en Uruff séchert Äre Slot, sou datt Äert Gerät séier drukënnt." },
       { q: "Wéi Bezuelmethoden akzeptéiert Dir?", a: "Ganz einfach — ech huelen Bargeld oder Digicash (direkten SNET-Banktransfer) un. Wielt wat fir Iech am bequemsten ass." },
@@ -552,6 +698,54 @@ const content = {
     footer: "Zu Lëtzebuerg gebaut.",
   },
 };
+
+const STATUS_BADGE_STYLES = {
+  open: {
+    wrapper: "bg-emerald-500/5 border-emerald-500/25",
+    ping: "bg-emerald-400",
+    dot: "bg-emerald-500",
+    label: "text-emerald-400",
+    detail: "text-emerald-100/80",
+  },
+  closed: {
+    wrapper: "bg-red-500/10 border-red-500/30",
+    ping: "bg-red-400",
+    dot: "bg-red-500",
+    label: "text-red-300",
+    detail: "text-red-100/80",
+  },
+  checking: {
+    wrapper: "bg-slate-500/10 border-slate-400/20",
+    ping: "bg-slate-400",
+    dot: "bg-slate-300",
+    label: "text-slate-300",
+    detail: "text-slate-400",
+  },
+};
+
+function LiveStatusBadge({ status }) {
+  const styles = STATUS_BADGE_STYLES[status.tone] || STATUS_BADGE_STYLES.checking;
+
+  return (
+    <div
+      aria-live="polite"
+      className={`mb-4 inline-flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full border ${styles.wrapper}`}
+    >
+      <span className="inline-flex items-center gap-2">
+        <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${styles.ping}`} />
+          <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${styles.dot}`} />
+        </span>
+        <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${styles.label}`}>
+          {status.label}
+        </span>
+      </span>
+      <span className={`text-[10px] font-bold uppercase tracking-[0.16em] ${styles.detail}`}>
+        {status.detail}
+      </span>
+    </div>
+  );
+}
 
 function ContactForm({ t }) {
   const [form, setForm] = useState({ name: "", email: "", message: "", botcheck: "" });
@@ -661,6 +855,7 @@ export default function App() {
   const [lang, setLang] = useState("en");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+  const [now, setNow] = useState(null);
 
   React.useEffect(() => {
     const browserLang = navigator.language.split("-")[0];
@@ -674,6 +869,14 @@ export default function App() {
   }, [lang]);
 
   const t = content[lang] || content.en;
+  const openingStatus = React.useMemo(() => getCurrentOpeningStatus(now, t), [now, t]);
+
+  React.useEffect(() => {
+    setNow(new Date());
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   function closeMobile() {
     setMobileOpen(false);
@@ -779,13 +982,14 @@ export default function App() {
       )}
 
       <section id="home" className="relative px-6 py-28 md:py-44 flex flex-col items-center justify-center text-center">
-        <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/5 border border-emerald-500/20 mb-6">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-500">{t.status}</span>
-        </div>
+        <LiveStatusBadge status={openingStatus} />
+
+        {openingStatus.showClosureNotice && (
+          <div className="mb-6 max-w-2xl rounded-2xl border border-red-500/25 bg-red-500/10 px-5 py-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-red-300">{t.summerClosureTitle}</p>
+            <p className="mt-2 text-sm font-semibold leading-relaxed text-red-50/90">{t.summerClosureBody}</p>
+          </div>
+        )}
 
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgb(66,123,157)]/10 border border-[rgb(66,123,157)]/20 text-[rgb(66,123,157)] text-[10px] font-black uppercase tracking-[0.2em] mb-4">
           {t.heroBadge}
