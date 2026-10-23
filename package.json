@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "deploy": "next build && touch out/.nojekyll"
+    "build": "next build --webpack",
+    "deploy": "npm run build && node -e \"require('fs').writeFileSync('out/.nojekyll', '')\""
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.1",

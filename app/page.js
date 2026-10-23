@@ -14,11 +14,10 @@ const REGULAR_SCHEDULE = {
   opens: { hour: 10, minute: 0 },
   closes: { hour: 18, minute: 0 },
 };
-const CLOSURE_NOTICE_START = { year: 2026, month: 1, day: 1, hour: 0, minute: 0 };
-const SUMMER_CLOSURE = {
-  startsAt: { year: 2026, month: 8, day: 7, hour: 0, minute: 0 },
-  endsAt: { year: 2026, month: 9, day: 1, hour: 10, minute: 0 },
-};
+const BUILDS_GALLERY = [
+  ["/builds/alienware-angle-1.jpg", "/builds/alienware-angle-2.jpg"],
+  ["/builds/white-rgb-full.jpg", "/builds/white-rgb-interior.jpg"],
+];
 
 function toMinutes(time) {
   return time.hour * 60 + time.minute;
@@ -40,9 +39,6 @@ function getLuxembourgTimeParts(date) {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: BUSINESS_TIME_ZONE,
     weekday: "short",
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
     hour: "numeric",
     minute: "numeric",
     hourCycle: "h23",
@@ -50,39 +46,9 @@ function getLuxembourgTimeParts(date) {
   const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
 
   return {
-    year: Number(values.year),
-    month: Number(values.month),
-    day: Number(values.day),
     weekday: weekdayMap[values.weekday],
     minutes: Number(values.hour) * 60 + Number(values.minute),
   };
-}
-
-function compareLocalDateTime(parts, point) {
-  const left = [parts.year, parts.month, parts.day, parts.minutes];
-  const right = [point.year, point.month, point.day, toMinutes(point)];
-
-  for (let i = 0; i < left.length; i += 1) {
-    if (left[i] !== right[i]) {
-      return left[i] - right[i];
-    }
-  }
-
-  return 0;
-}
-
-function isWithinSummerClosure(parts) {
-  return (
-    compareLocalDateTime(parts, SUMMER_CLOSURE.startsAt) >= 0 &&
-    compareLocalDateTime(parts, SUMMER_CLOSURE.endsAt) < 0
-  );
-}
-
-function shouldShowClosureNotice(parts) {
-  return (
-    compareLocalDateTime(parts, CLOSURE_NOTICE_START) >= 0 &&
-    compareLocalDateTime(parts, SUMMER_CLOSURE.endsAt) < 0
-  );
 }
 
 function isWithinRegularHours(parts) {
@@ -99,19 +65,16 @@ function getCurrentOpeningStatus(now, t) {
       tone: "checking",
       label: t.statusChecking,
       detail: t.status,
-      showClosureNotice: true,
     };
   }
 
   const parts = getLuxembourgTimeParts(now);
-  const isSummerClosure = isWithinSummerClosure(parts);
-  const isOpen = !isSummerClosure && isWithinRegularHours(parts);
+  const isOpen = isWithinRegularHours(parts);
 
   return {
     tone: isOpen ? "open" : "closed",
     label: isOpen ? t.statusOpenNow : t.statusClosedNow,
-    detail: isSummerClosure ? t.statusSummerDetail : isOpen ? fillScheduleTemplate(t.statusOpenUntil) : t.status,
-    showClosureNotice: shouldShowClosureNotice(parts),
+    detail: isOpen ? fillScheduleTemplate(t.statusOpenUntil) : t.status,
   };
 }
 
@@ -146,6 +109,7 @@ const content = {
     navLinks: [
       { href: "#home", label: "Home" },
       { href: "#services", label: "Services" },
+      { href: "#builds", label: "Builds" },
       { href: "#about", label: "About" },
       { href: "#pricing", label: "Pricing" },
       { href: "#faq", label: "FAQ" },
@@ -153,23 +117,28 @@ const content = {
     contactCta: "Contact",
     heroBadge: "Local PC Builds & Repairs in Luxembourg",
     heroTitle: "High-Performance Builds. Professional Repairs.",
-    heroDesc: "Fresh high school graduate in Informatics (GIN), providing expert PC solutions in Niederkorn. From custom gaming builds to precision laptop repairs.",
+    heroDesc: "Student at the University of Luxembourg in Belval, pursuing a Bachelor's degree in Applied Information Technology, and providing expert PC solutions in Niederkorn. From custom gaming builds to precision laptop repairs.",
     status: "Open Mon–Sat · 10:00–18:00",
     statusOpenNow: "Open now",
     statusClosedNow: "Closed now",
     statusChecking: "Checking status",
     statusOpenUntil: "until {time}",
-    statusSummerDetail: "Summer closure",
-    summerClosureTitle: "Summer closure",
-    summerClosureBody: "352pcs is closed from 7 August to early September. You can still send a message, and I will reply as soon as possible.",
     apptBadge: "Appointment Needed · Drop-Off Only · Niederkorn",
     whatsappCta: "Chat on WhatsApp",
     whatsappFast: "Fastest reply",
     faqButton: "Common Questions",
+    buildsTitle: "Recent Builds",
+    buildsIntro: "Custom PCs built by 352pcs.",
+    builds: [
+      { title: "Alienware Gaming PC", description: "A black Alienware PC, shown from multiple angles." },
+      { title: "White RGB Gaming PC", description: "A white showcase build with a coordinated RGB setup." },
+    ],
+    photoZoomLabel: "Zoom photo",
+    photoCloseLabel: "Close photo",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Hardware Specialist & Founder",
-    aboutBio: "I'm a recent high school graduate in Informatics (GIN). This September, I will be heading to Belval to pursue my informatics studies. For over 3 years, I've built and repaired PCs for the local community. 352pcs is where technical precision meets a passion for hardware.",
-    belvalStatus: "Future Student @ Belval (Sept 2026)",
+    aboutBio: "I am a student at the University of Luxembourg in Belval, pursuing a Bachelor's degree in Applied Information Technology. For over 3 years, I've built and repaired PCs for the local community. 352pcs is where technical precision meets a passion for hardware.",
+    belvalStatus: "Student @ University of Luxembourg · Belval",
     servicesTitle: "Our Expertise",
     services: [
       { title: "Custom PC Builds", desc: "Crafting unique gaming and workstation rigs optimized for your specific budget.", icon: "⚡" },
@@ -216,7 +185,6 @@ const content = {
     businessTitle: "How It Works",
     businessItems: [
       { label: "Opening Hours", value: "Monday to Saturday, 10:00 – 18:00 (closed Sunday)." },
-      { label: "Summer Closure", value: "Closed from 7 August to early September." },
       { label: "Response Time", value: "I reply within 24 hours." },
       { label: "Repair Turnaround", value: "Typically 2–7 days, depending on parts and complexity." },
       { label: "Service Area", value: "Niederkorn only — drop-off at my address." },
@@ -225,7 +193,7 @@ const content = {
     ],
     faqTitle: "Frequently Asked Questions",
     faqs: [
-      { q: "When are you open?", a: "I'm open Monday through Saturday, 10:00–18:00, and closed on Sundays. 352pcs is closed from 7 August to early September. Book an appointment, then drop by during opening hours and I'll be at the workshop ready to help." },
+      { q: "When are you open?", a: "I'm open Monday through Saturday, 10:00–18:00, and closed on Sundays. Book an appointment, then drop by during opening hours and I'll be at the workshop ready to help." },
       { q: "Do you offer pickup?", a: "It's drop-off only at my workshop in Niederkorn — no pickups or deliveries. Just bring your machine to me and I'll take great care of it." },
       { q: "Do I need an appointment?", a: "Yes, always book before you drop off! A quick WhatsApp message or a call locks in your slot, so I'm ready for you and your device gets looked at fast." },
       { q: "What payment methods do you accept?", a: "Nice and easy — I take cash or Digicash (SNET instant bank transfer). Whatever's most convenient for you works for me." },
@@ -257,6 +225,7 @@ const content = {
     navLinks: [
       { href: "#home", label: "Accueil" },
       { href: "#services", label: "Services" },
+      { href: "#builds", label: "Réalisations" },
       { href: "#about", label: "À propos" },
       { href: "#pricing", label: "Tarifs" },
       { href: "#faq", label: "FAQ" },
@@ -264,23 +233,28 @@ const content = {
     contactCta: "Contact",
     heroBadge: "Montage & réparation PC à Niederkorn",
     heroTitle: "Montages Haute Performance. Réparations d'Experts.",
-    heroDesc: "Jeune diplômé en informatique (GIN) offrant des solutions informatiques à Niederkorn. Des PC gaming sur mesure aux réparations de précision.",
+    heroDesc: "Étudiant à l’Université du Luxembourg, sur le campus de Belval, où je prépare un bachelor en technologies de l’information appliquées. Je propose des solutions informatiques à Niederkorn, des PC gaming sur mesure aux réparations de précision.",
     status: "Ouvert lun–sam · 10h00–18h00",
     statusOpenNow: "Ouvert maintenant",
     statusClosedNow: "Fermé maintenant",
     statusChecking: "Vérification du statut",
     statusOpenUntil: "jusqu'à {time}",
-    statusSummerDetail: "Fermeture d'été",
-    summerClosureTitle: "Fermeture d'été",
-    summerClosureBody: "352pcs est fermé du 7 août au début septembre. Vous pouvez quand même envoyer un message, je répondrai dès que possible.",
     apptBadge: "Sur rendez-vous · Dépôt uniquement · Niederkorn",
     whatsappCta: "Discuter sur WhatsApp",
     whatsappFast: "Réponse la plus rapide",
     faqButton: "Questions fréquentes",
+    buildsTitle: "Réalisations récentes",
+    buildsIntro: "PC personnalisés assemblés par 352pcs.",
+    builds: [
+      { title: "PC gaming Alienware", description: "Un PC Alienware noir, présenté sous différents angles." },
+      { title: "PC gaming blanc avec RGB", description: "Un PC vitrine blanc avec un éclairage RGB assorti." },
+    ],
+    photoZoomLabel: "Agrandir la photo",
+    photoCloseLabel: "Fermer la photo",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Fondateur & Technicien PC",
-    aboutBio: "Jeune diplômé en informatique (GIN), je commencerai mes études à Belval en septembre. Depuis 3 ans, je monte et répare des PC pour la communauté locale. 352pcs allie précision technique et passion du hardware.",
-    belvalStatus: "Futur Étudiant @ Belval (Sept 2026)",
+    aboutBio: "Je suis étudiant à l’Université du Luxembourg, sur le campus de Belval, où je prépare un bachelor en technologies de l’information appliquées. Depuis plus de 3 ans, je monte et répare des PC pour la communauté locale. 352pcs allie précision technique et passion du hardware.",
+    belvalStatus: "Étudiant à l’Université du Luxembourg · Belval",
     servicesTitle: "Notre Expertise",
     services: [
       { title: "PC sur Mesure", desc: "Création de PC gaming et stations de travail optimisés selon votre budget.", icon: "⚡" },
@@ -327,7 +301,6 @@ const content = {
     businessTitle: "Comment ça marche",
     businessItems: [
       { label: "Horaires", value: "Lundi au samedi, 10h00 – 18h00 (fermé le dimanche)." },
-      { label: "Fermeture d'été", value: "Fermé du 7 août au début septembre." },
       { label: "Délai de réponse", value: "Je réponds sous 24 heures." },
       { label: "Délai de réparation", value: "Généralement 2 à 7 jours, selon les pièces et la complexité." },
       { label: "Zone de service", value: "Niederkorn uniquement — dépôt à mon adresse." },
@@ -336,7 +309,7 @@ const content = {
     ],
     faqTitle: "Questions Fréquentes",
     faqs: [
-      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 10h00 à 18h00, et fermé le dimanche. 352pcs est fermé du 7 août au début septembre. Prenez rendez-vous, puis passez pendant les horaires d'ouverture : je serai à l'atelier, prêt à vous aider." },
+      { q: "Quels sont vos horaires ?", a: "Je suis ouvert du lundi au samedi, de 10h00 à 18h00, et fermé le dimanche. Prenez rendez-vous, puis passez pendant les horaires d'ouverture : je serai à l'atelier, prêt à vous aider." },
       { q: "Proposez-vous un enlèvement ?", a: "C'est uniquement en dépôt à mon atelier à Niederkorn — ni enlèvement ni livraison. Apportez-moi votre machine et j'en prendrai grand soin." },
       { q: "Faut-il prendre rendez-vous ?", a: "Oui, réservez toujours avant de venir ! Un petit message WhatsApp ou un appel suffit à bloquer votre créneau, pour que votre appareil soit pris en charge rapidement." },
       { q: "Quels moyens de paiement acceptez-vous ?", a: "Tout simple — j'accepte les espèces ou Digicash (virement bancaire instantané SNET). Choisissez ce qui vous arrange le plus." },
@@ -368,6 +341,7 @@ const content = {
     navLinks: [
       { href: "#home", label: "Start" },
       { href: "#services", label: "Services" },
+      { href: "#builds", label: "PC-Builds" },
       { href: "#about", label: "Über mich" },
       { href: "#pricing", label: "Preise" },
       { href: "#faq", label: "FAQ" },
@@ -375,23 +349,28 @@ const content = {
     contactCta: "Kontakt",
     heroBadge: "PC-Bau & Reparatur in Niederkorn",
     heroTitle: "High-Performance Builds. Profi-Reparatur.",
-    heroDesc: "Frischgebackener Informatik-Abiturient (GIN) mit Fokus auf IT-Lösungen in Niederkorn. Von maßgeschneiderten Gaming-PCs bis hin zu Präzisionsreparaturen.",
+    heroDesc: "Student an der Universität Luxemburg am Campus Belval. Ich studiere Angewandte Informationstechnologie und biete IT-Lösungen in Niederkorn an – von maßgeschneiderten Gaming-PCs bis zu präzisen Reparaturen.",
     status: "Geöffnet Mo–Sa · 10:00–18:00",
     statusOpenNow: "Jetzt geöffnet",
     statusClosedNow: "Jetzt geschlossen",
     statusChecking: "Status wird geprüft",
     statusOpenUntil: "bis {time}",
-    statusSummerDetail: "Sommerpause",
-    summerClosureTitle: "Sommerpause",
-    summerClosureBody: "352pcs ist vom 7. August bis Anfang September geschlossen. Sie können trotzdem eine Nachricht senden; ich antworte so schnell wie möglich.",
     apptBadge: "Nur mit Termin · Nur Abgabe · Niederkorn",
     whatsappCta: "Per WhatsApp schreiben",
     whatsappFast: "Schnellste Antwort",
     faqButton: "Häufige Fragen",
+    buildsTitle: "Aktuelle Builds",
+    buildsIntro: "Individuelle PC-Builds von 352pcs.",
+    builds: [
+      { title: "Alienware-Gaming-PC", description: "Ein schwarzer Alienware-PC aus mehreren Blickwinkeln." },
+      { title: "Weißer RGB-Gaming-PC", description: "Ein weißer Showcase-PC mit abgestimmter RGB-Beleuchtung." },
+    ],
+    photoZoomLabel: "Foto vergrößern",
+    photoCloseLabel: "Foto schließen",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Gründer & PC-Techniker",
-    aboutBio: "Ich habe vor kurzem meinen Abschluss in Informatik (GIN) gemacht. Ab diesem September studiere ich Informatik in Belval. Seit über 3 Jahren baue und repariere ich PCs für die Region. 352pcs vereint Präzision mit Leidenschaft für Hardware.",
-    belvalStatus: "Zukünftiger Student @ Belval (Sept 2026)",
+    aboutBio: "Ich absolviere einen Bachelor in Applied Information Technology an der Universität Luxemburg am Campus Belval. Seit über drei Jahren baue und repariere ich PCs für die Region. 352pcs verbindet technische Präzision mit Leidenschaft für Hardware.",
+    belvalStatus: "Student an der Universität Luxemburg · Belval",
     servicesTitle: "Expertise",
     services: [
       { title: "Custom PC Bau", desc: "Maßgeschneiderte Gaming-PCs und Workstations, optimal auf Ihr Budget abgestimmt.", icon: "⚡" },
@@ -438,7 +417,6 @@ const content = {
     businessTitle: "So funktioniert's",
     businessItems: [
       { label: "Öffnungszeiten", value: "Montag bis Samstag, 10:00 – 18:00 (Sonntag geschlossen)." },
-      { label: "Sommerpause", value: "Geschlossen vom 7. August bis Anfang September." },
       { label: "Antwortzeit", value: "Ich antworte innerhalb von 24 Stunden." },
       { label: "Reparaturdauer", value: "In der Regel 2–7 Tage, je nach Teilen und Komplexität." },
       { label: "Servicegebiet", value: "Nur Niederkorn — Abgabe an meiner Adresse." },
@@ -447,7 +425,7 @@ const content = {
     ],
     faqTitle: "Häufig gestellte Fragen",
     faqs: [
-      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 10:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. 352pcs ist vom 7. August bis Anfang September geschlossen. Buchen Sie einen Termin und kommen Sie während der Öffnungszeiten vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
+      { q: "Wann haben Sie geöffnet?", a: "Ich habe Montag bis Samstag von 10:00 bis 18:00 Uhr geöffnet, sonntags geschlossen. Buchen Sie einen Termin und kommen Sie während der Öffnungszeiten vorbei — ich bin in der Werkstatt und helfe Ihnen gerne." },
       { q: "Bieten Sie Abholung an?", a: "Nur Abgabe in meiner Werkstatt in Niederkorn — keine Abholung, keine Lieferung. Bringen Sie mir einfach Ihr Gerät, ich kümmere mich bestens darum." },
       { q: "Brauche ich einen Termin?", a: "Ja, bitte immer vorher buchen! Eine kurze WhatsApp-Nachricht oder ein Anruf sichert Ihren Termin, damit Ihr Gerät schnell drankommt." },
       { q: "Welche Zahlungsmethoden akzeptieren Sie?", a: "Ganz einfach — ich nehme Bargeld oder Digicash (sofortige SNET-Banküberweisung). Wählen Sie, was für Sie am bequemsten ist." },
@@ -479,6 +457,7 @@ const content = {
     navLinks: [
       { href: "#home", label: "Início" },
       { href: "#services", label: "Serviços" },
+      { href: "#builds", label: "Montagens" },
       { href: "#about", label: "Sobre" },
       { href: "#pricing", label: "Preços" },
       { href: "#faq", label: "FAQ" },
@@ -486,23 +465,28 @@ const content = {
     contactCta: "Contacto",
     heroBadge: "Montagem & reparação de PC em Niederkorn",
     heroTitle: "Builds de Alta Performance. Reparações Profissionais.",
-    heroDesc: "Recém-graduado em Informática (GIN) no Luxemburgo. De PCs de gaming por medida a reparações de precisão em Niederkorn.",
+    heroDesc: "Estudante na Universidade do Luxemburgo, no campus de Belval, onde frequento uma licenciatura em Tecnologias de Informação Aplicadas. Disponibilizo soluções informáticas em Niederkorn, desde PCs gaming por medida a reparações de precisão.",
     status: "Aberto seg–sáb · 10:00–18:00",
     statusOpenNow: "Aberto agora",
     statusClosedNow: "Fechado agora",
     statusChecking: "A verificar horário",
     statusOpenUntil: "até às {time}",
-    statusSummerDetail: "Pausa de verão",
-    summerClosureTitle: "Pausa de verão",
-    summerClosureBody: "A 352pcs está fechada de 7 de agosto até ao início de setembro. Pode enviar mensagem na mesma; respondo assim que possível.",
     apptBadge: "Com marcação · Só entrega · Niederkorn",
     whatsappCta: "Falar no WhatsApp",
     whatsappFast: "Resposta mais rápida",
     faqButton: "Perguntas frequentes",
+    buildsTitle: "Montagens recentes",
+    buildsIntro: "PCs personalizados montados pela 352pcs.",
+    builds: [
+      { title: "PC gaming Alienware", description: "Um PC Alienware preto, apresentado de vários ângulos." },
+      { title: "PC gaming branco com RGB", description: "Um PC branco de exposição com iluminação RGB coordenada." },
+    ],
+    photoZoomLabel: "Ampliar foto",
+    photoCloseLabel: "Fechar foto",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Fundador & Técnico de Hardware",
-    aboutBio: "Sou recém-graduado em Informática (GIN). Em setembro, irei para Belval continuar os meus estudos em informática. Há mais de 3 anos que monto e reparo PCs para a comunidade local. 352pcs é onde a precisão técnica encontra a paixão pelo hardware.",
-    belvalStatus: "Futuro Estudante @ Belval (Sept 2026)",
+    aboutBio: "Sou estudante na Universidade do Luxemburgo, no campus de Belval, onde frequento uma licenciatura em Tecnologias de Informação Aplicadas. Há mais de 3 anos que monto e reparo PCs para a comunidade local. 352pcs é onde a precisão técnica encontra a paixão pelo hardware.",
+    belvalStatus: "Estudante na Universidade do Luxemburgo · Belval",
     servicesTitle: "Especialidade",
     services: [
       { title: "Montagem de PCs", desc: "Criação de PCs gaming e estações de trabalho exclusivas, otimizadas para o seu orçamento.", icon: "⚡" },
@@ -549,7 +533,6 @@ const content = {
     businessTitle: "Como funciona",
     businessItems: [
       { label: "Horário", value: "Segunda a sábado, 10:00 – 18:00 (domingo fechado)." },
-      { label: "Pausa de verão", value: "Fechado de 7 de agosto até ao início de setembro." },
       { label: "Tempo de resposta", value: "Respondo em 24 horas." },
       { label: "Prazo de reparação", value: "Normalmente 2–7 dias, consoante peças e complexidade." },
       { label: "Área de serviço", value: "Apenas Niederkorn — entrega na minha morada." },
@@ -558,7 +541,7 @@ const content = {
     ],
     faqTitle: "Perguntas Frequentes",
     faqs: [
-      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 10:00 às 18:00, e fechado ao domingo. A 352pcs está fechada de 7 de agosto até ao início de setembro. Marque e apareça durante o horário de funcionamento: estarei na oficina, pronto para ajudar." },
+      { q: "Qual é o horário de funcionamento?", a: "Estou aberto de segunda a sábado, das 10:00 às 18:00, e fechado ao domingo. Marque e apareça durante o horário de funcionamento: estarei na oficina, pronto para ajudar." },
       { q: "Faz recolha?", a: "É só entrega na minha oficina em Niederkorn — não faço recolha nem entrega. Traga-me a sua máquina e eu trato dela com todo o cuidado." },
       { q: "Preciso de marcação?", a: "Sim, marque sempre antes de aparecer! Uma mensagem rápida no WhatsApp ou uma chamada garante o seu horário, para o seu equipamento ser visto rapidamente." },
       { q: "Que métodos de pagamento aceita?", a: "É simples — aceito dinheiro ou Digicash (transferência bancária instantânea SNET). Escolha o que for mais cómodo para si." },
@@ -590,6 +573,7 @@ const content = {
     navLinks: [
       { href: "#home", label: "Home" },
       { href: "#services", label: "Servicer" },
+      { href: "#builds", label: "PC-Builds" },
       { href: "#about", label: "Iwwer mech" },
       { href: "#pricing", label: "Präisser" },
       { href: "#faq", label: "FAQ" },
@@ -597,23 +581,28 @@ const content = {
     contactCta: "Kontakt",
     heroBadge: "PC-Bau & Reparatur zu Niederkorn",
     heroTitle: "High-Performance Builds. Profi-Reparaturen.",
-    heroDesc: "Frësche Informatik-Absolvent (GIN) bitt Informatik-Léisungen zu Niederkorn un. Vu personaliséierte Gaming-Maschinnen bis zu präzise Laptop-Reparaturen.",
+    heroDesc: "Ech studéieren Applied Information Technology op der Universitéit Lëtzebuerg um Campus Belval. Zu Nidderkuer bidden ech IT-Léisungen un – vu personaliséierte Gaming-PCen bis zu präzise Reparaturen.",
     status: "Op Méi–Sams · 10:00–18:00",
     statusOpenNow: "Elo op",
     statusClosedNow: "Elo zou",
     statusChecking: "Status gëtt gepréift",
     statusOpenUntil: "bis {time}",
-    statusSummerDetail: "Summerpaus",
-    summerClosureTitle: "Summerpaus",
-    summerClosureBody: "352pcs ass vum 7. August bis Ufank September zou. Dir kënnt trotzdeem eng Noriicht schécken; ech äntweren esou séier wéi méiglech.",
     apptBadge: "Nëmme mat Termin · Nëmmen Ofginn · Niederkorn",
     whatsappCta: "Op WhatsApp schreiwen",
     whatsappFast: "Séierst Äntwert",
     faqButton: "Heefeg Froen",
+    buildsTitle: "Rezent PC-Builds",
+    buildsIntro: "Individuell PC-Builds vu 352pcs.",
+    builds: [
+      { title: "Alienware-Gaming-PC", description: "E schwaarzen Alienware-PC aus verschiddene Perspektiven." },
+      { title: "Wäisse RGB-Gaming-PC", description: "E wäisse Showcase-PC mat ofgestëmmter RGB-Beliichtung." },
+    ],
+    photoZoomLabel: "Foto vergréisseren",
+    photoCloseLabel: "Foto zoumaachen",
     aboutName: "Oliveira Moutinho Daniel",
     aboutTitle2: "Grënner & Hardware-Techniker",
-    aboutBio: "Ech hunn viru kuerzem mäin Ofschloss an der Informatik (GIN) gemaach. Dëse September fänken ech mäi Studium an der Informatik um Belval un. Zënter iwwer 3 Joer bauen a reparéieren ech PCen fir d'Leit aus der Géigend. Bei 352pcs trefft technesch Präzisioun op Leidenschaft fir Hardware.",
-    belvalStatus: "Zukünftege Student @ Belval (Sept 2026)",
+    aboutBio: "Ech maachen e Bachelor am Fach Applied Information Technology op der Uni Lëtzebuerg um Campus Belval. Zënter iwwer dräi Joer bauen a reparéieren ech PCe fir d'Leit aus der Géigend. Bei 352pcs treffen technesch Präzisioun a Passioun fir Hardware openeen.",
+    belvalStatus: "Student op der Universitéit Lëtzebuerg · Belval",
     servicesTitle: "Expertise",
     services: [
       { title: "Custom PC Bau", desc: "Moossgeschneidert Gaming- a Workstation-Systemer, optimal op Äre Budget ugepasst.", icon: "⚡" },
@@ -660,7 +649,6 @@ const content = {
     businessTitle: "Sou funktionéiert et",
     businessItems: [
       { label: "Ouvertureszäiten", value: "Méindeg bis Samschdeg, 10:00 – 18:00 (Sonndeg zou)." },
-      { label: "Summerpaus", value: "Zou vum 7. August bis Ufank September." },
       { label: "Äntwertzäit", value: "Ech äntweren an 24 Stonnen." },
       { label: "Reparatiounsdauer", value: "Normalerweis 2–7 Deeg, jee no Deeler a Komplexitéit." },
       { label: "Servicegebitt", value: "Nëmmen Niederkorn — Ofginn op meng Adress." },
@@ -669,7 +657,7 @@ const content = {
     ],
     faqTitle: "Heefeg gestallte Froen",
     faqs: [
-      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 10:00 bis 18:00 Auer op, sonndes zou. 352pcs ass vum 7. August bis Ufank September zou. Reservéiert en Termin a kommt wärend den Ouvertureszäiten laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
+      { q: "Wéini sidd Dir op?", a: "Ech hunn Méindeg bis Samschdeg vu 10:00 bis 18:00 Auer op, sonndes zou. Reservéiert en Termin a kommt wärend den Ouvertureszäiten laanscht — ech sinn an der Atelier a hëllefen Iech gär." },
       { q: "Bitt Dir Ofhuelung un?", a: "Et ass nëmmen Ofginn an menger Atelier zu Niederkorn — keng Ofhuelung, keng Liwwerung. Bréngt mir einfach Är Maschinn, ech këmmere mech gutt drëm." },
       { q: "Brauch ech en Termin?", a: "Jo, reservéiert ëmmer ier Dir laanscht kommt! Eng kuerz WhatsApp-Noriicht oder en Uruff séchert Äre Slot, sou datt Äert Gerät séier drukënnt." },
       { q: "Wéi Bezuelmethoden akzeptéiert Dir?", a: "Ganz einfach — ech huelen Bargeld oder Digicash (direkten SNET-Banktransfer) un. Wielt wat fir Iech am bequemsten ass." },
@@ -729,7 +717,7 @@ function LiveStatusBadge({ status }) {
   return (
     <div
       aria-live="polite"
-      className={`mb-4 inline-flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full border ${styles.wrapper}`}
+      className={`inline-flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full border ${styles.wrapper}`}
     >
       <span className="inline-flex items-center gap-2">
         <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
@@ -799,7 +787,7 @@ function ContactForm({ t }) {
         placeholder={t.formName}
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
-        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(66,123,157)]/50 transition-colors"
+        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(72,177,255)]/50 transition-colors"
       />
       <input
         type="email"
@@ -809,7 +797,7 @@ function ContactForm({ t }) {
         placeholder={t.formEmail}
         value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
-        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(66,123,157)]/50 transition-colors"
+        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(72,177,255)]/50 transition-colors"
       />
       <textarea
         name="message"
@@ -819,7 +807,7 @@ function ContactForm({ t }) {
         placeholder={t.formMessage}
         value={form.message}
         onChange={(e) => setForm({ ...form, message: e.target.value })}
-        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(66,123,157)]/50 transition-colors resize-none"
+        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[rgb(72,177,255)]/50 transition-colors resize-none"
       />
       <input
         type="text"
@@ -834,7 +822,7 @@ function ContactForm({ t }) {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full bg-gradient-to-r from-[rgb(15,52,92)] to-[rgb(66,123,157)] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl text-xs font-extrabold uppercase tracking-widest transition-all"
+        className="w-full rounded-xl bg-blue-600 px-6 py-3 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "sending" ? t.formSending : t.formSubmit}
       </button>
@@ -856,6 +844,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [now, setNow] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   React.useEffect(() => {
     const browserLang = navigator.language.split("-")[0];
@@ -878,38 +867,53 @@ export default function App() {
     return () => window.clearInterval(timer);
   }, []);
 
+  React.useEffect(() => {
+    if (!selectedPhoto) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function closeOnEscape(event) {
+      if (event.key === "Escape") setSelectedPhoto(null);
+    }
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [selectedPhoto]);
+
   function closeMobile() {
     setMobileOpen(false);
   }
 
   return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-[#427b9d] selection:text-white">
+    <div className="min-h-screen overflow-hidden bg-[#070a12] font-sans text-[#eef3ff] selection:bg-blue-600 selection:text-[#070a12]">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[rgb(15,52,92)]/30 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[rgb(8,47,114)]/20 blur-[120px] rounded-full" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/[0.08] blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-500/[0.07] blur-[150px] rounded-full" />
       </div>
 
-      <header className="px-6 py-4 flex justify-between items-center bg-[#080c14]/80 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5">
+      <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#070a12]/90 px-4 backdrop-blur-2xl sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between py-3">
         <a href="#home" className="flex items-center gap-4">
           <Image
             src="/logo.png"
             alt="352pcs"
-            width={45}
-            height={45}
-            className="object-contain drop-shadow-[0_0_8px_rgba(66,123,157,0.5)]"
+            width={42}
+            height={42}
+            className="object-contain drop-shadow-[0_0_8px_rgba(72,177,255,0.42)]"
           />
           <span className="text-xl font-black tracking-tighter uppercase italic">
-            352<span className="text-[rgb(66,123,157)]">pcs</span>
+            352<span className="text-blue-300">pcs</span>
           </span>
         </a>
 
         <div className="flex gap-3 sm:gap-6 items-center">
-          <nav className="space-x-6 text-[10px] font-black uppercase tracking-widest hidden lg:block">
+          <nav className="hidden items-center gap-6 text-[10px] font-black uppercase tracking-[0.16em] lg:flex">
             {t.navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="hover:text-[rgb(66,123,157)] transition-all opacity-70 hover:opacity-100"
+                className="text-[10px] text-slate-400 transition-colors hover:text-blue-300"
               >
                 {link.label}
               </a>
@@ -932,7 +936,7 @@ export default function App() {
 
             <a
               href="#contact"
-              className="hidden sm:inline-block bg-gradient-to-r from-[rgb(15,52,92)] to-[rgb(66,123,157)] hover:brightness-110 text-white px-6 py-2 rounded-lg text-xs font-extrabold uppercase tracking-tighter transition-all"
+              className="hidden rounded-full bg-blue-600 px-5 py-2.5 text-xs font-black uppercase tracking-wide text-white transition-all hover:bg-blue-500 sm:inline-block"
             >
               {t.contactCta}
             </a>
@@ -940,7 +944,7 @@ export default function App() {
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg border border-white/10 hover:border-[rgb(66,123,157)]/50 transition-colors"
+              className="lg:hidden p-2 rounded-lg border border-white/10 hover:border-[rgb(72,177,255)]/50 transition-colors"
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
@@ -955,17 +959,18 @@ export default function App() {
             </button>
           </div>
         </div>
+        </div>
       </header>
 
       {mobileOpen && (
-        <div id="mobile-menu" className="lg:hidden fixed inset-0 top-[73px] z-40 bg-[#080c14]/95 backdrop-blur-xl">
+        <div id="mobile-menu" className="fixed inset-0 top-[73px] z-40 bg-[#070a12]/98 backdrop-blur-xl lg:hidden">
           <nav className="flex flex-col p-6 gap-1">
             {t.navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={closeMobile}
-                className="py-3 px-4 text-sm font-black uppercase tracking-widest hover:text-[rgb(66,123,157)] hover:bg-white/5 rounded-lg transition-all"
+                className="rounded-lg px-4 py-3 text-sm font-black uppercase tracking-widest transition-all hover:bg-white/5 hover:text-blue-300"
               >
                 {link.label}
               </a>
@@ -973,7 +978,7 @@ export default function App() {
             <a
               href="#contact"
               onClick={closeMobile}
-              className="mt-4 py-3 px-4 text-center bg-gradient-to-r from-[rgb(15,52,92)] to-[rgb(66,123,157)] rounded-lg text-sm font-extrabold uppercase tracking-widest"
+              className="mt-4 rounded-full bg-blue-600 px-4 py-3 text-center text-sm font-extrabold uppercase tracking-widest text-white"
             >
               {t.contactCta}
             </a>
@@ -981,171 +986,233 @@ export default function App() {
         </div>
       )}
 
-      <section id="home" className="relative px-6 py-28 md:py-44 flex flex-col items-center justify-center text-center">
-        <LiveStatusBadge status={openingStatus} />
-
-        {openingStatus.showClosureNotice && (
-          <div className="mb-6 max-w-2xl rounded-2xl border border-red-500/25 bg-red-500/10 px-5 py-4">
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-red-300">{t.summerClosureTitle}</p>
-            <p className="mt-2 text-sm font-semibold leading-relaxed text-red-50/90">{t.summerClosureBody}</p>
-          </div>
-        )}
-
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgb(66,123,157)]/10 border border-[rgb(66,123,157)]/20 text-[rgb(66,123,157)] text-[10px] font-black uppercase tracking-[0.2em] mb-4">
-          {t.heroBadge}
-        </div>
-
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-slate-300 text-[10px] font-bold uppercase tracking-[0.15em] mb-8">
-          <svg className="w-3.5 h-3.5 text-[rgb(66,123,157)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-          {t.apptBadge}
-        </div>
-
-        <h1 className="text-5xl md:text-8xl font-black mb-8 max-w-5xl tracking-[-0.04em] leading-[0.9] text-white">
-          {t.heroTitle.split(".").map((part, i) => (
-            <span key={i} className={i === 1 ? "text-[rgb(66,123,157)] block md:inline" : "block md:inline"}>
-              {part}
-              {part && i < 2 ? "." : ""}
-            </span>
-          ))}
-        </h1>
-
-        <p className="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl font-medium leading-relaxed">{t.heroDesc}</p>
-
-        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 px-9 py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-xl font-black text-sm uppercase tracking-widest transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_24px_rgba(37,211,102,0.35)]"
-          >
-            <WhatsAppIcon className="w-5 h-5" />
-            {t.whatsappCta}
-          </a>
-          <a
-            href="#contact"
-            className="px-9 py-4 bg-white text-black rounded-xl font-black text-sm uppercase tracking-widest hover:bg-[rgb(66,123,157)] hover:text-white transition-all duration-300 transform hover:-translate-y-1 shadow-xl hover:shadow-[0_10px_20px_rgba(66,123,157,0.3)]"
-          >
-            {t.contactCta}
-          </a>
-          <a
-            href="#services"
-            className="px-9 py-4 bg-white/5 border border-white/10 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-white/10 hover:border-[rgb(66,123,157)]/50 transition-all duration-300 transform hover:-translate-y-1"
-          >
-            {t.navLinks[1].label}
-          </a>
-          <a
-            href="#faq"
-            className="px-9 py-4 bg-white/5 border border-white/10 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-white/10 hover:border-[rgb(66,123,157)]/50 transition-all duration-300 transform hover:-translate-y-1"
-          >
-            {t.faqButton}
-          </a>
-        </div>
-      </section>
-
-      <section id="about" className="py-20 bg-black/50">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex justify-center mb-6">
-            <img
-              src="/founder-pro.png"
-              alt={t.aboutName}
-              className="w-48 h-48 rounded-2xl border-2 border-[rgb(66,123,157)]/20 object-cover shadow-2xl"
-            />
-          </div>
-          <h2 className="text-3xl font-bold text-white mb-2">{t.aboutName}</h2>
-          <p className="text-[rgb(66,123,157)] font-medium mb-1 uppercase tracking-widest text-sm">{t.aboutTitle2}</p>
-          <p className="text-slate-500 font-bold mb-6 uppercase tracking-widest text-[10px] opacity-70">{t.belvalStatus}</p>
-          <p className="max-w-2xl mx-auto text-gray-400 text-lg leading-relaxed">{t.aboutBio}</p>
-        </div>
-      </section>
-
-      <section id="services" className="px-6 py-32 max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h3 className="text-5xl font-black mb-4 tracking-tighter uppercase">{t.servicesTitle}</h3>
-          <div className="w-24 h-1.5 bg-[rgb(66,123,157)] mx-auto rounded-full" />
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {t.services.map((s, i) => (
-            <div
-              key={i}
-              className="group p-8 bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-3xl hover:border-[rgb(66,123,157)]/50 transition-all duration-500 shadow-2xl relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none" />
-              <div className="relative z-10">
-                <div className="text-4xl mb-6 transform group-hover:scale-110 transition-transform">{s.icon}</div>
-                <h4 className="text-xl font-black mb-3 text-white uppercase tracking-tight">{s.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed font-medium">{s.desc}</p>
-              </div>
+      <section id="home" className="relative isolate overflow-hidden px-6">
+        <div className="hero-grid pointer-events-none absolute inset-0 -z-10 opacity-45" />
+        <div className="absolute -right-48 top-16 -z-10 h-[36rem] w-[36rem] rounded-full bg-blue-600/[0.07] blur-[120px]" />
+        <div className="mx-auto grid min-h-[calc(100svh-72px)] max-w-7xl items-center gap-12 pb-20 pt-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-14">
+          <div className="relative z-10 max-w-3xl py-4">
+            <div className="mb-7 inline-flex items-center gap-2.5 border-l-2 border-blue-400 pl-3 text-[10px] font-black uppercase tracking-[0.2em] text-blue-300 sm:text-xs">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+              {t.heroBadge}
             </div>
-          ))}
-        </div>
-      </section>
 
-      <section id="pricing" className="px-6 py-24">
-        <div className="max-w-5xl mx-auto bg-white/[0.02] backdrop-blur-sm p-10 md:p-12 rounded-[2rem] border border-[rgb(66,123,157)]/30">
-          <h3 className="text-4xl font-black mb-4 tracking-tight uppercase text-center">{t.pricingTitle}</h3>
-          <p className="text-center text-slate-400 text-sm font-medium max-w-xl mx-auto mb-12 leading-relaxed">{t.pricingIntro}</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {t.prices.map((p, i) => (
-              <div key={i} className="flex flex-col text-center md:text-left p-6 rounded-2xl bg-white/[0.03] border border-white/5">
-                <span className="text-[rgb(66,123,157)] text-xs font-black uppercase tracking-[0.2em] mb-3">{p.label}</span>
-                <span className="text-4xl font-black tracking-tighter italic mb-4">
-                  {p.fixed ? p.cost : `${t.fromText} ${p.cost}`}
+            <h1 className="mb-7 text-[clamp(3.5rem,7.4vw,7.2rem)] font-black uppercase leading-[0.83] tracking-[-0.075em] text-white">
+              {t.heroTitle.split(".").map((part, i) => (
+              <span key={i} className={i === 1 ? "mt-3 block bg-gradient-to-r from-blue-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent" : "block"}>
+                  {part.trim()}{part && i < 2 ? "." : ""}
                 </span>
-                <p className="text-slate-400 text-sm font-medium leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-          {t.extraPrice && (
-            <div className="mt-8 p-6 rounded-2xl bg-white/[0.03] border border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-center sm:text-left">
-              <div>
-                <span className="text-[rgb(66,123,157)] text-xs font-black uppercase tracking-[0.2em] block mb-2">{t.extraPrice.label}</span>
-                <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-2xl">{t.extraPrice.desc}</p>
-              </div>
-              <span className="text-3xl font-black tracking-tighter italic shrink-0">
-                {t.fromText} {t.extraPrice.cost}
+              ))}
+            </h1>
+
+            <p className="max-w-xl border-l border-white/15 pl-5 text-base leading-7 text-stone-300 sm:text-lg sm:leading-8">{t.heroDesc}</p>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <LiveStatusBadge status={openingStatus} />
+              <span className="inline-flex max-w-full items-center gap-2 border border-white/10 bg-white/[0.035] px-3.5 py-2 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-300 sm:text-[10px]">
+                <svg className="h-3.5 w-3.5 shrink-0 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                {t.apptBadge}
               </span>
             </div>
-          )}
-          <p className="text-center text-slate-400 text-xs font-medium mt-10">{t.disclaimer}</p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-blue-600 px-7 py-4 text-sm font-black uppercase tracking-wide text-white shadow-[0_12px_40px_rgba(56,189,248,0.2)] transition-all hover:-translate-y-1 hover:bg-blue-500">
+                <WhatsAppIcon className="h-5 w-5" />{t.whatsappCta}
+              </a>
+              <a href="#builds" className="inline-flex items-center justify-center gap-3 border border-white/20 bg-black/20 px-7 py-4 text-sm font-black uppercase tracking-wide text-white transition-all hover:border-blue-400/60 hover:text-blue-300">
+                {t.buildsTitle}<span className="text-blue-300" aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            <div className="mt-9 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.15em] text-stone-500">
+              <span className="h-px w-8 bg-blue-600/60" />{t.belvalStatus}
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[510px] lg:ml-auto">
+            <div className="absolute -inset-4 rotate-2 border border-blue-300/20 sm:-inset-6" />
+            <div className="relative aspect-[0.7] overflow-hidden border border-white/10 bg-[#111827] shadow-[0_35px_120px_rgba(0,0,0,0.65)] sm:aspect-[0.76]">
+              <Image src="/builds/white-rgb-full.jpg" alt={t.builds[1].title} fill priority sizes="(min-width: 1024px) 42vw, 90vw" className="object-cover object-[center_35%] transition-transform duration-700 hover:scale-[1.025]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070a12] via-[#070a12]/5 to-transparent" />
+              <div className="absolute left-5 top-5 flex items-center gap-3 border border-white/15 bg-[#070a12]/75 px-4 py-3 backdrop-blur-md sm:left-7 sm:top-7">
+                <span className="text-xl font-black tracking-tighter text-blue-300">352</span>
+                <span className="h-7 w-px bg-white/20" />
+                <span className="max-w-[140px] text-[9px] font-black uppercase leading-4 tracking-[0.16em] text-white">{t.aboutTitle2}</span>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                <p className="text-[9px] font-black uppercase tracking-[0.24em] text-blue-300">{t.buildsTitle}</p>
+                <p className="mt-2 max-w-sm text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl">{t.buildsIntro}</p>
+              </div>
+            </div>
+              <span aria-hidden="true" className="absolute -right-8 top-1/2 hidden -translate-y-1/2 rotate-90 text-[9px] font-black uppercase tracking-[0.35em] text-blue-300/80 sm:block">352PCS — LUXEMBOURG</span>
+          </div>
         </div>
       </section>
 
-      <section className="px-6 py-16">
-        <div className="max-w-5xl mx-auto bg-white/[0.02] backdrop-blur-sm p-10 md:p-12 rounded-[2rem] border border-white/10">
-          <h3 className="text-3xl font-black mb-10 tracking-tight uppercase text-center">{t.businessTitle}</h3>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {t.businessItems.map((item, i) => (
-              <div key={i} className="p-6 bg-white/[0.03] rounded-2xl border border-white/5">
-                <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase tracking-[0.2em] block mb-2">{item.label}</span>
-                <p className="text-slate-300 text-sm font-medium leading-relaxed">{item.value}</p>
+      <section id="about" className="relative overflow-hidden border-b border-white/[0.06] bg-[#0a0e18] px-6 py-16 sm:py-24">
+        <div className="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-blue-700/[0.08] blur-[110px]" />
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+          <div className="relative mx-auto w-full max-w-[390px]">
+            <div className="absolute -bottom-4 -right-4 h-full w-full border border-blue-300/30" />
+            <div className="relative aspect-[0.88] overflow-hidden border border-white/10 bg-[#101827]">
+              <Image src="/founder-pro.png" alt={t.aboutName} fill sizes="(min-width: 1024px) 35vw, 85vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080b12]/70 via-transparent to-transparent" />
+            </div>
+            <span className="absolute -left-3 top-6 border border-blue-300/30 bg-[#101827]/90 px-4 py-2 text-[9px] font-black uppercase tracking-[0.18em] text-blue-300 backdrop-blur sm:-left-5">352pcs / Founder</span>
+          </div>
+          <div className="py-3">
+            <p className="mb-4 text-[10px] font-black uppercase tracking-[0.22em] text-blue-300">{t.belvalStatus}</p>
+            <h2 className="max-w-2xl text-4xl font-black uppercase leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl">{t.aboutName}</h2>
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-blue-300">{t.aboutTitle2}</p>
+            <p className="mt-7 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">{t.aboutBio}</p>
+            <div className="mt-8 flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.18em] text-blue-200"><span className="h-px w-10 bg-blue-300/60" />{t.heroBadge}</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="relative overflow-hidden bg-[#070a12] px-6 py-16 sm:py-24">
+        <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-blue-950/20 to-transparent" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="mb-12 flex flex-col gap-5 border-b border-white/10 pb-7 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-blue-300">352pcs / 01</p>
+              <h3 className="max-w-2xl text-4xl font-black uppercase leading-[0.92] tracking-[-0.055em] text-white sm:text-6xl">{t.servicesTitle}</h3>
+            </div>
+            <p className="max-w-xs text-xs font-bold uppercase leading-5 tracking-[0.1em] text-slate-500">{t.heroBadge}</p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
+            {t.services.map((s, i) => (
+              <div key={i} className={`group relative isolate overflow-hidden border border-white/[0.09] bg-[#0d1422] p-6 transition-all duration-300 hover:border-blue-300/30 hover:bg-[#101a2b] sm:p-8 ${i === 0 ? "min-h-[370px] lg:col-span-7 lg:row-span-2 lg:min-h-[540px]" : i === 1 || i === 2 ? "min-h-[260px] lg:col-span-5" : "min-h-[245px] lg:col-span-6"}`}>
+                {i === 0 && <>
+                  <Image src="/builds/white-rgb-full.jpg" alt="" fill sizes="(min-width: 1024px) 58vw, 100vw" className="-z-20 object-cover opacity-25 transition-transform duration-700 group-hover:scale-[1.04]" />
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a0e18]/95 via-[#0a0e18]/80 to-blue-950/40" />
+                </>}
+                <div className="flex items-start justify-between">
+                  <span className={`flex h-12 w-12 items-center justify-center border border-blue-300/20 bg-blue-400/[0.08] text-2xl text-blue-300 transition-transform group-hover:-rotate-6 group-hover:scale-110 ${i === 0 ? "sm:h-16 sm:w-16 sm:text-3xl" : ""}`}>{s.icon}</span>
+                  <span className="font-mono text-xs font-bold tracking-[0.18em] text-slate-600">{t.servicesTitle.toUpperCase()} / 0{i + 1}</span>
+                </div>
+                <div className={i === 0 ? "absolute inset-x-6 bottom-7 max-w-xl sm:inset-x-8 sm:bottom-9" : "mt-9"}>
+                  <h4 className={`mb-3 font-black uppercase leading-tight tracking-[-0.03em] text-white ${i === 0 ? "text-3xl sm:text-5xl" : "text-lg sm:text-xl"}`}>{s.title}</h4>
+                  <p className={`leading-6 text-slate-400 ${i === 0 ? "max-w-lg text-sm sm:text-base" : "text-sm"}`}>{s.desc}</p>
+                </div>
+                {i !== 0 && <span aria-hidden="true" className="absolute bottom-6 right-6 font-mono text-lg text-blue-300/60 transition-transform group-hover:translate-x-1">↗</span>}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="faq" className="px-6 py-24">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-black mb-4 tracking-tighter uppercase">{t.faqTitle}</h3>
-            <div className="w-24 h-1.5 bg-[rgb(66,123,157)] mx-auto rounded-full" />
+      <section id="builds" className="relative overflow-hidden bg-[#070a12] px-6 py-16 sm:py-24">
+        <div className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-blue-500/[0.08] blur-[110px]" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="mb-12 flex flex-col gap-5 border-b border-white/10 pb-7 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-blue-300">352pcs / PC-BUILDS</p>
+              <h3 className="text-5xl font-black uppercase leading-[0.88] tracking-[-0.06em] text-white sm:text-7xl">{t.buildsTitle}</h3>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-stone-400 sm:text-right">{t.buildsIntro}</p>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-6">
+            {t.builds.map((build, buildIndex) => (
+              <article key={build.title} className="grid overflow-hidden border border-white/10 bg-[#0b111d] shadow-[0_28px_90px_rgba(0,0,0,0.25)] lg:min-h-[450px] lg:grid-cols-12">
+                <div className={`relative min-h-[340px] overflow-hidden bg-[#090e18] sm:min-h-[460px] lg:col-span-7 ${buildIndex === 1 ? "lg:order-2" : ""}`}>
+                  <button type="button" onClick={() => setSelectedPhoto({ src: BUILDS_GALLERY[buildIndex][0], alt: build.title })} aria-label={`${t.photoZoomLabel}: ${build.title}, 1`} className="group absolute inset-0 z-0 h-full w-full cursor-zoom-in">
+                    <Image src={BUILDS_GALLERY[buildIndex][0]} alt="" fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-contain p-5 transition-transform duration-700 group-hover:scale-[1.035] sm:p-8" />
+                    <span className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 opacity-70 transition-opacity group-hover:opacity-100" />
+                  </button>
+                  <button type="button" onClick={() => setSelectedPhoto({ src: BUILDS_GALLERY[buildIndex][1], alt: build.title })} aria-label={`${t.photoZoomLabel}: ${build.title}, 2`} className="absolute bottom-5 right-5 z-20 h-28 w-24 cursor-zoom-in overflow-hidden border-2 border-blue-300 bg-[#070a12] shadow-2xl transition-transform hover:scale-105 sm:bottom-7 sm:right-7 sm:h-36 sm:w-28">
+                    <Image src={BUILDS_GALLERY[buildIndex][1]} alt="" fill sizes="112px" className="object-cover" />
+                  </button>
+                </div>
+                <div className={`flex flex-col justify-between p-7 sm:p-10 lg:col-span-5 lg:p-12 ${buildIndex === 1 ? "lg:order-1" : ""}`}>
+                  <div>
+                    <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">352pcs / {t.buildsTitle}</p>
+                    <h4 className="text-3xl font-black uppercase leading-[0.95] tracking-[-0.05em] text-white sm:text-4xl">{build.title}</h4>
+                    <p className="mt-5 max-w-md text-sm leading-7 text-stone-400">{build.description}</p>
+                  </div>
+                  <a href="#contact" className="mt-9 inline-flex w-fit items-center gap-3 border-b border-blue-300/50 pb-2 text-xs font-black uppercase tracking-[0.16em] text-blue-300 transition-colors hover:border-blue-400 hover:text-white">{t.contactCta}<span aria-hidden="true">↗</span></a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="relative overflow-hidden border-y border-white/[0.06] bg-[#0b111d] px-6 py-16 sm:py-24">
+        <div className="absolute -left-40 top-1/3 h-96 w-96 rounded-full bg-indigo-600/[0.08] blur-[110px]" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-blue-300">352pcs / {t.pricingTitle}</p>
+            <h3 className="max-w-md text-4xl font-black uppercase leading-[0.92] tracking-[-0.055em] text-white sm:text-6xl">{t.pricingTitle}</h3>
+            <p className="mt-6 max-w-md text-sm leading-6 text-slate-400">{t.pricingIntro}</p>
+          </div>
+          <div>
+            {t.prices.map((p, i) => (
+              <div key={i} className="grid gap-3 border-t border-white/10 py-6 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-8 sm:py-7">
+                <div>
+                  <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">0{i + 1} / {p.label}</span>
+                  <p className="max-w-xl text-sm leading-6 text-slate-400">{p.desc}</p>
+                </div>
+                <span className="text-3xl font-black tracking-tight text-white sm:min-w-36 sm:text-right">
+                  {p.fixed ? p.cost : <><span className="mr-1 text-xs font-bold uppercase text-slate-500">{t.fromText}</span>{p.cost}</>}
+                </span>
+              </div>
+            ))}
+            <div className="border-t border-white/10" />
+            {t.extraPrice && (
+              <div className="flex flex-col gap-4 border-b border-white/10 py-6 sm:flex-row sm:items-start sm:justify-between sm:gap-8 sm:py-7">
+                <div>
+                  <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">+ / {t.extraPrice.label}</span>
+                  <p className="max-w-xl text-sm leading-6 text-slate-400">{t.extraPrice.desc}</p>
+                </div>
+                <span className="text-3xl font-black tracking-tight text-white sm:min-w-36 sm:text-right">
+                  <span className="mr-1 text-xs font-bold uppercase text-slate-500">{t.fromText}</span>{t.extraPrice.cost}
+                </span>
+              </div>
+            )}
+            <p className="mt-6 text-xs leading-5 text-slate-500">{t.disclaimer}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#070a12] px-6 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl border-y border-white/10 py-7 sm:py-9">
+          <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <h3 className="text-2xl font-black uppercase tracking-tight text-white sm:text-3xl">{t.businessTitle}</h3>
+            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-blue-300">352pcs / {t.businessTitle}</span>
+          </div>
+          <div className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+            {t.businessItems.map((item, i) => (
+              <div key={i} className="border-t border-white/[0.07] py-5">
+                <span className="mb-2 block font-mono text-[9px] font-bold uppercase tracking-[0.17em] text-blue-300">0{i + 1} / {item.label}</span>
+                <p className="text-sm leading-6 text-slate-300">{item.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="bg-[#080c15] px-6 py-16 sm:py-24">
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-10 border-b border-white/10 pb-6 sm:mb-12">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">352pcs / FAQ</p>
+            <h3 className="text-4xl font-black uppercase tracking-[-0.04em] text-white sm:text-5xl">{t.faqTitle}</h3>
+          </div>
+          <div className="divide-y divide-white/10 border-y border-white/10">
             {t.faqs.map((faq, i) => (
-              <div key={i} className="bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden">
+              <div key={i}>
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex justify-between items-center p-5 text-left hover:bg-white/[0.02] transition-colors"
+                  className="flex w-full items-center justify-between gap-6 py-5 text-left transition-colors sm:py-6"
                   aria-expanded={openFaq === i}
                   aria-controls={`faq-answer-${i}`}
                 >
-                  <span className="text-sm font-bold text-white pr-4">{faq.q}</span>
-                  <span aria-hidden="true" className="text-[rgb(66,123,157)] text-xl flex-shrink-0">{openFaq === i ? "−" : "+"}</span>
+                  <span className="pr-4 text-sm font-bold text-slate-100">{faq.q}</span>
+                  <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center border border-blue-300/25 font-mono text-lg text-blue-300">{openFaq === i ? "−" : "+"}</span>
                 </button>
                 {openFaq === i && (
-                  <div id={`faq-answer-${i}`} className="px-5 pb-5">
-                    <p className="text-slate-400 text-sm leading-relaxed">{faq.a}</p>
+                  <div id={`faq-answer-${i}`} className="max-w-2xl pb-6 pr-12">
+                    <p className="text-sm leading-6 text-slate-400">{faq.a}</p>
                   </div>
                 )}
               </div>
@@ -1154,20 +1221,22 @@ export default function App() {
         </div>
       </section>
 
-      <section id="contact" className="px-6 py-32">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
-            <h3 className="text-5xl md:text-6xl font-black mb-4 tracking-tighter text-white uppercase italic">{t.contactTitle}</h3>
-            <p className="text-slate-400 text-lg max-w-2xl">{t.contactIntro}</p>
+      <section id="contact" className="relative overflow-hidden border-t border-white/[0.06] bg-[#0b1220] px-6 py-16 sm:py-24">
+        <div className="absolute -right-32 top-0 h-[32rem] w-[32rem] rounded-full bg-blue-600/[0.12] blur-[120px]" />
+        <div className="relative mx-auto max-w-7xl border border-white/[0.09] bg-[#080c15]/80 p-6 shadow-[0_35px_90px_rgba(0,0,0,0.35)] sm:p-9 lg:p-12">
+          <div className="mb-10 sm:mb-12">
+            <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">352pcs / {t.contactTitle}</p>
+            <h3 className="mb-4 text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl">{t.contactTitle}</h3>
+            <p className="max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">{t.contactIntro}</p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div className="space-y-8">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="space-y-4">
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-6 bg-[#25D366]/10 border border-[#25D366]/40 rounded-2xl hover:border-[#25D366] hover:bg-[#25D366]/15 transition-all group"
+                className="flex items-center gap-4 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.07] p-5 transition-all hover:border-[#25D366]/60 hover:bg-[#25D366]/[0.1] group sm:p-6"
               >
                 <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-[#25D366] text-white flex-shrink-0">
                   <WhatsAppIcon className="w-7 h-7" />
@@ -1182,35 +1251,35 @@ export default function App() {
 
               <a
                 href={`tel:${PHONE}`}
-                className="flex items-center gap-4 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-[rgb(66,123,157)]/50 transition-all group"
+                className="flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all hover:border-blue-400/25 hover:bg-white/[0.045] group sm:p-6"
               >
                 <span className="text-2xl">📞</span>
                 <div>
-                  <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase tracking-[0.2em] block mb-1">{t.phoneLabel}</span>
-                  <span className="text-xl font-black group-hover:text-[rgb(66,123,157)] transition-colors">{PHONE_DISPLAY}</span>
+                  <span className="text-[10px] font-black text-[rgb(72,177,255)] uppercase tracking-[0.2em] block mb-1">{t.phoneLabel}</span>
+                  <span className="text-xl font-black group-hover:text-[rgb(72,177,255)] transition-colors">{PHONE_DISPLAY}</span>
                 </div>
               </a>
 
               <a
                 href={`mailto:${EMAIL}`}
-                className="flex items-center gap-4 p-6 bg-white/[0.03] border border-white/10 rounded-2xl hover:border-[rgb(66,123,157)]/50 transition-all group"
+                className="flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all hover:border-blue-400/25 hover:bg-white/[0.045] group sm:p-6"
               >
                 <span className="text-2xl">✉️</span>
                 <div>
-                  <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase tracking-[0.2em] block mb-1">{t.emailLabel}</span>
-                  <span className="text-lg font-bold text-slate-300 group-hover:text-[rgb(66,123,157)] transition-colors break-all">{EMAIL}</span>
+                  <span className="text-[10px] font-black text-[rgb(72,177,255)] uppercase tracking-[0.2em] block mb-1">{t.emailLabel}</span>
+                  <span className="text-lg font-bold text-slate-300 group-hover:text-[rgb(72,177,255)] transition-colors break-all">{EMAIL}</span>
                 </div>
               </a>
 
-              <div className="p-6 bg-white/[0.03] border border-white/10 rounded-2xl">
-                <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase tracking-[0.2em] block mb-4">{t.formTitle}</span>
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-6">
+                <span className="text-[10px] font-black text-[rgb(72,177,255)] uppercase tracking-[0.2em] block mb-4">{t.formTitle}</span>
                 <ContactForm t={t} />
               </div>
             </div>
 
-            <div className="space-y-8">
-              <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
-                <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase block mb-4 tracking-widest">{t.locationLabel}</span>
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-white/[0.08] bg-[#101722]/70 p-5 sm:p-6">
+                <span className="text-[10px] font-black text-[rgb(72,177,255)] uppercase block mb-4 tracking-widest">{t.locationLabel}</span>
                 <p className="text-sm font-bold leading-relaxed text-slate-300 uppercase tracking-tight mb-4">
                   149, rue Pierre Gansen
                   <br />
@@ -1234,14 +1303,14 @@ export default function App() {
                   href={MAPS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 text-[10px] font-black text-[rgb(66,123,157)] uppercase tracking-widest hover:opacity-100 opacity-70 transition-opacity"
+                  className="mt-4 inline-flex items-center gap-2 text-[10px] font-black text-[rgb(72,177,255)] uppercase tracking-widest hover:opacity-100 opacity-70 transition-opacity"
                 >
                   {t.mapPrompt} →
                 </a>
               </div>
 
-              <div className="bg-white/5 p-8 rounded-3xl border border-white/5 flex flex-col items-center">
-                <span className="text-[10px] font-black text-[rgb(66,123,157)] uppercase block mb-4 tracking-widest">Instagram</span>
+              <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-[#101722]/70 p-8">
+                <span className="text-[10px] font-black text-[rgb(72,177,255)] uppercase block mb-4 tracking-widest">Instagram</span>
                 <a
                   href="https://instagram.com/352pcs"
                   target="_blank"
@@ -1259,11 +1328,25 @@ export default function App() {
         </div>
       </section>
 
-      <footer className="py-12 border-t border-white/5 text-center">
-        <p className="text-slate-600 text-[10px] font-black uppercase tracking-[0.3em]">
-          {t.footer} © 2026 352PCS
+      <footer className="border-t border-white/10 bg-[#070a12] px-6 py-8 text-center">
+        <p className="text-[10px] font-black uppercase tracking-[0.24em] text-stone-500">
+          <span className="text-blue-300">352PCS</span> · {t.footer} © 2026
         </p>
       </footer>
+
+      {selectedPhoto && (
+        <div className="fixed inset-0 z-[100] grid place-items-center bg-[#02040a]/95 p-4 backdrop-blur-xl" role="presentation" onClick={() => setSelectedPhoto(null)}>
+          <div className="photo-modal-panel w-full max-w-6xl border border-blue-300/25 bg-[#080c15] p-3 shadow-[0_0_100px_rgba(48,111,255,0.18)] sm:p-5" role="dialog" aria-modal="true" aria-label={selectedPhoto.alt} onClick={(event) => event.stopPropagation()}>
+            <div className="mb-3 flex items-center justify-between gap-4 border-b border-white/10 px-1 pb-3">
+              <p className="truncate font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-slate-300">{selectedPhoto.alt}</p>
+              <button type="button" autoFocus onClick={() => setSelectedPhoto(null)} className="shrink-0 border border-white/15 px-3 py-2 text-[9px] font-black uppercase tracking-widest text-blue-300 transition-colors hover:border-blue-400/50 hover:text-white">{t.photoCloseLabel} <span aria-hidden="true">×</span></button>
+            </div>
+            <div className="relative h-[min(78svh,900px)] w-full">
+              <Image src={selectedPhoto.src} alt={selectedPhoto.alt} fill sizes="95vw" className="object-contain" />
+            </div>
+          </div>
+        </div>
+      )}
 
       <FloatingWhatsApp label={t.whatsappCta} />
     </div>
