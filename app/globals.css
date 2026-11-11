@@ -32,6 +32,39 @@ body {
   animation: photo-pop-in 180ms ease-out both;
 }
 
+@keyframes builds-train {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.builds-train-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.builds-train-track {
+  display: flex;
+  width: max-content;
+  animation: builds-train 42s linear infinite;
+}
+
+.builds-train-track:hover,
+.builds-train-track:focus-within,
+.builds-train-track.is-paused {
+  animation-play-state: paused;
+}
+
+.builds-train-group {
+  display: flex;
+  flex: none;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 /* Offset anchor jumps so sections aren't hidden under the sticky header */
 html {
   scroll-padding-top: 90px;
@@ -59,6 +92,22 @@ html {
 
   .photo-modal-panel {
     animation: none;
+  }
+
+  .builds-train-track {
+    animation: none;
+  }
+
+  .builds-train-copy {
+    display: none;
+  }
+
+  .builds-train-viewport {
+    overflow-x: auto;
+  }
+
+  .builds-train-control {
+    display: none;
   }
 }
 

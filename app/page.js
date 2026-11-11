@@ -15,10 +15,38 @@ const REGULAR_SCHEDULE = {
   closes: { hour: 18, minute: 0 },
 };
 const BUILDS_GALLERY = [
-  ["/builds/alienware-angle-1.jpg", "/builds/alienware-angle-2.jpg"],
-  ["/builds/white-rgb-full.jpg", "/builds/white-rgb-interior.jpg"],
+  "/builds/alienware-angle-1.jpg",
+  "/builds/white-rgb-full.jpg",
+  "/builds/purple-rgb-build.jpg",
 ];
 
+const BUILD_GALLERY_COPY = {
+  en: {
+    pause: "Pause PC gallery",
+    resume: "Resume PC gallery",
+    newBuild: { title: "Purple RGB Gaming PC", description: "A black gaming build with vivid purple RGB lighting." },
+  },
+  fr: {
+    pause: "Mettre la galerie en pause",
+    resume: "Reprendre la galerie",
+    newBuild: { title: "PC gaming RGB violet", description: "Un PC gaming noir avec un éclairage RGB violet vif." },
+  },
+  de: {
+    pause: "PC-Galerie pausieren",
+    resume: "PC-Galerie fortsetzen",
+    newBuild: { title: "Gaming-PC mit violettem RGB", description: "Ein schwarzer Gaming-PC mit kräftiger violetter RGB-Beleuchtung." },
+  },
+  pt: {
+    pause: "Pausar galeria de PCs",
+    resume: "Retomar galeria de PCs",
+    newBuild: { title: "PC gaming RGB roxo", description: "Um PC gaming preto com iluminação RGB roxa intensa." },
+  },
+  lu: {
+    pause: "PC-Galerie pauséieren",
+    resume: "PC-Galerie weiderlafen loossen",
+    newBuild: { title: "Gaming-PC mat violettem RGB", description: "E schwaarze Gaming-PC mat staarker violetter RGB-Beliichtung." },
+  },
+};
 function toMinutes(time) {
   return time.hour * 60 + time.minute;
 }
@@ -130,8 +158,9 @@ const content = {
     buildsTitle: "Recent Builds",
     buildsIntro: "Custom PCs built by 352pcs.",
     builds: [
-      { title: "Alienware Gaming PC", description: "A black Alienware PC, shown from multiple angles." },
+      { title: "Alienware Gaming PC", description: "A black Alienware gaming PC with a clean, understated look." },
       { title: "White RGB Gaming PC", description: "A white showcase build with a coordinated RGB setup." },
+      BUILD_GALLERY_COPY.en.newBuild,
     ],
     photoZoomLabel: "Zoom photo",
     photoCloseLabel: "Close photo",
@@ -246,8 +275,9 @@ const content = {
     buildsTitle: "Réalisations récentes",
     buildsIntro: "PC personnalisés assemblés par 352pcs.",
     builds: [
-      { title: "PC gaming Alienware", description: "Un PC Alienware noir, présenté sous différents angles." },
+      { title: "PC gaming Alienware", description: "Un PC gaming Alienware noir au style sobre et soigné." },
       { title: "PC gaming blanc avec RGB", description: "Un PC vitrine blanc avec un éclairage RGB assorti." },
+      BUILD_GALLERY_COPY.fr.newBuild,
     ],
     photoZoomLabel: "Agrandir la photo",
     photoCloseLabel: "Fermer la photo",
@@ -362,8 +392,9 @@ const content = {
     buildsTitle: "Aktuelle Builds",
     buildsIntro: "Individuelle PC-Builds von 352pcs.",
     builds: [
-      { title: "Alienware-Gaming-PC", description: "Ein schwarzer Alienware-PC aus mehreren Blickwinkeln." },
+      { title: "Alienware-Gaming-PC", description: "Ein schwarzer Gaming-PC von Alienware mit schlichtem, sauberem Design." },
       { title: "Weißer RGB-Gaming-PC", description: "Ein weißer Showcase-PC mit abgestimmter RGB-Beleuchtung." },
+      BUILD_GALLERY_COPY.de.newBuild,
     ],
     photoZoomLabel: "Foto vergrößern",
     photoCloseLabel: "Foto schließen",
@@ -478,8 +509,9 @@ const content = {
     buildsTitle: "Montagens recentes",
     buildsIntro: "PCs personalizados montados pela 352pcs.",
     builds: [
-      { title: "PC gaming Alienware", description: "Um PC Alienware preto, apresentado de vários ângulos." },
+      { title: "PC gaming Alienware", description: "Um PC gaming Alienware preto, com um visual simples e cuidado." },
       { title: "PC gaming branco com RGB", description: "Um PC branco de exposição com iluminação RGB coordenada." },
+      BUILD_GALLERY_COPY.pt.newBuild,
     ],
     photoZoomLabel: "Ampliar foto",
     photoCloseLabel: "Fechar foto",
@@ -594,8 +626,9 @@ const content = {
     buildsTitle: "Rezent PC-Builds",
     buildsIntro: "Individuell PC-Builds vu 352pcs.",
     builds: [
-      { title: "Alienware-Gaming-PC", description: "E schwaarzen Alienware-PC aus verschiddene Perspektiven." },
+      { title: "Alienware-Gaming-PC", description: "E schwaarze Gaming-PC vun Alienware mat engem propperen, dezente Look." },
       { title: "Wäisse RGB-Gaming-PC", description: "E wäisse Showcase-PC mat ofgestëmmter RGB-Beliichtung." },
+      BUILD_GALLERY_COPY.lu.newBuild,
     ],
     photoZoomLabel: "Foto vergréisseren",
     photoCloseLabel: "Foto zoumaachen",
@@ -845,6 +878,7 @@ export default function App() {
   const [openFaq, setOpenFaq] = useState(null);
   const [now, setNow] = useState(null);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [buildsPaused, setBuildsPaused] = useState(false);
 
   React.useEffect(() => {
     const browserLang = navigator.language.split("-")[0];
@@ -858,7 +892,25 @@ export default function App() {
   }, [lang]);
 
   const t = content[lang] || content.en;
+  const galleryCopy = BUILD_GALLERY_COPY[lang] || BUILD_GALLERY_COPY.en;
   const openingStatus = React.useMemo(() => getCurrentOpeningStatus(now, t), [now, t]);
+
+  const renderBuildCards = (isClone = false) => t.builds.map((build, buildIndex) => (
+    <article key={`${isClone ? "loop-" : ""}${build.title}`} className="w-[min(78vw,360px)] shrink-0 overflow-hidden border border-white/10 bg-[#0b111d] shadow-[0_28px_90px_rgba(0,0,0,0.25)] sm:w-[min(58vw,420px)]">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#090e18]">
+        <button type="button" tabIndex={isClone ? -1 : undefined} onClick={() => setSelectedPhoto({ src: BUILDS_GALLERY[buildIndex], alt: build.title })} aria-label={`${t.photoZoomLabel}: ${build.title}`} className="group absolute inset-0 z-0 h-full w-full cursor-zoom-in">
+          <Image src={BUILDS_GALLERY[buildIndex]} alt={build.title} fill sizes="(min-width: 1024px) 420px, 78vw" className="object-contain p-5 transition-transform duration-700 group-hover:scale-[1.035] sm:p-7" />
+          <span className="absolute inset-0 bg-gradient-to-t from-[#070a12]/75 via-transparent to-black/10 opacity-80" />
+          <span aria-hidden="true" className="absolute bottom-5 right-5 font-mono text-xs font-bold uppercase tracking-widest text-blue-200">{t.photoZoomLabel} ↗</span>
+        </button>
+      </div>
+      <div className="min-h-36 border-t border-white/[0.08] p-5 sm:p-6">
+        <p className="mb-2 font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-blue-300">352pcs / 0{buildIndex + 1}</p>
+        <h4 className="text-xl font-black uppercase leading-tight tracking-tight text-white">{build.title}</h4>
+        <p className="mt-3 text-sm leading-6 text-stone-400">{build.description}</p>
+      </div>
+    </article>
+  ));
 
   React.useEffect(() => {
     setNow(new Date());
@@ -1104,35 +1156,23 @@ export default function App() {
       <section id="builds" className="relative overflow-hidden bg-[#070a12] px-6 py-16 sm:py-24">
         <div className="absolute -right-40 top-20 h-96 w-96 rounded-full bg-blue-500/[0.08] blur-[110px]" />
         <div className="relative mx-auto max-w-7xl">
-          <div className="mb-12 flex flex-col gap-5 border-b border-white/10 pb-7 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 flex flex-col gap-5 border-b border-white/10 pb-7 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-blue-300">352pcs / PC-BUILDS</p>
               <h3 className="text-5xl font-black uppercase leading-[0.88] tracking-[-0.06em] text-white sm:text-7xl">{t.buildsTitle}</h3>
             </div>
-            <p className="max-w-sm text-sm leading-6 text-stone-400 sm:text-right">{t.buildsIntro}</p>
+            <div className="flex flex-col gap-4 sm:items-end">
+              <p className="max-w-sm text-sm leading-6 text-stone-400 sm:text-right">{t.buildsIntro}</p>
+              <button type="button" onClick={() => setBuildsPaused((paused) => !paused)} aria-pressed={buildsPaused} className="builds-train-control inline-flex w-fit items-center gap-2 border border-white/15 px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-wider text-slate-300 transition-colors hover:border-blue-300/50 hover:text-white">
+                <span aria-hidden="true">{buildsPaused ? "▶" : "Ⅱ"}</span>{buildsPaused ? galleryCopy.resume : galleryCopy.pause}
+              </button>
+            </div>
           </div>
-          <div className="space-y-6">
-            {t.builds.map((build, buildIndex) => (
-              <article key={build.title} className="grid overflow-hidden border border-white/10 bg-[#0b111d] shadow-[0_28px_90px_rgba(0,0,0,0.25)] lg:min-h-[450px] lg:grid-cols-12">
-                <div className={`relative min-h-[340px] overflow-hidden bg-[#090e18] sm:min-h-[460px] lg:col-span-7 ${buildIndex === 1 ? "lg:order-2" : ""}`}>
-                  <button type="button" onClick={() => setSelectedPhoto({ src: BUILDS_GALLERY[buildIndex][0], alt: build.title })} aria-label={`${t.photoZoomLabel}: ${build.title}, 1`} className="group absolute inset-0 z-0 h-full w-full cursor-zoom-in">
-                    <Image src={BUILDS_GALLERY[buildIndex][0]} alt="" fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-contain p-5 transition-transform duration-700 group-hover:scale-[1.035] sm:p-8" />
-                    <span className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 opacity-70 transition-opacity group-hover:opacity-100" />
-                  </button>
-                  <button type="button" onClick={() => setSelectedPhoto({ src: BUILDS_GALLERY[buildIndex][1], alt: build.title })} aria-label={`${t.photoZoomLabel}: ${build.title}, 2`} className="absolute bottom-5 right-5 z-20 h-28 w-24 cursor-zoom-in overflow-hidden border-2 border-blue-300 bg-[#070a12] shadow-2xl transition-transform hover:scale-105 sm:bottom-7 sm:right-7 sm:h-36 sm:w-28">
-                    <Image src={BUILDS_GALLERY[buildIndex][1]} alt="" fill sizes="112px" className="object-cover" />
-                  </button>
-                </div>
-                <div className={`flex flex-col justify-between p-7 sm:p-10 lg:col-span-5 lg:p-12 ${buildIndex === 1 ? "lg:order-1" : ""}`}>
-                  <div>
-                    <p className="mb-5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">352pcs / {t.buildsTitle}</p>
-                    <h4 className="text-3xl font-black uppercase leading-[0.95] tracking-[-0.05em] text-white sm:text-4xl">{build.title}</h4>
-                    <p className="mt-5 max-w-md text-sm leading-7 text-stone-400">{build.description}</p>
-                  </div>
-                  <a href="#contact" className="mt-9 inline-flex w-fit items-center gap-3 border-b border-blue-300/50 pb-2 text-xs font-black uppercase tracking-[0.16em] text-blue-300 transition-colors hover:border-blue-400 hover:text-white">{t.contactCta}<span aria-hidden="true">↗</span></a>
-                </div>
-              </article>
-            ))}
+          <div className="builds-train-viewport" role="region" aria-label={t.buildsTitle}>
+            <div className={`builds-train-track${buildsPaused ? " is-paused" : ""}`}>
+              <div className="builds-train-group builds-train-copy" aria-hidden="true">{renderBuildCards(true)}</div>
+              <div className="builds-train-group">{renderBuildCards()}</div>
+            </div>
           </div>
         </div>
       </section>
