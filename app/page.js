@@ -187,21 +187,23 @@ const content = {
       },
       {
         label: "Simple Upgrades",
-        cost: "39€",
-        desc: "RAM, SSD, GPU and other component installation. Final price depends on accessibility, configuration and testing required.",
-        fixed: false,
+        cost: "49€",
+        desc: "Charged per component (for example, RAM, SSD or GPU), including installation and a functional check. More involved work is quoted before it begins.",
+        fixed: true,
       },
       {
         label: "PC Repairs",
-        cost: "89€",
-        desc: "Repair labour starts at 89€, including the diagnosis when the repair is approved. Final price confirmed before work begins.",
+        cost: "99€",
+        desc: "Repair labour starts at 99€, including the diagnosis when the repair is approved. Final price confirmed before work begins.",
         fixed: false,
       },
       {
         label: "Custom PC Build",
-        cost: "149€",
-        desc: "I assemble, set up, and test your PC. Parts cost extra (yours, or ordered for you).",
-        fixed: false,
+        tierPrices: [
+          { label: "Parts up to 3,000€", cost: "149€" },
+          { label: "Parts over 3,000€", cost: "199€" },
+        ],
+        desc: "Assembly, setup and testing included. Parts cost extra (yours, or ordered for you). Any additional work is quoted before it begins.",
       },
     ],
     extraPrice: {
@@ -304,21 +306,23 @@ const content = {
       },
       {
         label: "Upgrades simples",
-        cost: "39€",
-        desc: "Installation de RAM, SSD, GPU et autres composants. Le prix final dépend de l'accès, de la configuration et des tests nécessaires.",
-        fixed: false,
+        cost: "49€",
+        desc: "Tarif par composant installé (RAM, SSD ou GPU, par exemple), avec vérification du fonctionnement. Les interventions plus complexes sont chiffrées avant le début.",
+        fixed: true,
       },
       {
         label: "Réparations PC",
-        cost: "89€",
-        desc: "La main-d'œuvre de réparation commence à 89€, diagnostic inclus si la réparation est validée. Prix final confirmé avant le début des travaux.",
+        cost: "99€",
+        desc: "La main-d'œuvre de réparation commence à 99€, diagnostic inclus si la réparation est validée. Prix final confirmé avant le début des travaux.",
         fixed: false,
       },
       {
         label: "Montage PC sur mesure",
-        cost: "149€",
-        desc: "J'assemble, configure et teste votre PC. Les pièces sont en plus (les vôtres, ou commandées pour vous).",
-        fixed: false,
+        tierPrices: [
+          { label: "Pièces jusqu'à 3 000€", cost: "149€" },
+          { label: "Pièces au-delà de 3 000€", cost: "199€" },
+        ],
+        desc: "Montage, configuration et tests inclus. Les pièces sont en supplément (les vôtres ou commandées par mes soins). Tout travail supplémentaire est chiffré avant le début.",
       },
     ],
     extraPrice: {
@@ -421,21 +425,23 @@ const content = {
       },
       {
         label: "Einfache Upgrades",
-        cost: "39€",
-        desc: "Installation von RAM, SSD, GPU und anderen Komponenten. Der Endpreis hängt von Zugänglichkeit, Konfiguration und Tests ab.",
-        fixed: false,
+        cost: "49€",
+        desc: "Preis pro eingebauter Komponente (z. B. RAM, SSD oder GPU), einschließlich Einbau und Funktionsprüfung. Aufwendigere Arbeiten werden vor Beginn separat kalkuliert.",
+        fixed: true,
       },
       {
         label: "PC-Reparaturen",
-        cost: "89€",
-        desc: "Reparaturarbeit ab 89€, Diagnose inklusive wenn die Reparatur freigegeben wird. Endpreis vor Arbeitsbeginn bestätigt.",
+        cost: "99€",
+        desc: "Reparaturarbeit ab 99€, Diagnose inklusive, wenn die Reparatur freigegeben wird. Der Endpreis wird vor Arbeitsbeginn bestätigt.",
         fixed: false,
       },
       {
         label: "Custom PC-Bau",
-        cost: "149€",
-        desc: "Ich baue, richte ein und teste Ihren PC. Teile kosten extra (Ihre eigenen oder von mir bestellt).",
-        fixed: false,
+        tierPrices: [
+          { label: "Teile bis 3.000€", cost: "149€" },
+          { label: "Teile über 3.000€", cost: "199€" },
+        ],
+        desc: "Zusammenbau, Einrichtung und Tests inklusive. Die Teile werden separat berechnet; auf Wunsch bestelle ich sie für Sie. Zusätzliche Arbeiten werden vor Beginn angeboten.",
       },
     ],
     extraPrice: {
@@ -538,21 +544,23 @@ const content = {
       },
       {
         label: "Upgrades simples",
-        cost: "39€",
-        desc: "Instalação de RAM, SSD, GPU e outros componentes. O preço final depende do acesso, da configuração e dos testes necessários.",
-        fixed: false,
+        cost: "49€",
+        desc: "Preço por componente instalado (por exemplo, RAM, SSD ou GPU), incluindo instalação e verificação funcional. Trabalhos mais complexos são orçamentados antes do início.",
+        fixed: true,
       },
       {
         label: "Reparações PC",
-        cost: "89€",
-        desc: "A mão de obra de reparação começa nos 89€, com diagnóstico incluído quando a reparação é aprovada. Preço final confirmado antes do início do trabalho.",
+        cost: "99€",
+        desc: "A mão de obra de reparação começa nos 99€, com diagnóstico incluído quando a reparação é aprovada. O preço final é confirmado antes do início do trabalho.",
         fixed: false,
       },
       {
         label: "Montagem de PC",
-        cost: "149€",
-        desc: "Monto, configuro e testo o seu PC. As peças custam à parte (suas, ou encomendadas por mim).",
-        fixed: false,
+        tierPrices: [
+          { label: "Peças até 3.000€", cost: "149€" },
+          { label: "Peças acima de 3.000€", cost: "199€" },
+        ],
+        desc: "Montagem, configuração e testes incluídos. As peças são cobradas à parte (suas ou encomendadas por mim). Qualquer trabalho adicional é orçamentado antes do início.",
       },
     ],
     extraPrice: {
@@ -655,21 +663,23 @@ const content = {
       },
       {
         label: "Einfach Upgrades",
-        cost: "39€",
-        desc: "Installatioun vu RAM, SSD, GPU an anere Komponenten. De Schlusspräis hänkt vum Zougang, der Konfiguratioun an den Tester of.",
-        fixed: false,
+        cost: "49€",
+        desc: "Präis pro agebauter Komponent (z. B. RAM, SSD oder GPU), inklusiv Installatioun a Funktiounskontroll. Méi opwänneg Aarbechte ginn am Viraus matgedeelt.",
+        fixed: true,
       },
       {
         label: "PC-Reparaturen",
-        cost: "89€",
-        desc: "Reparatur-Aarbecht fänkt bei 89€ un, Diagnos abegraff wann d'Reparatur validéiert gëtt. Schlusspräis virum Ufank confirméiert.",
+        cost: "99€",
+        desc: "Reparatur-Aarbecht fänkt bei 99€ un, Diagnos abegraff wann d'Reparatur validéiert gëtt. De Schlusspräis gëtt virum Ufank confirméiert.",
         fixed: false,
       },
       {
         label: "Custom PC-Bau",
-        cost: "149€",
-        desc: "Ech bauen, riichten an an testen Äre PC. Deeler kaschten extra (Är eegen, oder vu mir bestallt).",
-        fixed: false,
+        tierPrices: [
+          { label: "Deeler bis 3.000€", cost: "149€" },
+          { label: "Deeler iwwer 3.000€", cost: "199€" },
+        ],
+        desc: "Zesummebau, Ariichtung an Tester inklusiv. Deeler ginn extra berechent (Är eegen oder vu mir bestallt). Zousätzlech Aarbechte ginn am Viraus ugebueden.",
       },
     ],
     extraPrice: {
@@ -1192,9 +1202,20 @@ export default function App() {
                   <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">0{i + 1} / {p.label}</span>
                   <p className="max-w-xl text-sm leading-6 text-slate-400">{p.desc}</p>
                 </div>
-                <span className="text-3xl font-black tracking-tight text-white sm:min-w-36 sm:text-right">
-                  {p.fixed ? p.cost : <><span className="mr-1 text-xs font-bold uppercase text-slate-500">{t.fromText}</span>{p.cost}</>}
-                </span>
+                {p.tierPrices ? (
+                  <div className="flex flex-col gap-2 sm:min-w-64">
+                    {p.tierPrices.map((tier) => (
+                      <div key={tier.label} className="grid grid-cols-[1fr_auto] items-baseline gap-3 sm:grid-cols-[auto_auto] sm:justify-end">
+                        <span className="text-xs font-bold text-slate-500 sm:text-right">{tier.label}</span>
+                        <span className="whitespace-nowrap text-2xl font-black tracking-tight text-white">{tier.cost}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-3xl font-black tracking-tight text-white sm:min-w-36 sm:text-right">
+                    {p.fixed ? p.cost : <><span className="mr-1 text-xs font-bold uppercase text-slate-500">{t.fromText}</span>{p.cost}</>}
+                  </span>
+                )}
               </div>
             ))}
             <div className="border-t border-white/10" />
