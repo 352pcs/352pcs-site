@@ -193,17 +193,23 @@ const content = {
       },
       {
         label: "PC Repairs",
-        cost: "99€",
-        desc: "Repair labour starts at 99€, including the diagnosis when the repair is approved. Final price confirmed before work begins.",
+        cost: "119€",
+        desc: "Repair labour starts at 119€, including the diagnosis when the repair is approved. Final price confirmed before work begins.",
         fixed: false,
       },
       {
         label: "Custom PC Build",
         tierPrices: [
-          { label: "Parts up to 3,000€", cost: "149€" },
-          { label: "Parts over 3,000€", cost: "199€" },
+          { label: "Parts up to 3,000€", cost: "169€" },
+          { label: "Parts over 3,000€", cost: "219€" },
         ],
-        desc: "Assembly, setup and testing included. Parts cost extra (yours, or ordered for you). Any additional work is quoted before it begins.",
+        desc: "Assembly, setup and testing included. Supply your own parts, or I can source and order them for an additional 49€. Component costs are separate. Any additional work is quoted before it begins.",
+      },
+      {
+        label: "Parts sourcing & ordering",
+        cost: "49€",
+        desc: "Covers the time and care needed to choose compatible parts and place the order. Example: a build with parts up to 3,000€ is 169€ + 49€ = 218€ for the build and sourcing, plus the cost of the parts.",
+        fixed: true,
       },
     ],
     extraPrice: {
@@ -211,6 +217,8 @@ const content = {
       cost: "99€",
       desc: "Detailed internal cleaning, fan cleaning, CPU thermal-paste replacement where required, reassembly and temperature testing. Heavily soiled PCs or jobs requiring extensive disassembly are quoted after inspection.",
     },
+    warrantyTitle: "Warranty coverage",
+    warrantyNote: "Hardware components are covered by the applicable manufacturer's warranty, subject to the manufacturer's terms. Applicable statutory consumer guarantees remain unaffected. Assembly and configuration services are covered by a 1-year workmanship warranty, without prejudice to mandatory legal rights.",
     fromText: "from",
     disclaimer: "Clear pricing, no surprise charges. Any additional work is discussed and approved first.",
     businessTitle: "How It Works",
@@ -220,7 +228,7 @@ const content = {
       { label: "Repair Turnaround", value: "Typically 2–7 days, depending on parts and complexity." },
       { label: "Service Area", value: "Niederkorn only — drop-off at my address." },
       { label: "Appointments", value: "Appointment needed — please book before you drop off your device." },
-      { label: "In-Person Only", value: "Drop-off only. No remote software support and no home visits." },
+      { label: "Remote Support", value: "Remote support is available for software issues only; pricing is discussed before the session. Hardware repairs are drop-off only. No home visits." },
     ],
     faqTitle: "Frequently Asked Questions",
     faqs: [
@@ -229,9 +237,9 @@ const content = {
       { q: "Do I need an appointment?", a: "Yes, always book before you drop off! A quick WhatsApp message or a call locks in your slot, so I'm ready for you and your device gets looked at fast." },
       { q: "What payment methods do you accept?", a: "Nice and easy — I take cash or Digicash (SNET instant bank transfer). Whatever's most convenient for you works for me." },
       { q: "Which brands do you work on?", a: "All of them! Dell, HP, Lenovo, Asus, Acer, Apple, MSI, and fully custom builds — laptops and desktops alike. If it's a computer, I can work on it." },
-      { q: "How do custom builds work?", a: "Two easy options: tell me your budget and goals and I'll source every compatible part for you, or supply your own parts and I'll handle the assembly, cable management, and tuning — as long as the components are compatible." },
+      { q: "How do custom builds work?", a: "Two easy options: tell me your budget and goals and I'll source and order compatible parts for a 49€ fee, plus the cost of the parts, or supply your own parts and I'll handle the assembly, cable management, and tuning — as long as the components are compatible." },
       { q: "What should I bring?", a: "Keep it simple — bring your PC or laptop and its power cable or charger. That's everything I need to start the diagnostic." },
-      { q: "Can you fix my software issues remotely?", a: "No remote support, sorry — every repair, including software issues, is done in person at the workshop so I can properly diagnose and fix it." },
+      { q: "Do you offer remote support?", a: "Yes, for software issues only. I don't provide remote support for hardware problems. Pricing is discussed before the session. Hardware repairs must be handled in person at my workshop in Niederkorn." },
       { q: "What is your service area?", a: "Niederkorn only. I'm a local, drop-off-based workshop, so all the work happens right here at my address." },
     ],
     contactTitle: "Ready to Start?",
@@ -312,17 +320,23 @@ const content = {
       },
       {
         label: "Réparations PC",
-        cost: "99€",
-        desc: "La main-d'œuvre de réparation commence à 99€, diagnostic inclus si la réparation est validée. Prix final confirmé avant le début des travaux.",
+        cost: "119€",
+        desc: "La main-d'œuvre de réparation commence à 119€, diagnostic inclus si la réparation est validée. Prix final confirmé avant le début des travaux.",
         fixed: false,
       },
       {
         label: "Montage PC sur mesure",
         tierPrices: [
-          { label: "Pièces jusqu'à 3 000€", cost: "149€" },
-          { label: "Pièces au-delà de 3 000€", cost: "199€" },
+          { label: "Pièces jusqu'à 3 000€", cost: "169€" },
+          { label: "Pièces au-delà de 3 000€", cost: "219€" },
         ],
-        desc: "Montage, configuration et tests inclus. Les pièces sont en supplément (les vôtres ou commandées par mes soins). Tout travail supplémentaire est chiffré avant le début.",
+        desc: "Montage, configuration et tests inclus. Fournissez vos pièces ou demandez-moi de les sélectionner et de les commander pour 49€ de plus. Le coût des composants est en supplément. Tout travail supplémentaire est chiffré avant le début.",
+      },
+      {
+        label: "Sélection et commande des pièces",
+        cost: "49€",
+        desc: "Ce tarif couvre le temps et le soin nécessaires pour choisir des pièces compatibles et passer commande. Exemple : un montage avec des pièces jusqu'à 3 000€ coûte 169€ + 49€ = 218€ pour le montage et la commande, plus le prix des composants.",
+        fixed: true,
       },
     ],
     extraPrice: {
@@ -330,6 +344,8 @@ const content = {
       cost: "99€",
       desc: "Nettoyage interne détaillé, nettoyage des ventilateurs, remplacement de la pâte thermique du CPU si nécessaire, remontage et test des températures. PC très encrassés ou démontage important : devis après inspection.",
     },
+    warrantyTitle: "Garanties",
+    warrantyNote: "Les composants matériels bénéficient de la garantie fabricant applicable, selon les conditions du fabricant. Les garanties légales applicables aux consommateurs restent inchangées. Les prestations de montage et de configuration sont couvertes par une garantie d'un an sur la qualité de l'exécution, sans préjudice des droits légaux impératifs.",
     fromText: "à partir de",
     disclaimer: "Tarifs clairs, pas de frais surprises. Tout travail supplémentaire est discuté et validé au préalable.",
     businessTitle: "Comment ça marche",
@@ -339,7 +355,7 @@ const content = {
       { label: "Délai de réparation", value: "Généralement 2 à 7 jours, selon les pièces et la complexité." },
       { label: "Zone de service", value: "Niederkorn uniquement — dépôt à mon adresse." },
       { label: "Rendez-vous", value: "Sur rendez-vous — réservez avant de déposer votre appareil." },
-      { label: "Sur place uniquement", value: "Dépôt uniquement. Pas de support logiciel à distance ni de visites à domicile." },
+      { label: "Assistance à distance", value: "Assistance à distance uniquement pour les problèmes logiciels ; tarif discuté avant la session. Les réparations matérielles se font sur dépôt uniquement. Pas de visite à domicile." },
     ],
     faqTitle: "Questions Fréquentes",
     faqs: [
@@ -348,9 +364,9 @@ const content = {
       { q: "Faut-il prendre rendez-vous ?", a: "Oui, réservez toujours avant de venir ! Un petit message WhatsApp ou un appel suffit à bloquer votre créneau, pour que votre appareil soit pris en charge rapidement." },
       { q: "Quels moyens de paiement acceptez-vous ?", a: "Tout simple — j'accepte les espèces ou Digicash (virement bancaire instantané SNET). Choisissez ce qui vous arrange le plus." },
       { q: "Sur quelles marques travaillez-vous ?", a: "Toutes ! Dell, HP, Lenovo, Asus, Acer, Apple, MSI et montages 100 % sur mesure — portables comme fixes. Si c'est un ordinateur, je peux m'en occuper." },
-      { q: "Comment fonctionnent les montages sur mesure ?", a: "Deux options simples : donnez-moi votre budget et vos objectifs et je commande toutes les pièces compatibles pour vous, ou fournissez vos propres pièces et je m'occupe du montage, du câblage et des réglages — tant que les composants sont compatibles." },
+      { q: "Comment fonctionnent les montages sur mesure ?", a: "Deux options simples : donnez-moi votre budget et vos objectifs et je sélectionne puis commande des pièces compatibles pour 49€ de plus, auxquels s'ajoute le coût des pièces, ou fournissez vos propres pièces et je m'occupe du montage, du câblage et des réglages — tant que les composants sont compatibles." },
       { q: "Que dois-je apporter ?", a: "Faites simple — apportez votre PC ou portable et son câble d'alimentation ou chargeur. C'est tout ce qu'il me faut pour lancer le diagnostic." },
-      { q: "Pouvez-vous régler mes problèmes logiciels à distance ?", a: "Pas de support à distance, désolé — chaque réparation, y compris les problèmes logiciels, se fait en personne à l'atelier pour un diagnostic et une réparation corrects." },
+      { q: "Proposez-vous une assistance à distance ?", a: "Oui, uniquement pour les problèmes logiciels. Je ne propose pas d'assistance à distance pour les problèmes matériels. Le tarif est discuté avant la session. Les réparations matérielles se font en personne à mon atelier à Niederkorn." },
       { q: "Quelle est votre zone de service ?", a: "Uniquement Niederkorn. Je suis un atelier local en dépôt, donc tout se passe directement à mon adresse." },
     ],
     contactTitle: "Prêt à commencer ?",
@@ -431,17 +447,23 @@ const content = {
       },
       {
         label: "PC-Reparaturen",
-        cost: "99€",
-        desc: "Reparaturarbeit ab 99€, Diagnose inklusive, wenn die Reparatur freigegeben wird. Der Endpreis wird vor Arbeitsbeginn bestätigt.",
+        cost: "119€",
+        desc: "Reparaturarbeit ab 119€, Diagnose inklusive, wenn die Reparatur freigegeben wird. Der Endpreis wird vor Arbeitsbeginn bestätigt.",
         fixed: false,
       },
       {
         label: "Custom PC-Bau",
         tierPrices: [
-          { label: "Teile bis 3.000€", cost: "149€" },
-          { label: "Teile über 3.000€", cost: "199€" },
+          { label: "Teile bis 3.000€", cost: "169€" },
+          { label: "Teile über 3.000€", cost: "219€" },
         ],
-        desc: "Zusammenbau, Einrichtung und Tests inklusive. Die Teile werden separat berechnet; auf Wunsch bestelle ich sie für Sie. Zusätzliche Arbeiten werden vor Beginn angeboten.",
+        desc: "Zusammenbau, Einrichtung und Tests inklusive. Sie können eigene Teile mitbringen oder ich wähle kompatible Teile aus und bestelle sie für 49€ extra. Die Teilekosten kommen hinzu. Zusätzliche Arbeiten werden vor Beginn angeboten.",
+      },
+      {
+        label: "Teileauswahl und Bestellung",
+        cost: "49€",
+        desc: "Deckt Zeit und Sorgfalt für die Auswahl kompatibler Teile und die Bestellung ab. Beispiel: Zusammenbau eines PCs mit Teilen bis 3.000€: 169€ + 49€ = 218€ für Montage und Beschaffung, zuzüglich Teilekosten.",
+        fixed: true,
       },
     ],
     extraPrice: {
@@ -449,6 +471,8 @@ const content = {
       cost: "99€",
       desc: "Gründliche Innenreinigung, Lüfterreinigung, CPU-Wärmeleitpasten-Wechsel bei Bedarf, Zusammenbau und Temperaturtests. Stark verschmutzte PCs oder aufwendige Demontage nach Inspektion angeboten.",
     },
+    warrantyTitle: "Garantie",
+    warrantyNote: "Für Hardwarekomponenten gilt die jeweilige Herstellergarantie gemäß den Bedingungen des Herstellers. Anwendbare gesetzliche Verbraucherrechte bleiben unberührt. Montage- und Konfigurationsleistungen sind durch eine einjährige Garantie auf die fachgerechte Ausführung abgedeckt, ohne dass zwingende gesetzliche Rechte eingeschränkt werden.",
     fromText: "ab",
     disclaimer: "Klare Preise, keine Überraschungskosten. Zusätzliche Arbeiten werden vorher besprochen und freigegeben.",
     businessTitle: "So funktioniert's",
@@ -458,7 +482,7 @@ const content = {
       { label: "Reparaturdauer", value: "In der Regel 2–7 Tage, je nach Teilen und Komplexität." },
       { label: "Servicegebiet", value: "Nur Niederkorn — Abgabe an meiner Adresse." },
       { label: "Termine", value: "Nur mit Termin — bitte vor der Abgabe Ihres Geräts buchen." },
-      { label: "Nur vor Ort", value: "Nur Abgabe. Kein Remote-Software-Support und keine Hausbesuche." },
+      { label: "Fernsupport", value: "Fernsupport gibt es nur bei Softwareproblemen; der Preis wird vor der Sitzung besprochen. Hardware-Reparaturen erfolgen nur vor Ort nach Abgabe des Geräts. Keine Hausbesuche." },
     ],
     faqTitle: "Häufig gestellte Fragen",
     faqs: [
@@ -467,9 +491,9 @@ const content = {
       { q: "Brauche ich einen Termin?", a: "Ja, bitte immer vorher buchen! Eine kurze WhatsApp-Nachricht oder ein Anruf sichert Ihren Termin, damit Ihr Gerät schnell drankommt." },
       { q: "Welche Zahlungsmethoden akzeptieren Sie?", a: "Ganz einfach — ich nehme Bargeld oder Digicash (sofortige SNET-Banküberweisung). Wählen Sie, was für Sie am bequemsten ist." },
       { q: "An welchen Marken arbeiten Sie?", a: "An allen! Dell, HP, Lenovo, Asus, Acer, Apple, MSI und komplett individuelle Builds — Laptops wie Desktops. Wenn es ein Computer ist, kann ich daran arbeiten." },
-      { q: "Wie funktionieren Custom Builds?", a: "Zwei einfache Optionen: Nennen Sie mir Budget und Ziele und ich beschaffe alle kompatiblen Teile für Sie, oder Sie liefern Ihre eigenen Teile und ich übernehme Zusammenbau, Kabelmanagement und Feintuning — solange die Komponenten kompatibel sind." },
+      { q: "Wie funktionieren Custom Builds?", a: "Zwei einfache Optionen: Nennen Sie mir Budget und Ziele, dann wähle ich kompatible Teile aus und bestelle sie gegen eine Gebühr von 49€ zuzüglich der Teilekosten. Oder Sie liefern Ihre eigenen Teile und ich übernehme Zusammenbau, Kabelmanagement und Feintuning — solange die Komponenten kompatibel sind." },
       { q: "Was soll ich mitbringen?", a: "Halten Sie es einfach — bringen Sie Ihren PC oder Laptop und das Netzkabel bzw. Ladegerät mit. Mehr brauche ich nicht, um mit der Diagnose zu starten." },
-      { q: "Können Sie meine Softwareprobleme aus der Ferne lösen?", a: "Kein Remote-Support, sorry — jede Reparatur, auch Softwareprobleme, erfolgt persönlich in der Werkstatt, damit ich richtig diagnostizieren und reparieren kann." },
+      { q: "Bieten Sie Fernsupport an?", a: "Ja, nur bei Softwareproblemen. Für Hardwareprobleme biete ich keinen Fernsupport an. Der Preis wird vor der Sitzung besprochen. Arbeiten an der Hardware erfolgen persönlich in meiner Werkstatt in Niederkorn." },
       { q: "Was ist Ihr Servicegebiet?", a: "Nur Niederkorn. Ich bin eine lokale Werkstatt mit Abgabe vor Ort, also passiert alles direkt an meiner Adresse." },
     ],
     contactTitle: "Bereit?",
@@ -550,17 +574,23 @@ const content = {
       },
       {
         label: "Reparações PC",
-        cost: "99€",
-        desc: "A mão de obra de reparação começa nos 99€, com diagnóstico incluído quando a reparação é aprovada. O preço final é confirmado antes do início do trabalho.",
+        cost: "119€",
+        desc: "A mão de obra de reparação começa nos 119€, com diagnóstico incluído quando a reparação é aprovada. O preço final é confirmado antes do início do trabalho.",
         fixed: false,
       },
       {
         label: "Montagem de PC",
         tierPrices: [
-          { label: "Peças até 3.000€", cost: "149€" },
-          { label: "Peças acima de 3.000€", cost: "199€" },
+          { label: "Peças até 3.000€", cost: "169€" },
+          { label: "Peças acima de 3.000€", cost: "219€" },
         ],
-        desc: "Montagem, configuração e testes incluídos. As peças são cobradas à parte (suas ou encomendadas por mim). Qualquer trabalho adicional é orçamentado antes do início.",
+        desc: "Montagem, configuração e testes incluídos. Pode fornecer as suas peças ou pedir-me para escolher e encomendar peças compatíveis por mais 49€. O custo das peças é cobrado à parte. Qualquer trabalho adicional é orçamentado antes do início.",
+      },
+      {
+        label: "Seleção e encomenda de peças",
+        cost: "49€",
+        desc: "Cobre o tempo e o cuidado necessários para escolher peças compatíveis e fazer a encomenda. Exemplo: montagem com peças até 3.000€: 169€ + 49€ = 218€ pelos serviços de montagem e encomenda, mais o custo das peças.",
+        fixed: true,
       },
     ],
     extraPrice: {
@@ -568,6 +598,8 @@ const content = {
       cost: "99€",
       desc: "Limpeza interna detalhada, limpeza das ventoinhas, substituição da pasta térmica do CPU quando necessário, remontagem e testes de temperatura. PCs muito sujos ou com desmontagem extensa: orçamento após inspeção.",
     },
+    warrantyTitle: "Garantia",
+    warrantyNote: "Os componentes de hardware estão abrangidos pela garantia do fabricante aplicável, sujeita aos termos do fabricante. Mantêm-se inalteradas as garantias legais dos consumidores aplicáveis. Os serviços de montagem e configuração estão cobertos por uma garantia de um ano sobre a qualidade da execução, sem prejuízo dos direitos legais imperativos.",
     fromText: "a partir de",
     disclaimer: "Preços claros, sem cobranças surpresa. Qualquer trabalho adicional é discutido e aprovado primeiro.",
     businessTitle: "Como funciona",
@@ -577,7 +609,7 @@ const content = {
       { label: "Prazo de reparação", value: "Normalmente 2–7 dias, consoante peças e complexidade." },
       { label: "Área de serviço", value: "Apenas Niederkorn — entrega na minha morada." },
       { label: "Marcações", value: "Com marcação — reserve antes de entregar o seu equipamento." },
-      { label: "Apenas presencial", value: "Apenas entrega. Sem suporte remoto de software nem visitas ao domicílio." },
+      { label: "Suporte remoto", value: "O suporte remoto está disponível apenas para problemas de software; o preço é combinado antes da sessão. As reparações de hardware são feitas apenas mediante entrega do equipamento. Sem visitas ao domicílio." },
     ],
     faqTitle: "Perguntas Frequentes",
     faqs: [
@@ -586,9 +618,9 @@ const content = {
       { q: "Preciso de marcação?", a: "Sim, marque sempre antes de aparecer! Uma mensagem rápida no WhatsApp ou uma chamada garante o seu horário, para o seu equipamento ser visto rapidamente." },
       { q: "Que métodos de pagamento aceita?", a: "É simples — aceito dinheiro ou Digicash (transferência bancária instantânea SNET). Escolha o que for mais cómodo para si." },
       { q: "Com que marcas trabalha?", a: "Todas! Dell, HP, Lenovo, Asus, Acer, Apple, MSI e builds totalmente personalizados — portáteis e desktops. Se for um computador, eu trato dele." },
-      { q: "Como funcionam os builds personalizados?", a: "Duas opções simples: diga-me o orçamento e os objetivos e eu encomendo todas as peças compatíveis por si, ou forneça as suas próprias peças e eu faço a montagem, a gestão de cabos e a afinação — desde que os componentes sejam compatíveis." },
+      { q: "Como funcionam os builds personalizados?", a: "Duas opções simples: diga-me o orçamento e os objetivos e eu seleciono e encomendo peças compatíveis por mais 49€, acrescidos do custo das peças, ou forneça as suas próprias peças e eu faço a montagem, a gestão de cabos e a afinação — desde que os componentes sejam compatíveis." },
       { q: "O que devo trazer?", a: "Simples — traga o seu PC ou portátil e o cabo de alimentação ou carregador. É tudo o que preciso para começar o diagnóstico." },
-      { q: "Pode resolver os meus problemas de software remotamente?", a: "Sem suporte remoto, lamento — todas as reparações, incluindo problemas de software, são feitas presencialmente na oficina para um diagnóstico e reparação corretos." },
+      { q: "Disponibiliza suporte remoto?", a: "Sim, apenas para problemas de software. Não presto suporte remoto para problemas de hardware. O preço é combinado antes da sessão. As reparações de hardware são feitas presencialmente na minha oficina em Niederkorn." },
       { q: "Qual é a sua área de serviço?", a: "Apenas Niederkorn. Sou uma oficina local com entrega no local, por isso tudo acontece diretamente na minha morada." },
     ],
     contactTitle: "Vamos começar?",
@@ -669,17 +701,23 @@ const content = {
       },
       {
         label: "PC-Reparaturen",
-        cost: "99€",
-        desc: "Reparatur-Aarbecht fänkt bei 99€ un, Diagnos abegraff wann d'Reparatur validéiert gëtt. De Schlusspräis gëtt virum Ufank confirméiert.",
+        cost: "119€",
+        desc: "Reparatur-Aarbecht fänkt bei 119€ un, Diagnos abegraff wann d'Reparatur validéiert gëtt. De Schlusspräis gëtt virum Ufank confirméiert.",
         fixed: false,
       },
       {
         label: "Custom PC-Bau",
         tierPrices: [
-          { label: "Deeler bis 3.000€", cost: "149€" },
-          { label: "Deeler iwwer 3.000€", cost: "199€" },
+          { label: "Deeler bis 3.000€", cost: "169€" },
+          { label: "Deeler iwwer 3.000€", cost: "219€" },
         ],
-        desc: "Zesummebau, Ariichtung an Tester inklusiv. Deeler ginn extra berechent (Är eegen oder vu mir bestallt). Zousätzlech Aarbechte ginn am Viraus ugebueden.",
+        desc: "Zesummebau, Ariichtung an Tester inklusiv. Dir kënnt Är eege Deeler matbréngen oder ech sichen kompatibel Deeler eraus a bestellen se fir 49€ extra. D'Käschte vun den Deeler kommen dobäi. Zousätzlech Aarbechte ginn am Viraus ugebueden.",
+      },
+      {
+        label: "Deeler auswielen a bestellen",
+        cost: "49€",
+        desc: "De Präis deckt d'Zäit an d'Suergfalt of, fir kompatibel Deeler erauszesichen an ze bestellen. Beispill: Bei engem PC mat Deeler bis 3.000€ kaschten de Montagepräis an d'Bestellung 169€ + 49€ = 218€, plus d'Käschte vun den Deeler.",
+        fixed: true,
       },
     ],
     extraPrice: {
@@ -687,6 +725,8 @@ const content = {
       cost: "99€",
       desc: "Detailléiert intern Reinigung, Ventilateur botzen, CPU-Wärmeleetpaste wiesselen wann néideg, Remontage an Temperaturtester. Staark verschmotzt PCen oder opwänneg Demontage: Präis no Inspektioun.",
     },
+    warrantyTitle: "Garantie",
+    warrantyNote: "Fir Hardware-Komponente gëllt déi jeeweileg Hierstellergarantie no de Bedéngunge vum Hiersteller. Déi uwendbar gesetzlech Verbraucherrechter bleiwen onberéiert. Montage- a Konfiguratiounsleeschtunge si vun enger Garantie vun engem Joer op d'Qualitéit vun der Ausféierung ofgedeckt, ouni datt zwingend gesetzlech Rechter ageschränkt ginn.",
     fromText: "vun",
     disclaimer: "Kloer Präisser, keng Iwwerraschungs-Käschten. All zousätzlech Aarbecht gëtt virdru diskutéiert a validéiert.",
     businessTitle: "Sou funktionéiert et",
@@ -696,7 +736,7 @@ const content = {
       { label: "Reparatiounsdauer", value: "Normalerweis 2–7 Deeg, jee no Deeler a Komplexitéit." },
       { label: "Servicegebitt", value: "Nëmmen Niederkorn — Ofginn op meng Adress." },
       { label: "Rendez-vous", value: "Nëmme mat Termin — reservéiert ier Dir Äert Gerät ofgitt." },
-      { label: "Nëmmen op der Plaz", value: "Nëmmen Ofginn. Kee Remote-Software-Support a keng Hausbesuch." },
+      { label: "Remote-Support", value: "Remote-Support gëtt nëmme bei Softwareproblemer ugebueden; de Präis gëtt virun der Sessioun beschwat. Hardware-Reparature ginn nëmmen op der Plaz no Ofginn vum Gerät gemaach. Keng Hausbesich." },
     ],
     faqTitle: "Heefeg gestallte Froen",
     faqs: [
@@ -705,9 +745,9 @@ const content = {
       { q: "Brauch ech en Termin?", a: "Jo, reservéiert ëmmer ier Dir laanscht kommt! Eng kuerz WhatsApp-Noriicht oder en Uruff séchert Äre Slot, sou datt Äert Gerät séier drukënnt." },
       { q: "Wéi Bezuelmethoden akzeptéiert Dir?", a: "Ganz einfach — ech huelen Bargeld oder Digicash (direkten SNET-Banktransfer) un. Wielt wat fir Iech am bequemsten ass." },
       { q: "Mat wéi enge Marken schafft Dir?", a: "All Marken! Dell, HP, Lenovo, Asus, Acer, Apple, MSI a komplett personaliséiert Builds — Laptoppen a Desktoppen. Wann et en Computer ass, kann ech drun schaffen." },
-      { q: "Wéi funktionéieren d'Custom Builds?", a: "Zwou einfach Optiounen: sot mir Äre Budget an Är Ziler an ech bestellen all kompatibel Deeler fir Iech, oder liwwert Är eege Deeler an ech maachen den Zesummebau, d'Kabelmanagement an d'Feintuning — soulaang d'Komponenten kompatibel sinn." },
+      { q: "Wéi funktionéieren d'Custom Builds?", a: "Zwou einfach Optiounen: sot mir Äre Budget an Är Ziler an ech sichen kompatibel Deeler eraus a bestellen se fir eng Zousazgebühr vu 49€, plus d'Käschte vun den Deeler, oder liwwert Är eege Deeler an ech maachen den Zesummebau, d'Kabelmanagement an d'Feintuning — soulaang d'Komponenten kompatibel sinn." },
       { q: "Wat soll ech matbréngen?", a: "Maacht et einfach — bréngt Äre PC oder Laptop an d'Stroumkabel oder Luedgerät mat. Méi brauch ech net fir mat der Diagnos unzefänken." },
-      { q: "Kënnt Dir meng Softwareproblemer aus der Distanz léisen?", a: "Kee Remote-Support, pardon — all Reparatur, och Softwareproblemer, gëtt perséinlech an der Atelier gemaach, fir datt ech richteg diagnostizéiere a reparéiere kann." },
+      { q: "Bitt Dir Remote-Support un?", a: "Jo, nëmme bei Softwareproblemer. Fir Hardwareproblemer gëtt et kee Remote-Support. De Präis gëtt virun der Sessioun beschwat. Hardware-Aarbechte ginn op der Plaz a menger Atelier zu Niederkorn gemaach." },
       { q: "Wat ass Äert Servicegebitt?", a: "Nëmmen Niederkorn. Ech sinn eng lokal Atelier mat Ofginn op der Plaz, also geschitt alles direkt op menger Adress." },
     ],
     contactTitle: "Bereet?",
@@ -1231,6 +1271,10 @@ export default function App() {
               </div>
             )}
             <p className="mt-6 text-xs leading-5 text-slate-500">{t.disclaimer}</p>
+            <div className="mt-6 border border-blue-300/15 bg-blue-300/[0.04] px-5 py-4">
+              <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">{t.warrantyTitle}</span>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">{t.warrantyNote}</p>
+            </div>
           </div>
         </div>
       </section>
