@@ -187,9 +187,15 @@ const content = {
       },
       {
         label: "Simple Upgrades",
-        cost: "49€",
-        desc: "Charged per component (for example, RAM, SSD or GPU), including installation and a functional check. More involved work is quoted before it begins.",
-        fixed: true,
+        componentPrices: [
+          { label: "RAM", cost: "29€" },
+          { label: "SSD/NVMe", cost: "39€" },
+          { label: "PSU", cost: "49€" },
+          { label: "GPU", cost: "29€" },
+          { label: "CPU", cost: "59€" },
+          { label: "Case", cost: "89€" },
+        ],
+        desc: "Applies only to upgrades requested by the client. Price per component, including installation and a functional check. Repairs and replacements needed to fix a fault are quoted separately; complex jobs are quoted before work begins.",
       },
       {
         label: "PC Repairs",
@@ -314,9 +320,15 @@ const content = {
       },
       {
         label: "Upgrades simples",
-        cost: "49€",
-        desc: "Tarif par composant installé (RAM, SSD ou GPU, par exemple), avec vérification du fonctionnement. Les interventions plus complexes sont chiffrées avant le début.",
-        fixed: true,
+        componentPrices: [
+          { label: "RAM", cost: "29€" },
+          { label: "SSD/NVMe", cost: "39€" },
+          { label: "Alimentation", cost: "49€" },
+          { label: "Carte graphique", cost: "29€" },
+          { label: "Processeur", cost: "59€" },
+          { label: "Boîtier", cost: "89€" },
+        ],
+        desc: "Ces tarifs s’appliquent uniquement aux améliorations demandées par le client. Ils sont facturés par composant, installation et vérification du fonctionnement incluses. Les réparations et remplacements nécessaires pour corriger une panne sont chiffrés séparément ; les interventions complexes sont chiffrées avant le début des travaux.",
       },
       {
         label: "Réparations PC",
@@ -441,9 +453,15 @@ const content = {
       },
       {
         label: "Einfache Upgrades",
-        cost: "49€",
-        desc: "Preis pro eingebauter Komponente (z. B. RAM, SSD oder GPU), einschließlich Einbau und Funktionsprüfung. Aufwendigere Arbeiten werden vor Beginn separat kalkuliert.",
-        fixed: true,
+        componentPrices: [
+          { label: "RAM", cost: "29€" },
+          { label: "SSD/NVMe", cost: "39€" },
+          { label: "Netzteil", cost: "49€" },
+          { label: "Grafikkarte", cost: "29€" },
+          { label: "Prozessor", cost: "59€" },
+          { label: "Gehäuse", cost: "89€" },
+        ],
+        desc: "Diese Preise gelten nur für vom Kunden gewünschte Upgrades. Sie gelten pro Komponente inklusive Einbau und Funktionsprüfung. Reparaturen und der Austausch defekter Teile werden separat angeboten; komplexe Arbeiten werden vor Beginn kalkuliert.",
       },
       {
         label: "PC-Reparaturen",
@@ -568,9 +586,15 @@ const content = {
       },
       {
         label: "Upgrades simples",
-        cost: "49€",
-        desc: "Preço por componente instalado (por exemplo, RAM, SSD ou GPU), incluindo instalação e verificação funcional. Trabalhos mais complexos são orçamentados antes do início.",
-        fixed: true,
+        componentPrices: [
+          { label: "RAM", cost: "29€" },
+          { label: "SSD/NVMe", cost: "39€" },
+          { label: "Fonte de alimentação", cost: "49€" },
+          { label: "Placa gráfica", cost: "29€" },
+          { label: "Processador", cost: "59€" },
+          { label: "Caixa", cost: "89€" },
+        ],
+        desc: "Estes preços aplicam-se apenas a upgrades pedidos pelo cliente. São cobrados por componente e incluem a instalação e um teste de funcionamento. Reparações e substituições necessárias para corrigir uma avaria são orçamentadas à parte; trabalhos complexos são orçamentados antes do início.",
       },
       {
         label: "Reparações PC",
@@ -695,9 +719,15 @@ const content = {
       },
       {
         label: "Einfach Upgrades",
-        cost: "49€",
-        desc: "Präis pro agebauter Komponent (z. B. RAM, SSD oder GPU), inklusiv Installatioun a Funktiounskontroll. Méi opwänneg Aarbechte ginn am Viraus matgedeelt.",
-        fixed: true,
+        componentPrices: [
+          { label: "RAM", cost: "29€" },
+          { label: "SSD/NVMe", cost: "39€" },
+          { label: "Netzdeel", cost: "49€" },
+          { label: "Grafikkaart", cost: "29€" },
+          { label: "Prozessor", cost: "59€" },
+          { label: "Gehäis", cost: "89€" },
+        ],
+        desc: "Dës Präisser gëlle just fir Upgrades, déi de Client ugefrot huet. De Präis gëllt pro Komponent, inklusiv Installatioun a Funktiounskontroll. Reparaturen an den Austausch vun defekten Deeler ginn separat berechent; méi komplex Aarbechte ginn am Viraus ugebueden.",
       },
       {
         label: "PC-Reparaturen",
@@ -1242,7 +1272,16 @@ export default function App() {
                   <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">0{i + 1} / {p.label}</span>
                   <p className="max-w-xl text-sm leading-6 text-slate-400">{p.desc}</p>
                 </div>
-                {p.tierPrices ? (
+                {p.componentPrices ? (
+                  <div className="flex flex-col gap-1 sm:min-w-64">
+                    {p.componentPrices.map((component) => (
+                      <div key={component.label} className="grid grid-cols-[1fr_auto] items-baseline gap-3 sm:grid-cols-[auto_auto] sm:justify-end">
+                        <span className="text-xs font-bold text-slate-500 sm:text-right">{component.label}</span>
+                        <span className="whitespace-nowrap text-xl font-black tracking-tight text-white">{component.cost}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : p.tierPrices ? (
                   <div className="flex flex-col gap-2 sm:min-w-64">
                     {p.tierPrices.map((tier) => (
                       <div key={tier.label} className="grid grid-cols-[1fr_auto] items-baseline gap-3 sm:grid-cols-[auto_auto] sm:justify-end">
